@@ -1,60 +1,83 @@
 # Device Recovery Lab
 
-**I built this lab to show what recovery requires when a device acts but its response disappears.**
+**I built this lab to make two decisions inspectable: when a service has enough
+evidence to claim completion, and how it keeps recovering when other work is slow.**
 
-My professional work spans distributed services, customer-facing device
-interfaces, and testing tools. Here, I bring those concerns together in a small,
-independent experiment: request a simulated parcel-locker release, introduce a
-communication failure, and follow the evidence the service uses to recover.
+Request a simulated parcel-locker release, break communication, and inspect the
+service's decision alongside the device's actual recorded behavior. Then compare
+one recovery worker with four under the same independently injected faults.
 
-I keep message receipt separate from completion because a device can accept a
-command before it acts, and it can act before the service learns the result.
-The interface makes that gap visible.
+[**Open the interactive evidence →**](https://b8z.github.io/device-recovery-lab/)
+· [Run the processes locally](#run-it) · [Read the controlled experiment](docs/workload.md)
 
-**[Step through captured failures in your browser](https://b8z.github.io/device-recovery-lab/)**
-— no installation. The viewer displays real saved API snapshots. Run the local
-lab below to execute the processes and inject your own failures.
+[![Recorded lost-response experiment: the locker has opened once while the service remains uncertain and queries its journal.](docs/experiment-workbench.png)](https://b8z.github.io/device-recovery-lab/)
 
-![A real run: the service is uncertain while the simulated device is open after one actuator pulse](docs/demo-uncertain.png)
+*The illustration follows real saved API snapshots from the simulator. It is not
+physical hardware. The diagnostic instrument shows what happened; the service
+must obtain completion evidence through the controller protocol.*
 
-*The device panel is diagnostic instrumentation. My recovery service must query
-the device journal; it cannot use this panel as completion evidence.*
+## Break a specific assumption
 
-## Start with three communication failures
+| Condition | Expected behavior | Evidence to inspect |
+| --- | --- | --- |
+| Duplicate command | Same ID returns the existing operation; no second pulse | Duplicate suppression and one physical-action event |
+| Completion response lost | Preserve uncertainty; query before considering a resend | One send, another journal query, one pulse |
+| Device disconnected | Bounded backoff; reconcile after reconnect | Missing journal permits sending the same immutable command |
+| Controller dies before or after its pulse | Both incomplete journals become `IN_DOUBT`; require inspection | Zero versus one pulse, neither inferred from receipt |
+| Service dies during an outstanding response | Abandoned ownership expires; successor reconciles | Real process kill, preserved journal, one pulse |
+| Many queued operations with external faults | Isolate blocked work with bounded concurrency | Matched one/four-worker workloads and every raw observation |
 
-| Inject a failure | What to inspect |
-| --- | --- |
-| **Duplicate command** | Two deliveries share one command ID. The controller suppresses the duplicate and records one pulse. |
-| **Lost acknowledgment** | The device acts, then its completion response is dropped. The service enters UNCERTAIN and reconciles from the journal without resending. |
-| **Disconnected device** | The service backs off while the device remains closed. Restore the link and watch it query the journal before retrying the same command. |
+Receiving a message is not completing a physical action. If the controller dies
+between acting and recording completion, a retry could repeat an action and a
+success claim could invent one. I keep that uncertainty explicit.
 
-## Then break the assumption that permits recovery
+[![Two actual controller crashes leave the same IN_DOUBT record with different pulse counts.](docs/crash-boundary.png)](https://b8z.github.io/device-recovery-lab/#boundary)
 
-**What if the controller dies between applying a pulse and recording completion?**
-I terminate the actual controller process just before or just after the pulse.
-After restart, both journals say `IN_DOUBT`, but the diagnostic instrument shows
-zero pulses in one run and one in the other. The service stops at
-`NEEDS_INSPECTION` because neither a retry nor a success claim follows from that evidence.
+## What makes the concurrent recovery work
 
-[![Actual captured crash runs: the same IN_DOUBT journal state with zero versus one physical pulses](docs/crash-boundary.png)](https://b8z.github.io/device-recovery-lab/#crash_after)
+The service persists intent before I/O. Workers claim durable queue entries with
+an owner token, lease expiry, and incremented epoch. Every worker state/event write
+checks that ownership in the same transaction, so an expired worker cannot
+regress the journal or release its successor's claim. The controller still needs
+durable duplicate suppression: a lease cannot cancel a network request already sent.
 
-**[Inspect the crash comparison](https://b8z.github.io/device-recovery-lab/#boundary)**
-· [Read my reasoning](docs/crash-boundary.md)
-· [Check the actual process-exit tests](tests/test_crash_boundary.py)
+The workload uses a separate HTTP proxy to delay, drop, and duplicate traffic.
+The service and controller do not choose their own faults. A separate observer
+checks physical-action, completion-report, and service-decision evidence.
 
-<details>
-<summary>See a complete captured run and its recovery timeline</summary>
+A deliberately broken worker that declares completion without querying the
+controller is retained as a **negative test**. The experiment must reject it.
+This checks the acceptance oracle itself, rather than accepting a green status.
 
-![Actual local run: lost completion acknowledgment, one actuator pulse, and successful journal reconciliation](docs/demo-lost-ack.png)
+**Open the implementation:**
 
-My browser tests captured these screenshots from the running lab. The timeline
-follows the lost acknowledgment through uncertainty to journal reconciliation.
+- [Behavior contract](docs/behavior.md) and [concurrency contract](docs/workload-contract.md): independently defined outcomes.
+- [Recovery controller](lab/service.py): journal-first recovery, claims, epochs, fenced writes and bounded retry budgets.
+- [Ownership tests](tests/test_ownership.py): competing claims, stale owners, stale snapshots and existing-journal migration.
+- [External fault tests](tests/test_external_faults.py): real transport faults, actual service termination and the deliberately broken worker.
+- [Controller crash tests](tests/test_crash_boundary.py): physical uncertainty that automatic retries cannot resolve.
+- [Experiment script](scripts/workload.py): matched workloads, retained failures and reproducible observations.
 
-</details>
+## What I measured
 
-**Inspect the [behavior contract](docs/behavior.md), [recovery code](lab/service.py),
-or [recorded experiments](measurements/README.md).** The contract defines the
-expected outcomes independently of the implementation.
+At source `80215b81d2ae2ab61b67a8eb289692c09ead875b`, all **864 measured
+operations in 36 batches** passed the recorded correctness checks. Each batch
+contained 24 operations. I compared one and four workers using three seeds and
+three timing repetitions under both clean and mixed-fault workloads.
+
+For mixed faults, median batch completion was **5.916 s with one worker and
+2.775 s with four**. Four workers finished faster in eight of nine matched pairs;
+the exception took **8.009 s versus 5.857 s**. I retain that run and do not claim
+a consistent speedup. These are finite, single-host observations that include
+queue waiting and intentional delays, not production latency or fleet capacity.
+
+[**Inspect the completion curves and the slower run →**](https://b8z.github.io/device-recovery-lab/#workload)
+
+The [method and full results](docs/workload.md) specify environment, timing
+boundaries, seeds, warmup, repetitions, aggregation and limitations.
+[Raw data](measurements/concurrency.json) retains every operation and proxy event.
+The earlier [four-scenario experiment](measurements/README.md) remains attached
+to its original source revision; I have not relabeled it as a new measurement.
 
 ## Run it
 
@@ -67,108 +90,67 @@ cd device-recovery-lab
 python run.py
 ```
 
-Open **http://127.0.0.1:8765**. If your system calls Python `python3`, use that
-command instead; Windows also supports `py -3 run.py`.
+Open **http://127.0.0.1:8765**. Use `python3` if that is your Python command;
+Windows also supports `py -3 run.py`.
 
-1. Start **Healthy delivery** and select **Request release**. Inspect the receipt,
-   later physical pulse, and completed journal evidence.
-2. Select **Lost acknowledgment**, request another release, and inspect the
-   `ACK DROPPED → OUTCOME UNCERTAIN → RECONCILED` sequence. The pulse count stays one.
+1. Select **Healthy delivery**, then **Request release**. Receipt precedes the
+   physical pulse and confirmed completion.
+2. Select **Lost acknowledgment** and request another release. Inspect uncertainty,
+   reconciliation and the unchanged pulse count of one.
 3. Select **Disconnected device**, request release, then **Reconnect device**.
-   Leaving it disconnected eventually pauses automatic recovery; reconnect also
-   resumes reconciliation.
-4. Compare **Crash before pulse** with **Crash after pulse**. The launcher restarts
-   the device process; both runs require inspection, with zero and one pulses
-   respectively. The ordinary resume action cannot supply missing evidence.
-5. Use **Export evidence JSON** or **Recent run** to inspect and compare runs.
+4. Compare **Crash before pulse** and **Crash after pulse**. The launcher restarts
+   the controller; both runs require inspection, with zero and one pulses.
+5. Use **Export evidence JSON** or **Recent run** to inspect previous observations.
 
-Stop both processes with Ctrl+C. Journals persist in `.lab/` (ignored by Git).
-For a fresh session use `python run.py --data-dir .lab/fresh`. Busy ports can be
-changed with `--port 8875 --device-port 8876`. Only loopback connections are served.
-
-## How I designed it
-
-I chose two Python processes with separate SQLite journals so a visitor can
-inspect process boundaries and persistent recovery state without installing a
-broker. The service records its intent before I/O. If the outcome is uncertain,
-it queries the device journal using the same command ID before considering a
-resend. On the device side, that ID ties duplicate deliveries to the same action.
-
-Java/Spring Boot and Kafka are part of my professional background, but a broker
-would add setup without resolving the question this experiment asks: did the
-physical action complete? I describe the tradeoffs and a possible later transport
-experiment in the [architecture decision](docs/architecture.md).
-
-```text
-Browser → service + intent journal → HTTP → simulated device + execution journal
-               ↓ recovery queries                     ↓ delayed release pulse
-            event timeline ← receipt / completion / injected faults
-```
-
-The service has one recovery worker; the device has a separate execution worker
-and database. Each run uses one fresh synthetic locker and one release command.
-
-### Where to inspect my implementation
-
-- [Behavior contract](docs/behavior.md): expected outcomes written before implementation.
-- [Recovery controller](lab/service.py): durable intent before I/O, bounded backoff,
-  ambiguous outcomes, journal-first retries and explicit attention state.
-- [Device journal](lab/device.py): asynchronous receipt versus execution, durable
-  duplicate suppression, an actual dropped HTTP response, and abrupt process exit
-  before completion is journaled.
-- [Crash-boundary tests](tests/test_crash_boundary.py): distinguish a lost response
-  from missing physical evidence; demonstrate when recovery must stop.
-- [Acceptance tests](tests/test_recovery.py): pulse-count invariants, restarts,
-  conflicts, concurrent requests, failure budgets and HTTP boundaries.
-- [Architecture and alternatives](docs/architecture.md): why this slice uses two
-  Python processes, HTTP and SQLite instead of requiring Spring/Kafka.
-- [Verification guide](docs/testing.md) and [reproducible observations](measurements/README.md).
-
-## Tests and measurements
+The default is four recovery workers; use `--workers 1` for a single worker.
+Stop with Ctrl+C. Journals persist in the ignored `.lab/` directory. Use
+`--data-dir .lab/fresh` for a fresh session and `--port 8875 --device-port 8876`
+if the default ports are occupied. Servers bind only to loopback.
 
 ```sh
 python -m unittest -v
+python scripts/workload.py --check
+python scripts/workload.py --output .verify/my-workload.json
 ```
 
-I check correctness with 16 Python tests and eight live Playwright browser tests,
-including duplicate suppression, process restarts, recovery budgets, and the
-visible user journey. The browser checks are optional; setup and coverage are in
-[docs/testing.md](docs/testing.md).
+The first two commands check correctness. The last runs the full experiment from
+a clean checkout and records the tested commit; allow several minutes.
+Optional browser verification and clean-environment evidence are in
+[the testing guide](docs/testing.md).
 
-Separately, I measure whether each failure adds command sends, journal queries,
-or actuator pulses compared with healthy delivery. My measurement script also
-records local end-to-end observation times under the same settings for all four
-scenarios. The raw data includes the tested commit and environment. Timings
-include polling and intentional fault delays, so I don’t treat them as production
-latency measurements.
+## Architecture and limits
 
-In my [October 3, 2026 recorded run](measurements/README.md#recorded-run--october-3-2026),
-all 32 measured trials (eight per scenario) completed with one simulated actuator
-pulse each. Lost-ack trials added a journal query without a second command send.
-I retain the raw observations, warmups, configuration, and variability so the
-result can be inspected and repeated. This finite sample supports these settings;
-it does not establish a universal execution guarantee.
+```text
+Browser → service + durable queue → HTTP → controller + execution journal
+                    ↓                             ↓
+          owned recovery workers             simulated pulse
 
-## Limits and next questions
+Workload experiment inserts a separate fault proxy at the HTTP boundary.
+The observer reads retained evidence; it cannot authorize service completion.
+```
 
-**Receiving a message is not completing a physical action.** The four messaging
-cases commit their simulated pulse and completion together. The two crash cases
-deliberately separate the action from the completion record, then demonstrate
-why unresolved execution requires independent inspection. They do not implement
-a sensor or an operator-resolution workflow. I don’t claim exactly-once physical
-execution, power-loss safety, or resilience to controller journal loss.
+I use Python and separate SQLite journals to expose process boundaries and
+persistent state with little setup. Java/Spring Boot and Kafka are part of my
+professional background. Adding a broker here would introduce another delivery
+layer without resolving the physical-action boundary. The
+[architecture decisions](docs/architecture.md) explain that choice and alternatives.
 
-Completed here: three communication failures, two actual process-crash boundaries,
-a healthy baseline, restartable journals, bounded recovery, visible evidence,
-automated acceptance and browser checks.
-Future experiments, **not implemented**: independent physical resolution,
-controller storage loss, multiple devices/controllers, and alternative broker transports.
+Completed: six inspectable workflows, real process-crash tests, durable worker
+ownership, externally injected faults, matched workload measurements and browser
+verification. The public viewer plays captured output; the local interface runs
+the actual processes.
 
-I created this independent personal demonstration with synthetic data in October
-2026. It contains no employer code, interfaces, or incident reconstructions, and
-I haven’t deployed it as a production system. I used AI tools during development;
-the published contract, executable checks, and recorded observations make the
-result inspectable.
+Not implemented: physical sensing or operator resolution, controller storage-loss
+recovery, sustained admission/backpressure, multi-host coordination, clock-jump
+handling, or broker transport. Every operation uses a fresh synthetic locker;
+this does not model conflicting actions on the same physical device. I make no
+exactly-once physical execution, power-loss safety or production deployment claim.
 
-MIT licensed. Runtime uses the Python standard library; optional browser tests
-use Playwright (Apache-2.0). See [LICENSE](LICENSE).
+This is independent personal work created in October 2026 with synthetic data.
+It contains no employer code, interfaces, or incident reconstructions. I used AI
+assistance during development; the contracts, tests, source and raw observations
+make the result inspectable.
+
+MIT licensed. The viewer uses Manrope under SIL OFL 1.1; optional browser tests use
+Playwright under Apache-2.0. See [LICENSE](LICENSE) and
+[third-party notices](THIRD_PARTY_NOTICES.md).

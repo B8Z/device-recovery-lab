@@ -18,7 +18,8 @@ flowchart LR
     UI -. diagnostic view through service API .-> D
 ```
 
-The service's `runs` table is a durable work queue. A single worker owns dispatch.
+The service's `runs` table is a durable work queue. The original release used one
+worker; ADR-003 below adds bounded concurrent ownership (four workers by default).
 It commits dispatch intent **before** sending. After a crash it queries the
 controller by the same ID before deciding whether to resend. Only an explicit
 absent-journal response allows redispatch. SQLite uniqueness constraints and
@@ -68,7 +69,7 @@ the need for the controller journal, reconciliation, and ambiguous-outcome polic
 
 ## Boundaries and consequences
 
-- One service worker and one simulated controller; no leader election, failover,
+- One service process and one simulated controller; no leader election, failover,
   multi-host clocks, message broker, high availability or throughput claim.
 - Persistence covers process restart, not controller storage loss. An empty
   replacement journal could authorize an unsafe repeat on real hardware.
@@ -131,3 +132,32 @@ on-disk recovery. I also considered automatic reconciliation from the diagnostic
 counter, but that would give the controller an observation the modeled device
 protocol does not supply. Both would hide the uncertainty this experiment needs
 to expose. See the [walkthrough and limits](crash-boundary.md).
+
+# ADR-003: Bound concurrency and fence stale journal writes
+
+**Status:** Accepted · **Date:** October 3, 2026 · **Owner:** Adam Bates
+
+One blocked network call delays unrelated work with a single synchronous worker.
+I added a configurable pool of one to sixteen recovery workers, defaulting to
+four, while keeping the durable queue and protocol. A worker claims an operation
+with a conditional transaction that checks its epoch, readiness, and lease expiry.
+Every worker update checks its unexpired owner token in the same transaction as
+the state and event writes. A late result cannot overwrite a successor's decision.
+
+A thread lock would coordinate only the current process; it would not describe
+abandoned work after a crash. A broker would add delivery infrastructure without
+removing stale ownership or the physical-action boundary. An async HTTP rewrite
+could avoid blocking threads, but would change more of the baseline and still
+need durable ownership. I chose a small worker pool to isolate this question.
+
+The lease protects service-journal mutations. It cannot stop an already-issued
+network request, so device-side duplicate suppression remains necessary. This
+is not a multi-host lease service. Schema additions preserve existing operations;
+the migration is idempotent and tested against the previous table definition.
+
+A separate fault proxy supplies the workload's delays, dropped requests,
+dropped replies, and duplicate delivery. Both worker counts receive the same
+seeded inputs. The [experiment](workload.md) retains raw observations and the
+slower four-worker outlier alongside the median improvement. I have not tested
+sustained admission, fairness across devices, rate limits, lease renewal,
+multi-host clocks, controller journal loss, or physical inspection resolution.

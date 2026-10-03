@@ -107,3 +107,42 @@ comparison, keyboard stepping, playback and mobile layout. Screenshots were
 captured from the rendered viewer. The mobile timeline reserves space for the
 new `instrument` event source. These captures are correctness evidence; the
 original four-scenario timing data remains attached to its original revision.
+
+## Concurrent recovery and redesigned viewer — October 3, 2026
+
+Runtime source `80215b81d2ae2ab61b67a8eb289692c09ead875b` passed all **23 Python
+checks** in a fresh local clone and a new Python 3.12.14 virtual environment with
+no third-party runtime packages. The documented launcher ran from that clean
+checkout on ports 8870/8871. All **eight live Playwright journeys** passed against
+it with four recovery workers. The browser runner used the existing Playwright
+1.63.0 / Chromium 153.0.8010.12 installation outside the clone.
+
+New checks cover competing claims, expired owners, stale candidate epochs,
+existing-journal migration, an externally injected fault matrix, a service process
+killed during an outstanding response, and rejection of a deliberately broken
+worker that invents completion without a journal query. See
+[the workload contract](workload-contract.md) and [experiment method](workload.md).
+
+The full measurement ran from that same clean runtime source. A separate review
+reconstructed the seeded inputs, paired identities, fault counts, completion
+ordering and aggregate statistics from the retained raw data. All 36 measured
+batches and both warmups are present. Correctness verification and performance
+observations remain separate; passing these checks does not establish an
+execution guarantee outside the tested model.
+
+The redesigned static viewer has **three browser tests** covering all six
+captured outcomes, keyboard stepping and playback, all 18 workload pairs,
+the slower four-worker run, and layouts at 1440, 768, 720, 390 and 320 CSS pixels.
+The 720-pixel case checks the reflow width corresponding to a 1440-pixel window
+at 200% zoom; it does not control a browser's native zoom setting. Reduced-motion
+preference is included. Charts use line patterns as well as color and expose
+numeric results and accessible summaries.
+
+Fresh screenshots were visually inspected. Review caught unreadably small mobile
+evidence labels; the mobile layout now stacks scenarios and crash comparisons
+and uses 12–14px core evidence text. The scope includes keyboard, layout and
+visual checks, not a full screen-reader or WCAG certification audit.
+
+`demo/traces.json` now contains six fresh captures at this runtime revision.
+The device illustration follows those snapshots. The workload chart is derived
+from the retained measurement file; its source hash uses normalized Git LF bytes.

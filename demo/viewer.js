@@ -43,6 +43,23 @@ function render() {
   $("sends").textContent = v.sends;
   $("checks").textContent = v.checks;
   $("pulses").textContent = v.device?.pulses ?? "—";
+  $("apparatus").classList.toggle("is-open", Boolean(v.device?.pulses));
+  $("apparatus").classList.toggle("is-unknown", !v.device);
+  $("apparatus").classList.toggle("is-offline", v.device?.online === false);
+  $("run-label").textContent = v.id.slice(0, 8).toUpperCase();
+  $("journal-state").textContent = {
+    QUEUED: "NOT YET OBSERVED",
+    ACCEPTED: "RECEIVED",
+    UNCERTAIN: "RESPONSE UNAVAILABLE",
+    COMPLETED: "COMPLETED",
+    NEEDS_INSPECTION: "IN_DOUBT",
+    NEEDS_ATTENTION: "NO FINAL EVIDENCE",
+  }[v.state];
+  $("state").style.color = v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
+  $("status-marker").style.background =
+    v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
+  $("event-count").textContent =
+    `${v.events.length} OBSERVATIONS / ELAPSED · SOURCE · EVIDENCE`;
   $("explanation").textContent = explanations[v.state];
   $("previous").disabled = frame === 0;
   $("next").disabled = frame === trace.frames.length - 1;
@@ -127,7 +144,7 @@ for (const b of document.querySelectorAll("[data-scenario]"))
     if (data) {
       choose(b.dataset.scenario);
       if (b.closest(".boundary"))
-        document.querySelector(".controls").scrollIntoView({ block: "center" });
+        $("experiment").scrollIntoView({ block: "start" });
     }
   });
 document.addEventListener("visibilitychange", () => {

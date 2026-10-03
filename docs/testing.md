@@ -164,3 +164,8 @@ outcome beside the primary button makes completion visible on phones.
 
 The redesigned screenshots were captured from the rendered viewer. Runtime code,
 retained traces and measurement data are unchanged by this presentation revision.
+
+The page versions its stylesheet and scripts by normalized source content so an
+existing browser tab does not retain an older layout after a deployment. After
+editing viewer assets, run `python scripts/version_viewer_assets.py`. The browser
+CI job checks those references before running the visitor journeys.

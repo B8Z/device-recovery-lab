@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1] / "demo"
 page = ROOT / "index.html"
 original = page.read_text(encoding="utf-8")
 updated = original
-for asset in ("style.css", "viewer.js", "workload.js"):
+for asset in ("style.css", "instrument.css", "viewer.js", "workload.js"):
     source = (ROOT / asset).read_bytes().replace(b"\r\n", b"\n")
     version = hashlib.sha256(source).hexdigest()[:12]
     pattern = rf'((?:href|src)="){re.escape(asset)}(?:\?v=[a-f0-9]+)?(")'

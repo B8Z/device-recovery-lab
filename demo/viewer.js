@@ -2,7 +2,8 @@ const $ = (id) => document.getElementById(id);
 let data,
   trace,
   frame = 0,
-  timer;
+  timer,
+  paused = false;
 const cases = {
   lost_ack: [
     "The door opened.",
@@ -52,11 +53,80 @@ const explanations = {
 function stop() {
   clearInterval(timer);
   timer = null;
+  paused = false;
   $("play").textContent = "Play capture";
   $("resolve").disabled = !trace;
   $("resolve").firstChild.textContent = trace?.scenario.startsWith("crash_")
     ? "See why it stops "
-    : "Watch recovery ";
+    : "Replay the sequence ";
+}
+function pause() {
+  clearInterval(timer);
+  timer = null;
+  paused = true;
+  $("play").textContent = "Resume capture";
+  $("resolve").firstChild.textContent = "Resume sequence ";
+}
+// Describe newly retained evidence, not invented intermediate device states.
+const eventLabels = [
+  ["PHYSICAL_OUTCOME_UNRESOLVED", "Inspection required"],
+  ["RECONCILED", "Outcome reconciled"],
+  ["COMPLETION_CONFIRMED", "Completion confirmed"],
+  ["ACK_DROPPED", "Reply lost"],
+  ["JOURNAL_ABSENT", "No device record"],
+  ["LINK_RECONNECTED", "Link restored"],
+  ["DELIVERY_BLOCKED", "Delivery blocked"],
+  ["DUPLICATE_SUPPRESSED", "Duplicate suppressed"],
+  ["CONTROLLER_RESTARTED", "Controller restarted"],
+  ["PHYSICAL_ACTION_PERFORMED", "Device acted"],
+  ["RECEIPT_ACKNOWLEDGED", "Receipt acknowledged"],
+  ["COMPLETION_REPORTED", "Completion reported"],
+  ["COMPLETION_QUERY", "Completion queried"],
+  ["RECONCILIATION_QUERY", "Journal queried"],
+  ["COMMAND_RECEIVED", "Command received"],
+  ["REQUEST_PERSISTED", "Request saved"],
+];
+function sequenceLabel(index) {
+  // Later snapshots can insert events earlier in timestamp order.
+  const previous = new Set(
+    index
+      ? trace.frames[index - 1].snapshot.events.map((event) =>
+          JSON.stringify(event),
+        )
+      : [],
+  );
+  const newEvents = new Set(
+    trace.frames[index].snapshot.events
+      .filter((event) => !previous.has(JSON.stringify(event)))
+      .map((event) => event.kind),
+  );
+  return (
+    eventLabels.find(([kind]) => newEvents.has(kind))?.[1] ||
+    trace.frames[index].snapshot.state.replaceAll("_", " ")
+  );
+}
+function buildSequence() {
+  $("sequence").replaceChildren(
+    ...trace.frames.map((captured, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.frame = index;
+      const number = document.createElement("span");
+      number.className = "sequence-number";
+      number.textContent = String(index + 1).padStart(2, "0");
+      const title = document.createElement("strong");
+      title.textContent = sequenceLabel(index);
+      const time = document.createElement("small");
+      time.textContent = `+${captured.observed_seconds.toFixed(2)} s`;
+      button.append(number, title, time);
+      button.addEventListener("click", () => {
+        stop();
+        frame = index;
+        render();
+      });
+      return button;
+    }),
+  );
 }
 function render() {
   const captured = trace.frames[frame],
@@ -64,6 +134,23 @@ function render() {
   $("frame").value = frame;
   $("position").textContent =
     `${frame + 1}/${trace.frames.length} · +${captured.observed_seconds.toFixed(2)}s`;
+  $("sequence-position").textContent =
+    `Snapshot ${frame + 1} of ${trace.frames.length}`;
+  for (const button of $("sequence").children) {
+    const index = Number(button.dataset.frame);
+    button.setAttribute("aria-pressed", String(index === frame));
+    button.classList.toggle("observed", index < frame);
+    if (index === frame) {
+      const sequence = $("sequence"),
+        left = button.offsetLeft;
+      if (left < sequence.scrollLeft) sequence.scrollLeft = left;
+      else if (
+        left + button.offsetWidth >
+        sequence.scrollLeft + sequence.clientWidth
+      )
+        sequence.scrollLeft = left + button.offsetWidth - sequence.clientWidth;
+    }
+  }
   $("state").textContent = v.state.replaceAll("_", " ");
   document.querySelector(".experiment-console").dataset.state = v.state;
   $("decision-title").textContent = {
@@ -164,20 +251,12 @@ function choose(scenario) {
   trace = data.traces.find((t) => t.scenario === scenario);
   $("resolve").firstChild.textContent = scenario.startsWith("crash_")
     ? "See why it stops "
-    : "Watch recovery ";
+    : "Replay the sequence ";
   const [first, second, description] = cases[scenario];
   $("case-title").textContent = `${first} ${second}`;
   $("hero-description").textContent = description;
-  document.querySelector(".case-number").textContent = String(
-    [
-      "lost_ack",
-      "duplicate",
-      "disconnected",
-      "crash_before",
-      "crash_after",
-      "healthy",
-    ].indexOf(scenario) + 1,
-  ).padStart(2, "0");
+  $("scenario-picker").value = scenario;
+  $("scenario-picker").disabled = false;
   frame =
     scenario === "lost_ack"
       ? trace.frames.findIndex(
@@ -191,24 +270,18 @@ function choose(scenario) {
   $("frame").max = trace.frames.length - 1;
   for (const b of document.querySelectorAll("[data-scenario][aria-pressed]"))
     b.setAttribute("aria-pressed", String(b.dataset.scenario === scenario));
+  buildSequence();
   render();
 }
 $("resolve").addEventListener("click", () => {
   if (!trace) return;
   if (timer) {
-    stop();
+    pause();
     return;
   }
-  // The guided opening starts with the ambiguity, then shows captured recovery.
-  // Other cases replay from their first retained observation.
-  frame =
-    trace.scenario === "lost_ack"
-      ? trace.frames.findIndex(
-          (f) =>
-            f.snapshot.state === "UNCERTAIN" && f.snapshot.device?.pulses === 1,
-        )
-      : 0;
-  if (frame < 0) frame = 0;
+  // Start at the first retained observation, including receipt before action.
+  if (!paused) frame = 0;
+  paused = false;
   render();
   $("resolve").firstChild.textContent = "Pause replay ";
   $("play").textContent = "Pause capture";
@@ -219,7 +292,11 @@ $("resolve").addEventListener("click", () => {
     }
     frame++;
     render();
+    if (frame === trace.frames.length - 1) stop();
   }, 1400);
+});
+$("scenario-picker").addEventListener("change", (event) => {
+  if (data) choose(event.target.value);
 });
 function showScene() {
   $("case-title").focus({ preventScroll: true });
@@ -247,10 +324,11 @@ for (const [id, direction] of [
 $("play").addEventListener("click", () => {
   if (!trace) return;
   if (timer) {
-    stop();
+    pause();
     return;
   }
-  frame = 0;
+  if (!paused) frame = 0;
+  paused = false;
   render();
   $("play").textContent = "Pause capture";
   $("resolve").firstChild.textContent = "Pause replay ";
@@ -263,6 +341,7 @@ $("play").addEventListener("click", () => {
     }
     frame++;
     render();
+    if (frame === trace.frames.length - 1) stop();
   }, 700);
 });
 for (const b of document.querySelectorAll("[data-scenario]"))
@@ -273,7 +352,7 @@ for (const b of document.querySelectorAll("[data-scenario]"))
     }
   });
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) stop();
+  if (document.hidden && timer) pause();
 });
 (async () => {
   try {

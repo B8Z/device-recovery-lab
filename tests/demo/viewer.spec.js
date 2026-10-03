@@ -1,11 +1,49 @@
 const { test, expect } = require("@playwright/test");
 
+test("the opening sequence distinguishes receipt, action and completion evidence", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator("#scenario-picker")).toHaveValue("lost_ack");
+  await expect(page.locator("#sequence button")).toHaveCount(5);
+  for (const [index, state, pulses, label] of [
+    [1, "ACCEPTED", "0", "Receipt acknowledged"],
+    [2, "ACCEPTED", "1", "Device acted"],
+    [3, "UNCERTAIN", "1", "Reply lost"],
+    [4, "COMPLETED", "1", "Outcome reconciled"],
+  ]) {
+    const step = page.locator(`#sequence [data-frame="${index}"]`);
+    await expect(step).toContainText(label);
+    await step.click();
+    await expect(step).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("#state")).toHaveText(state);
+    await expect(page.locator("#pulses")).toHaveText(pulses);
+  }
+  await page.locator("#scenario-picker").selectOption("crash_after");
+  // A completion query was inserted before the already observed restart.
+  await expect(page.locator('#sequence [data-frame="3"]')).toContainText(
+    "Completion queried",
+  );
+  await expect(page.locator("#state")).toHaveText("NEEDS INSPECTION");
+  await page.locator("#scenario-picker").selectOption("lost_ack");
+  await page.locator("#resolve").click();
+  await expect(page.locator("#frame")).toHaveValue("1");
+  await page.locator("#resolve").click();
+  await expect(page.locator("#resolve")).toContainText("Resume sequence");
+  await page.locator("#resolve").click();
+  await expect(page.locator("#frame")).toHaveValue("1");
+  await expect(page.locator("#state")).toHaveText("COMPLETED", {
+    timeout: 10000,
+  });
+  await expect(page.locator("#resolve")).toContainText("Replay the sequence");
+});
+
 test("the opening explains the disagreement and shows recovery without another action", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.locator("main #hero-title")).toContainText(
-    "Device recovery is",
+    "A timeout can hide",
   );
   await expect(page.locator("#case-title")).toHaveText(
     "The door opened. The reply didn’t.",
@@ -59,7 +97,7 @@ test("the opening explains the disagreement and shows recovery without another a
   await expect(page.locator("#decision-title")).toHaveText(
     "The service must stop.",
   );
-  await expect(page.locator("#hero-title")).toContainText("Device recovery is");
+  await expect(page.locator("#hero-title")).toContainText("A timeout can hide");
 });
 
 test("captured uncertainty and every recovery path remain inspectable", async ({
@@ -117,7 +155,7 @@ test("captured uncertainty and every recovery path remain inspectable", async ({
   await page.locator("#play").click();
   await expect(page.locator("#play")).toHaveText("Pause capture");
   await page.locator("#play").click();
-  await expect(page.locator("#play")).toHaveText("Play capture");
+  await expect(page.locator("#play")).toHaveText("Resume capture");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('.scenarios [data-scenario="crash_after"]').click();
   await expect(page.locator("#state")).toHaveText("NEEDS INSPECTION");

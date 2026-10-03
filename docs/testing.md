@@ -184,3 +184,24 @@ on phones. Selecting another case focuses its heading, then keyboard navigation
 reaches the replay action. An independent review checked the rendered opening,
 state explanations and mobile disclosure. The existing six captured workflows,
 18 measured workload pairs, slower-run link and raw-data provenance are retained.
+
+## Inspectable sequence — October 3, 2026
+
+The opening now provides a case selector and a button for every retained
+snapshot. Each label highlights newly observed evidence; a snapshot can contain
+several events. The labels compare event identities because later observations
+can insert events earlier in timestamp order. The full event list remains
+available in the explorer.
+
+Guided replay starts at the first saved snapshot and advances every 1,400 ms.
+Pause and resume preserve the current snapshot. The deeper explorer uses 700 ms.
+Neither interval is a new measurement. Selecting a case loads its existing
+capture; it does not inject a live fault from the hosted page.
+
+Five static browser tests cover the additional controls. The sequence check
+independently distinguishes receipt with zero actions, receipt after one action,
+uncertainty after the lost reply, and reconciliation with that same action count.
+It also checks a late-arriving completion-query event, pause/resume, and replay
+completion. The existing scenario, workload, keyboard and viewport checks remain.
+The discrete device illustration changes directly with the selected snapshot,
+so its image and action count agree on initial load and while seeking.

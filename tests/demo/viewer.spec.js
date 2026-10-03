@@ -1,5 +1,50 @@
 const { test, expect } = require("@playwright/test");
 
+test("the opening explains the disagreement and shows recovery without another action", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator("main #hero-title")).toContainText(
+    "The door opened.",
+  );
+  await expect(page.locator("#guided-result")).toHaveText(
+    "Unconfirmed · 1 action",
+  );
+  await expect(page.locator("#service-brief")).toHaveText("No confirmation");
+  for (const viewport of [
+    { width: 1366, height: 900 },
+    { width: 390, height: 844 },
+    { width: 375, height: 812 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const action = await page.locator("#resolve").boundingBox();
+    const physical = await page.locator("#physical").boundingBox();
+    expect(action.y + action.height).toBeLessThanOrEqual(viewport.height);
+    expect(physical.y + physical.height).toBeLessThanOrEqual(viewport.height);
+  }
+  await page.locator("#resolve").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#state")).toHaveText("COMPLETED", {
+    timeout: 12000,
+  });
+  await expect(page.locator("#guided-result")).toHaveText(
+    "Confirmed · 1 action",
+  );
+  await expect(page.locator("#sends")).toHaveText("1");
+  await expect(page.locator("#pulses")).toHaveText("1");
+  await expect(page.locator("#service-brief")).toHaveText(
+    "Completion confirmed",
+  );
+  await page.locator('.scenarios [data-scenario="crash_after"]').click();
+  await expect(page.locator("#hero-title")).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(page.locator("#resolve")).toBeFocused();
+  await expect(page.locator("#guided-result")).toHaveText(
+    "Inspection required · 1 action",
+  );
+  await expect(page.locator("#resolve")).toContainText("See why it stops");
+});
+
 test("captured uncertainty and every recovery path remain inspectable", async ({
   page,
 }) => {

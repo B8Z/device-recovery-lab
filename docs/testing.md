@@ -146,3 +146,20 @@ visual checks, not a full screen-reader or WCAG certification audit.
 `demo/traces.json` now contains six fresh captures at this runtime revision.
 The device illustration follows those snapshots. The workload chart is derived
 from the retained measurement file; its source hash uses normalized Git LF bytes.
+
+## Guided opening — October 3, 2026
+
+The opening now starts with the captured lost-response ambiguity and offers a
+guided replay. That replay advances retained snapshots every 1,400 ms; the deeper
+explorer still uses 700 ms. Neither interval represents elapsed process time.
+The device drawing, displayed outcome and counters all use the same snapshot.
+
+Four static browser tests pass, including a new journey that checks the opening's
+action and physical-state readout fit within 1366×900, 390×844 and 375×812 viewports.
+It activates recovery by keyboard, verifies confirmation with one command send
+and one physical action, then changes to a controller-crash case and checks focus
+reaches the new replay action. The hero is inside the main landmark, and a compact
+outcome beside the primary button makes completion visible on phones.
+
+The redesigned screenshots were captured from the rendered viewer. Runtime code,
+retained traces and measurement data are unchanged by this presentation revision.

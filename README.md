@@ -7,7 +7,7 @@ Request a simulated parcel-locker release, break communication, and inspect the
 service's decision alongside the device's actual recorded behavior. Then compare
 one recovery worker with four under the same independently injected faults.
 
-[**Open the interactive evidence →**](https://b8z.github.io/device-recovery-lab/)
+[**Watch the recovery →**](https://b8z.github.io/device-recovery-lab/)
 · [Run the processes locally](#run-it) · [Read the controlled experiment](docs/workload.md)
 
 [![Recorded lost-response experiment: the locker has opened once while the service remains uncertain and queries its journal.](docs/experiment-workbench.png)](https://b8z.github.io/device-recovery-lab/)

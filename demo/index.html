@@ -6,7 +6,7 @@
     <title>Device Recovery Lab — Adam Bates</title>
     <meta
       name="description"
-      content="An engineering experiment in device recovery: inspect real process failures, durable ownership, and controlled concurrent workloads."
+      content="The door opened. The reply didn’t. Explore how Adam Bates built a recovery service that checks device evidence before retrying a physical action."
     />
     <link
       rel="preload"
@@ -19,552 +19,662 @@
   </head>
   <body>
     <a class="skip" href="#experiment">Skip to the experiment</a>
-    <header class="site-header wrap">
-      <a class="brand" href="https://github.com/B8Z"
-        ><span class="brand-mark" aria-hidden="true">ab.</span
-        ><span>ADAM BATES<small>SOFTWARE ENGINEER</small></span></a
-      >
-      <nav aria-label="Main">
-        <a href="#workload">The workload</a><a href="#boundary">The boundary</a
-        ><a
-          class="source-link"
-          href="https://github.com/B8Z/device-recovery-lab"
-          >Source code <span aria-hidden="true">↗</span></a
+    <div class="opening">
+      <header class="site-header wrap">
+        <a class="brand" href="https://github.com/B8Z"
+          ><span class="brand-mark">ab<span>.</span></span
+          ><span>Adam Bates<small>Software engineer</small></span></a
         >
-      </nav>
-    </header>
-    <main class="wrap">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">
-            <span class="orange-square"></span> FIELD NOTES / 01 &nbsp; · &nbsp;
-            SYSTEMS &amp; DEVICES
-          </p>
-          <h1>Did the device<br /><em>actually act?</em></h1>
-        </div>
-        <div class="hero-note">
-          <p>
-            I built this lab to make recovery decisions visible. Follow a
-            command across a process boundary, break the response, and inspect
-            what the service can prove.
-          </p>
-          <a class="text-link" href="#experiment"
-            >Explore the experiment <span aria-hidden="true">↘</span></a
+        <nav aria-label="Main">
+          <a href="#explorer">Failure explorer</a
+          ><a href="#workload">Measurements</a
+          ><a
+            class="source-link"
+            href="https://github.com/B8Z/device-recovery-lab"
+            >View source <span aria-hidden="true">↗</span></a
           >
-          <div class="disciplines">
-            Distributed services <span>/</span> Device integration
-            <span>/</span> Testing
-          </div>
-        </div>
-      </section>
-
-      <section id="experiment" class="workbench" aria-labelledby="lab-title">
-        <div class="bench-heading">
-          <div>
-            <span class="micro">DEVICE RECOVERY LAB</span>
-            <h2 id="lab-title">A release command, under failure.</h2>
-          </div>
-          <span class="recording"><i></i> RECORDED RUN</span>
-        </div>
-        <div class="bench-grid">
-          <aside class="scenario-rail">
-            <p class="micro">01 / SELECT A CONDITION</p>
-            <div class="scenarios" role="group" aria-label="Captured scenario">
-              <button data-scenario="healthy" aria-pressed="false">
-                <span>00</span>
-                <div>
-                  <strong>Healthy delivery</strong
-                  ><small>Establish the baseline</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
-              <button data-scenario="duplicate" aria-pressed="false">
-                <span>01</span>
-                <div>
-                  <strong>Duplicate command</strong
-                  ><small>Same identity, twice</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
-              <button data-scenario="lost_ack" aria-pressed="true">
-                <span>02</span>
-                <div>
-                  <strong>Lost acknowledgment</strong
-                  ><small>Action complete. Reply lost.</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
-              <button data-scenario="disconnected" aria-pressed="false">
-                <span>03</span>
-                <div>
-                  <strong>Disconnected device</strong
-                  ><small>Restore the link</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
-              <button data-scenario="crash_before" aria-pressed="false">
-                <span>04</span>
-                <div>
-                  <strong>Crash before pulse</strong
-                  ><small>Intent without execution</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
-              <button data-scenario="crash_after" aria-pressed="false">
-                <span>05</span>
-                <div>
-                  <strong>Crash after pulse</strong
-                  ><small>Execution without a record</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </button>
+        </nav>
+      </header>
+    </div>
+    <main>
+      <div class="opening">
+        <section id="experiment" class="hero wrap" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="signal-dot"></span> DEVICE RECOVERY LAB
+              <span class="case-number">/ 01</span>
+            </p>
+            <h1 id="hero-title" tabindex="-1">
+              The door opened.<br /><span>The reply didn’t.</span>
+            </h1>
+            <p class="hero-description" id="hero-description">
+              A missing reply doesn’t tell me whether the device acted. I built
+              a recovery service that checks durable device evidence before
+              deciding whether to resend.
+            </p>
+            <div class="hero-actions">
+              <button id="resolve" class="primary" disabled>
+                Watch recovery <span aria-hidden="true">↗</span></button
+              ><span class="replay-disclosure"
+                >Recorded process output<br /><strong
+                  id="guided-result"
+                  role="status"
+                  >Loading evidence.</strong
+                ></span
+              >
             </div>
-          </aside>
-          <div class="apparatus" id="apparatus">
+            <div class="decision-panel" aria-live="polite">
+              <span id="status-marker" class="status-marker"></span>
+              <div>
+                <span class="decision-label">WHAT THE SERVICE KNOWS</span>
+                <h2 id="state">Loading evidence</h2>
+                <p id="explanation"></p>
+                <code id="journal-state"></code>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
             <div class="scene-heading">
-              <span class="micro">02 / PHYSICAL OBSERVATION</span
-              ><span class="micro" id="run-label">LKR—01</span>
+              <span>Service / <b id="service-brief">Loading evidence</b></span
+              ><span class="recording"><i></i> CAPTURED RUN</span>
             </div>
-            <svg
-              id="device-drawing"
-              viewBox="0 0 520 360"
-              role="img"
-              aria-label="Illustration of the simulated parcel locker; its state follows the selected captured snapshot."
-            >
-              <defs>
-                <pattern
-                  id="rig-grid"
-                  width="24"
-                  height="24"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M24 0H0V24"
-                    fill="none"
-                    stroke="#d6e7e1"
-                    stroke-opacity=".055"
-                  />
-                </pattern>
-                <linearGradient id="metal" x2="1" y2="1">
-                  <stop stop-color="#53615d" />
-                  <stop offset="1" stop-color="#283431" />
-                </linearGradient>
-                <linearGradient id="side" x2="1" y2="0">
-                  <stop stop-color="#26332f" />
-                  <stop offset="1" stop-color="#1c2623" />
-                </linearGradient>
-              </defs>
-              <rect width="520" height="360" fill="url(#rig-grid)" />
-              <path
-                d="M20 295L260 350 500 217M85 317L325 184M155 333L395 200M62 245L302 300M133 204L373 259"
-                fill="none"
-                stroke="#a6b6ae"
-                stroke-opacity=".14"
-              />
-              <ellipse
-                cx="280"
-                cy="297"
-                rx="146"
-                ry="31"
-                fill="#000"
-                opacity=".22"
-              />
-              <g stroke="#84968b" stroke-width="1">
-                <path d="M186 62L354 101 410 67 243 30Z" fill="#68786e" />
-                <path d="M354 101L410 67V273L354 307Z" fill="url(#side)" />
-                <path d="M186 62L354 101V307L186 268Z" fill="url(#metal)" />
-                <path
-                  d="M199 87L341 120V288L199 255Z"
-                  fill="#101b17"
-                  stroke="#718477"
+            <div id="apparatus" class="apparatus">
+              <svg
+                id="device-drawing"
+                viewBox="0 0 720 490"
+                role="img"
+                aria-label="A simulated locker and a recovery service connected by separate command and response paths. The illustration follows captured observations."
+              >
+                <defs>
+                  <linearGradient id="front" x1="0" y1="0" x2="1" y2=".6">
+                    <stop stop-color="#c4c9cc" />
+                    <stop offset=".48" stop-color="#969fa5" />
+                    <stop offset="1" stop-color="#59636c" />
+                  </linearGradient>
+                  <linearGradient id="side" x2="1" y2="1">
+                    <stop stop-color="#45515c" />
+                    <stop offset=".55" stop-color="#303944" />
+                    <stop offset="1" stop-color="#171e26" />
+                  </linearGradient>
+                  <linearGradient id="top" x2="1" y2="1">
+                    <stop stop-color="#e0e5e7" />
+                    <stop offset="1" stop-color="#70818a" />
+                  </linearGradient>
+                  <linearGradient id="inside" x2="1" y2="1">
+                    <stop stop-color="#0a1016" />
+                    <stop offset="1" stop-color="#2f3a40" />
+                  </linearGradient>
+                  <linearGradient id="door" x2="1" y2=".7">
+                    <stop stop-color="#87959d" />
+                    <stop offset=".5" stop-color="#d3dadd" />
+                    <stop offset="1" stop-color="#73818b" />
+                  </linearGradient>
+                  <linearGradient id="edge" x2="1" y2="0">
+                    <stop stop-color="#d7e0e4" />
+                    <stop offset=".5" stop-color="#81929c" />
+                    <stop offset="1" stop-color="#394650" />
+                  </linearGradient>
+                  <radialGradient id="ground">
+                    <stop stop-color="#607778" stop-opacity=".2" />
+                    <stop offset="1" stop-color="#607778" stop-opacity="0" />
+                  </radialGradient>
+                  <filter
+                    id="shadow"
+                    x="-40%"
+                    y="-50%"
+                    width="180%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="13" />
+                  </filter>
+                  <pattern
+                    id="floor"
+                    width="60"
+                    height="60"
+                    patternUnits="userSpaceOnUse"
+                    patternTransform="matrix(1 .22 -1 .22 355 328)"
+                  >
+                    <path
+                      d="M60 0H0V60"
+                      stroke="#778b99"
+                      stroke-opacity=".13"
+                      fill="none"
+                    />
+                  </pattern>
+                </defs>
+                <ellipse
+                  cx="470"
+                  cy="386"
+                  rx="233"
+                  ry="103"
+                  fill="url(#ground)"
                 />
                 <path
-                  d="M199 222L279 185 341 199V288L199 255Z"
-                  fill="#192a20"
-                  stroke="#31493a"
+                  d="M145 315L458 227 714 313 418 474Z"
+                  fill="url(#floor)"
                 />
-                <g class="parcel">
-                  <path
-                    d="M229 217L284 189 326 199 271 228Z"
-                    fill="#ccb88a"
-                    stroke="#ded1ac"
-                  />
-                  <path
-                    d="M229 217L271 228V265L229 255Z"
-                    fill="#a89266"
-                    stroke="#ded1ac"
-                  />
-                  <path
-                    d="M271 228L326 199V235L271 265Z"
-                    fill="#877249"
-                    stroke="#bda777"
-                  />
-                  <path
-                    d="M251 206L293 216V252"
-                    fill="none"
-                    stroke="#efdab1"
-                    stroke-width="8"
-                  />
+                <ellipse
+                  cx="472"
+                  cy="397"
+                  rx="140"
+                  ry="23"
+                  fill="#000"
+                  opacity=".6"
+                  filter="url(#shadow)"
+                />
+                <path d="M190 173H258L326 196" class="command-wire" />
+                <path d="M326 288L260 320H190" class="return-wire" />
+                <g class="wire-caption">
+                  <text x="203" y="155">COMMAND →</text>
+                  <text x="207" y="345" id="return-path-label">REPLY LOST</text>
                 </g>
-                <g class="door-closed">
-                  <path d="M199 87L341 120V288L199 255Z" fill="#596b5d" />
+                <g id="lost-reply-mark" class="lost-reply-mark">
+                  <circle cx="239" cy="320" r="14" fill="#121923" />
                   <path
-                    d="M210 101L330 129V272L210 244Z"
-                    fill="none"
-                    stroke="#8c9b8b"
-                  />
-                  <path d="M317 179V205" stroke="#131e18" stroke-width="5" />
-                  <path
-                    d="M221 137L269 148"
-                    stroke="#a9b79f"
+                    d="M234 315l10 10m0-10l-10 10"
+                    stroke="#ff956e"
                     stroke-width="2"
                   />
                 </g>
-                <g class="door-open">
-                  <path
-                    d="M199 87L132 122V290L199 255Z"
-                    fill="#7f927b"
-                    stroke="#b4c5a7"
+                <g class="service-node">
+                  <rect
+                    x="26"
+                    y="144"
+                    width="165"
+                    height="204"
+                    rx="15"
+                    fill="#151e28"
+                    stroke="#425365"
+                  />
+                  <path d="M26 191H191" stroke="#354450" />
+                  <circle cx="45" cy="167" r="3" fill="#baf078" />
+                  <text
+                    x="58"
+                    y="171"
+                    fill="#d8e0e5"
+                    font-size="12"
+                    font-family="monospace"
+                  >
+                    RECOVERY SERVICE
+                  </text>
+                  <rect
+                    x="46"
+                    y="212"
+                    width="123"
+                    height="36"
+                    rx="5"
+                    fill="#0b1118"
                   />
                   <path
-                    d="M191 102L142 127V275L191 250Z"
-                    fill="#647b5f"
-                    stroke="#93a98b"
+                    d="M57 225h38m-38 9h23"
+                    stroke="#76909a"
+                    stroke-width="2"
                   />
-                  <path d="M148 189V213" stroke="#263c26" stroke-width="5" />
+                  <circle cx="153" cy="230" r="3" fill="#baf078" />
+                  <path
+                    d="M47 272h98m-98 12h79m-79 12h106"
+                    stroke="#4f6574"
+                    stroke-width="3"
+                  />
+                  <text
+                    x="47"
+                    y="324"
+                    font-family="monospace"
+                    font-size="12"
+                    fill="#a9b8c6"
+                  >
+                    DURABLE INTENT
+                  </text>
                 </g>
-                <path
-                  d="M363 139L397 118M363 146L397 125M363 153L397 132"
-                  stroke="#597060"
-                />
-              </g>
-              <circle
-                class="device-led"
-                cx="375"
-                cy="89"
-                r="3.5"
-                fill="#c7f6a9"
-              />
-              <g fill="none" stroke="#748b7c" stroke-width="1">
-                <path d="M239 30V15H121" />
-                <circle cx="121" cy="15" r="2" />
-                <path d="M410 198H461V225" />
-                <circle cx="461" cy="225" r="2" />
-                <path d="M199 255L150 321H66" />
-                <circle cx="66" cy="321" r="2" />
-              </g>
-              <g
-                class="drawing-label"
-                fill="#acbeb0"
-                font-family="monospace"
-                font-size="9"
-                letter-spacing="1"
-              >
-                <text x="23" y="19">SYNTHETIC DEVICE</text>
-                <text x="416" y="244">JOURNAL</text>
-                <text x="23" y="342">RELEASE ACTUATOR</text>
-                <text
-                  transform="matrix(1 .23 0 1 205 76)"
-                  fill="#d5dfc9"
-                  font-size="8"
-                >
-                  LKR / 01
-                </text>
-              </g>
-            </svg>
-            <div class="physical-strip">
-              <div>
-                <span class="micro">OBSERVED STATE</span
-                ><strong id="physical">Loading</strong
-                ><small id="online">Loading capture</small>
-              </div>
-              <div class="pulse-readout">
-                <strong id="pulses">—</strong><span>actuator<br />pulses</span>
+                <g class="locker-shell">
+                  <path
+                    d="M384 60L599 116 650 86 437 32Z"
+                    fill="url(#top)"
+                    stroke="#c0ccd1"
+                    stroke-opacity=".5"
+                  />
+                  <path
+                    d="M599 116L650 86V347L599 382Z"
+                    fill="url(#side)"
+                    stroke="#51616e"
+                  />
+                  <path
+                    d="M384 60L599 116V382L384 326Z"
+                    fill="url(#front)"
+                    stroke="#b7c6ce"
+                    stroke-width="1.2"
+                  />
+                  <path
+                    d="M398 85L586 134V362L398 312Z"
+                    fill="#303b42"
+                    stroke="#d0dadd"
+                    stroke-opacity=".5"
+                  />
+                  <path
+                    d="M405 94L579 140V351L405 306Z"
+                    fill="url(#inside)"
+                    stroke="#142029"
+                    stroke-width="4"
+                  />
+                  <path d="M405 306L443 279 579 315V351Z" fill="#414d54" />
+                  <path d="M443 106V279L405 306V94Z" fill="#161f26" />
+                  <path
+                    d="M444 279L578 315"
+                    stroke="#64727b"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M611 169l25-14m-25 22l25-14m-25 22l25-14m-25 22l25-14m-25 22l25-14"
+                    stroke="#788793"
+                    stroke-opacity=".4"
+                    stroke-width="2"
+                  />
+                  <circle cx="615" cy="326" r="2" fill="#85959c" />
+                  <circle cx="632" cy="315" r="2" fill="#85959c" />
+                  <path
+                    d="M408 74l67 17"
+                    stroke="#eef3f5"
+                    stroke-opacity=".75"
+                  />
+                  <text
+                    x="400"
+                    y="77"
+                    transform="rotate(15 400 77)"
+                    font-family="monospace"
+                    font-size="8"
+                    fill="#24333e"
+                  >
+                    LAB / LKR–01
+                  </text>
+                  <circle cx="587" cy="126" r="3" fill="#c5f597" />
+                  <path d="M590 350l3 .8v10l-3-.8z" fill="#101820" />
+                  <g class="parcel">
+                    <path
+                      d="M447 241L500 222 549 237 495 257Z"
+                      fill="#ddc798"
+                    />
+                    <path d="M447 241L495 257V311L447 297Z" fill="#ae8d59" />
+                    <path d="M495 257L549 237V289L495 311Z" fill="#c0a574" />
+                    <path
+                      d="M467 234l48 16v21l-13 5v-23l-48-15z"
+                      fill="#ecd8ab"
+                    />
+                    <path d="M508 279l20-7v14l-20 8z" fill="#e7dfc8" />
+                    <path d="M512 281l12-4m-12 8l9-3" stroke="#80785e" />
+                  </g>
+                  <g class="door-closed">
+                    <path
+                      d="M403 91L580 139V353L403 307Z"
+                      fill="url(#door)"
+                      stroke="#d6e0e4"
+                    />
+                    <path
+                      d="M420 113L565 151V329L420 291Z"
+                      fill="#9aabb4"
+                      stroke="#748690"
+                    />
+                    <path d="M548 212l6 2v36l-6-2z" fill="#273640" />
+                    <path d="M415 102L572 144" stroke="#f4f8fa" opacity=".5" />
+                  </g>
+                  <g class="door-open">
+                    <path
+                      d="M399 91L315 139V354L399 307Z"
+                      fill="url(#door)"
+                      stroke="#e0e7eb"
+                      stroke-width="1.4"
+                    />
+                    <path d="M399 91L405 94V309L399 307Z" fill="#8196a2" />
+                    <path d="M315 139L307 137V353L315 354Z" fill="#526a7b" />
+                    <path
+                      d="M328 150L385 118V293L328 325Z"
+                      fill="#708994"
+                      stroke="#bbcbd2"
+                    />
+                    <path
+                      d="M330 151L385 121V293L377 297V132L330 158Z"
+                      fill="#405b6d"
+                    />
+                    <path d="M329 230l6-3v34l-6 3z" fill="#1a2f3d" />
+                    <path d="M307 137L393 88 399 91 315 139Z" fill="#d3dde2" />
+                    <path
+                      d="M319 146V344"
+                      stroke="#f7fafb"
+                      stroke-opacity=".55"
+                    />
+                  </g>
+                  <path
+                    d="M396 125l8 2v29l-8-2zM396 263l8 2v29l-8-2z"
+                    fill="url(#edge)"
+                    stroke="#3e5462"
+                  />
+                  <path
+                    d="M386 328l15 4v11l-15-4zM582 379l14 4v10l-14-4zM635 356l11-7v10l-11 7z"
+                    fill="#0b1117"
+                  />
+                </g>
+                <path d="M659 148h25v85" stroke="#56717a" fill="none" />
+                <circle cx="659" cy="148" r="3" fill="#baf078" />
+              </svg>
+              <div class="device-caption">
+                <div>
+                  <span>OBSERVED DEVICE STATE</span
+                  ><strong id="physical">—</strong><small id="online"></small>
+                </div>
+                <div class="pulse-badge">
+                  <strong id="pulses">—</strong
+                  ><span>physical<br />action</span>
+                </div>
               </div>
             </div>
-            <p class="instrument-caption">
-              Test instrument only. This view is not completion evidence
-              available to the service.
-            </p>
-          </div>
-          <article class="decision-panel">
-            <p class="micro">03 / SERVICE KNOWLEDGE</p>
-            <div class="status-marker" id="status-marker"></div>
-            <h3 id="state">Loading</h3>
-            <p id="explanation" aria-live="polite"></p>
-            <div class="numbers">
+            <div class="service-readouts">
               <div><strong id="sends">—</strong><span>command sends</span></div>
+              <span class="readout-divider"></span>
               <div>
                 <strong id="checks">—</strong><span>journal queries</span>
               </div>
+              <code id="run-label"></code>
             </div>
-            <div class="protocol">
-              <span>Evidence source</span><strong>Controller journal</strong
-              ><code id="journal-state">Awaiting capture</code>
-            </div>
-          </article>
-        </div>
-        <div class="controls">
-          <div class="transport-controls">
-            <button id="previous" aria-label="Previous captured snapshot">
-              ←</button
-            ><button id="play">Play capture</button
-            ><button id="next" aria-label="Next captured snapshot">→</button>
-          </div>
-          <label for="frame"
-            >SNAPSHOT<input
-              type="range"
-              id="frame"
-              min="0"
-              value="0"
-              max="0" /></label
-          ><output id="position" for="frame"></output>
-        </div>
-        <div class="bench-caption">
-          <span class="micro"
-            >SERVICE <b>→</b> HTTP TRANSPORT <b>→</b> DEVICE CONTROLLER</span
-          ><a href="traces.json" download>Download trace JSON ↓</a>
-        </div>
-      </section>
-      <p class="notice">
-        <strong>Real process output. Recorded playback.</strong> This page does
-        not execute the service or simulator.
-        <a href="https://github.com/B8Z/device-recovery-lab#run-it"
-          >Run it locally</a
-        >
-        to inject failures. The illustration follows the saved observations; it
-        is not a recording of physical hardware.
-      </p>
-      <p id="error" role="alert" hidden></p>
-      <noscript
-        ><p>
-          Read the
-          <a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/behavior.md"
-            >behavior contract</a
-          >
-          and <a href="traces.json">captured JSON</a> without JavaScript.
-        </p></noscript
-      >
-
-      <section class="timeline" aria-labelledby="timeline-title">
-        <div class="section-bar">
-          <h2 id="timeline-title">Follow the evidence.</h2>
-          <span class="micro" id="event-count"></span>
-        </div>
-        <div
-          class="timeline-scroll"
-          tabindex="0"
-          aria-label="Captured event timeline"
-        >
-          <ol id="events"></ol>
-        </div>
-      </section>
-
-      <section
-        id="workload"
-        class="workload section-block"
-        aria-labelledby="workload-title"
-      >
-        <div class="section-top">
-          <span class="eyebrow">EXPERIMENT 02 / CONCURRENT RECOVERY</span
-          ><span class="section-number">02</span>
-        </div>
-        <div class="section-intro">
-          <h2 id="workload-title">
-            One slow device.<br />Everyone else waiting?
-          </h2>
-          <p>
-            I compare one recovery worker with four, using the same queued
-            operations and faults injected by a separate HTTP proxy. The
-            question is what happens to the unaffected work.
-          </p>
-        </div>
-        <div class="workload-controls">
-          <label
-            >Workload<select id="workload-kind">
-              <option value="mixed">Mixed faults</option>
-              <option value="clean">No injected faults</option>
-            </select></label
-          ><label>Seed<select id="workload-seed"></select></label
-          ><label>Repetition<select id="workload-repetition"></select></label
-          ><span class="micro">ACTUAL LOCAL MEASUREMENTS</span>
-        </div>
-        <div class="plot-card">
-          <div class="plot-top">
-            <h3>Completed operations over time</h3>
-            <div class="plot-legend">
-              <span class="one-worker">1 worker</span
-              ><span class="four-workers">4 workers</span>
-            </div>
-          </div>
-          <svg
-            id="workload-chart"
-            viewBox="0 0 1000 300"
-            role="img"
-            aria-label="Recorded completion curves for one and four recovery workers"
-          ></svg>
-          <p id="plot-caption" class="small"></p>
-        </div>
-        <div class="measurement-strip" id="measurement-strip"></div>
-        <p class="small" id="workload-source">
-          Loading measured workload evidence.
-        </p>
-        <div class="result-note">
-          <p>
-            <strong>Lower typical delay. One important exception.</strong> Four
-            workers finished faster in 8 of 9 mixed-fault pairs. The slowest
-            four-worker batch took 8.009 s against 5.857 s for its one-worker
-            pair. These observations do not isolate the cause of that variation.
-          </p>
-          <button id="inspect-outlier">Inspect the slower run ↗</button>
-        </div>
-        <div class="research-links">
-          <a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/workload.md"
-            >Method, results &amp; limitations ↗</a
-          ><a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/tests/test_external_faults.py"
-            >Inspect the adversarial tests ↗</a
-          >
-        </div>
-      </section>
-
-      <section
-        id="boundary"
-        class="boundary section-block"
-        aria-labelledby="boundary-title"
-      >
-        <div class="section-top">
-          <span class="eyebrow">EXPERIMENT 03 / THE PHYSICAL BOUNDARY</span
-          ><span class="section-number">03</span>
-        </div>
-        <div class="section-intro">
-          <h2 id="boundary-title">
-            The same record.<br />Two different realities.
-          </h2>
-          <p>
-            I terminate the controller on either side of the simulated pulse.
-            Both restarted journals contain unfinished intent. Only the separate
-            test instrument reveals which action occurred.
-          </p>
-        </div>
-        <div class="boundary-grid">
-          <article class="outcome">
-            <div class="outcome-heading">
-              <span class="micro">A / CRASH BEFORE THE PULSE</span
-              ><span class="outcome-symbol" aria-hidden="true">○</span>
-            </div>
-            <div class="pulse-count">
-              <strong data-pulses="crash_before">—</strong
-              ><span>physical <br />pulses</span>
-            </div>
-            <div class="journal-slip">
-              <span class="micro">CONTROLLER JOURNAL</span
-              ><code data-journal="crash_before">Loading</code
-              ><span>No completion record</span>
-            </div>
-            <button data-scenario="crash_before">
-              Inspect this captured run <span aria-hidden="true">↗</span>
-            </button>
-          </article>
-          <article class="outcome after">
-            <div class="outcome-heading">
-              <span class="micro">B / CRASH AFTER THE PULSE</span
-              ><span class="outcome-symbol" aria-hidden="true">◉</span>
-            </div>
-            <div class="pulse-count">
-              <strong data-pulses="crash_after">—</strong
-              ><span>physical <br />pulse</span>
-            </div>
-            <div class="journal-slip">
-              <span class="micro">CONTROLLER JOURNAL</span
-              ><code data-journal="crash_after">Loading</code
-              ><span>No completion record</span>
-            </div>
-            <button data-scenario="crash_after">
-              Inspect this captured run <span aria-hidden="true">↗</span>
-            </button>
-          </article>
-        </div>
-        <div class="boundary-decision">
-          <span class="decision-icon" aria-hidden="true">↳</span>
-          <div>
-            <h3>The service has to stop.</h3>
-            <p>
-              A retry could repeat a completed action. Declaring success could
-              invent one. I preserve uncertainty and require independent
-              physical inspection.
+            <p class="instrument-caption">
+              The observer can see the action. The service must obtain its own
+              completion evidence.
             </p>
           </div>
-          <a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/crash-boundary.md"
-            >Read the decision ↗</a
+          <div class="hero-foot">
+            <p>
+              <strong>Receiving a command is not completing an action.</strong>
+              Follow the evidence across that boundary.
+            </p>
+            <a href="#explorer"
+              >Explore all six cases <span aria-hidden="true">↓</span></a
+            >
+          </div>
+        </section>
+      </div>
+      <div class="content wrap">
+        <p class="notice">
+          <strong>A real run, replayed.</strong> This page does not execute the
+          service or simulator. The drawing follows saved simulator
+          observations; no physical hardware is involved.
+          <a href="https://github.com/B8Z/device-recovery-lab#run-it"
+            >Run the processes locally ↗</a
           >
-        </div>
-        <p class="small">
-          Final captured outcomes. No real hardware is involved. The instrument
-          is a separate store, excluded from recovery decisions; its pulse count
-          is absent from the controller's command response.
         </p>
-      </section>
-
-      <section class="inspection section-block">
-        <div>
-          <span class="eyebrow">OPEN THE IMPLEMENTATION</span>
-          <h2>Every claim has<br />a place to look.</h2>
-          <p>
-            I keep the contract, failure injection, recovery decisions and
-            experimental results available alongside the interface.
+        <p id="error" role="alert" hidden></p>
+        <noscript
+          ><p>
+            JavaScript loads the recorded evidence. Read the
+            <a href="https://github.com/B8Z/device-recovery-lab"
+              >source and behavior contract</a
+            >
+            without JavaScript.
+          </p></noscript
+        >
+        <section id="explorer" class="explorer" aria-labelledby="lab-title">
+          <div class="section-bar">
+            <div>
+              <span class="eyebrow">GO DEEPER</span>
+              <h2 id="lab-title">Change the failure. Inspect the decision.</h2>
+            </div>
+            <a href="traces.json" download>Download captured evidence ↓</a>
+          </div>
+          <div class="scenarios" role="group" aria-label="Captured scenario">
+            <button data-scenario="lost_ack" aria-pressed="true">
+              <span>01</span><strong>Lost reply</strong
+              ><small>Acted. Not confirmed.</small>
+            </button>
+            <button data-scenario="duplicate" aria-pressed="false">
+              <span>02</span><strong>Duplicate delivery</strong
+              ><small>Two messages. One action.</small>
+            </button>
+            <button data-scenario="disconnected" aria-pressed="false">
+              <span>03</span><strong>Disconnected</strong
+              ><small>Recover after reconnect.</small>
+            </button>
+            <button data-scenario="crash_before" aria-pressed="false">
+              <span>04</span><strong>Crash before action</strong
+              ><small>Unfinished execution intent.</small>
+            </button>
+            <button data-scenario="crash_after" aria-pressed="false">
+              <span>05</span><strong>Crash after action</strong
+              ><small>Missing completion evidence.</small>
+            </button>
+            <button data-scenario="healthy" aria-pressed="false">
+              <span>06</span><strong>Healthy baseline</strong
+              ><small>Receipt, action, confirmation.</small>
+            </button>
+          </div>
+          <div class="controls">
+            <div class="transport-controls">
+              <button id="previous" aria-label="Previous captured snapshot">
+                ←</button
+              ><button id="play">Play capture</button
+              ><button id="next" aria-label="Next captured snapshot">→</button>
+            </div>
+            <label for="frame"
+              >Snapshot
+              <input id="frame" type="range" min="0" max="0" value="0" /></label
+            ><output id="position" for="frame"></output
+            ><button id="back-to-scene">View this state ↑</button>
+          </div>
+          <details class="timeline">
+            <summary>
+              Inspect the captured event timeline <span id="event-count"></span>
+            </summary>
+            <div
+              class="timeline-scroll"
+              tabindex="0"
+              aria-label="Captured event timeline"
+            >
+              <ol id="events"></ol>
+            </div>
+          </details>
+        </section>
+        <section
+          id="boundary"
+          class="boundary section-block"
+          aria-labelledby="boundary-title"
+        >
+          <div class="section-top">
+            <span class="eyebrow">THE LIMIT OF AUTOMATIC RECOVERY</span
+            ><span class="section-number">03</span>
+          </div>
+          <div class="section-intro">
+            <h2 id="boundary-title">What if the record<br />is missing too?</h2>
+            <p>
+              I terminate the controller on either side of the simulated pulse.
+              Both restarted journals contain unfinished intent. Only the
+              separate test instrument reveals which action occurred.
+            </p>
+          </div>
+          <div class="boundary-grid">
+            <article class="outcome">
+              <div class="outcome-heading">
+                <span class="micro">A / CRASH BEFORE THE PULSE</span
+                ><span class="outcome-symbol" aria-hidden="true">○</span>
+              </div>
+              <div class="pulse-count">
+                <strong data-pulses="crash_before">—</strong
+                ><span>physical <br />pulses</span>
+              </div>
+              <div class="journal-slip">
+                <span class="micro">CONTROLLER JOURNAL</span
+                ><code data-journal="crash_before">Loading</code
+                ><span>No completion record</span>
+              </div>
+              <button data-scenario="crash_before">
+                Inspect this captured run <span aria-hidden="true">↗</span>
+              </button>
+            </article>
+            <article class="outcome after">
+              <div class="outcome-heading">
+                <span class="micro">B / CRASH AFTER THE PULSE</span
+                ><span class="outcome-symbol" aria-hidden="true">◉</span>
+              </div>
+              <div class="pulse-count">
+                <strong data-pulses="crash_after">—</strong
+                ><span>physical <br />pulse</span>
+              </div>
+              <div class="journal-slip">
+                <span class="micro">CONTROLLER JOURNAL</span
+                ><code data-journal="crash_after">Loading</code
+                ><span>No completion record</span>
+              </div>
+              <button data-scenario="crash_after">
+                Inspect this captured run <span aria-hidden="true">↗</span>
+              </button>
+            </article>
+          </div>
+          <div class="boundary-decision">
+            <span class="decision-icon" aria-hidden="true">↳</span>
+            <div>
+              <h3>The service has to stop.</h3>
+              <p>
+                A retry could repeat a completed action. Declaring success could
+                invent one. I preserve uncertainty and require independent
+                physical inspection.
+              </p>
+            </div>
+            <a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/crash-boundary.md"
+              >Read the decision ↗</a
+            >
+          </div>
+          <p class="small">
+            Final captured outcomes. No real hardware is involved. The
+            instrument is a separate store, excluded from recovery decisions;
+            its pulse count is absent from the controller's command response.
           </p>
-        </div>
-        <div class="inspection-links">
-          <a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/workload-contract.md"
-            ><span>01</span>
-            <div>
-              <strong>The contract</strong
-              ><small>Expected outcomes, written before implementation</small>
+        </section>
+
+        <section
+          id="workload"
+          class="workload section-block"
+          aria-labelledby="workload-title"
+        >
+          <div class="section-top">
+            <span class="eyebrow">THE CONTROLLED EXPERIMENT</span
+            ><span class="section-number">02</span>
+          </div>
+          <div class="section-intro">
+            <h2 id="workload-title">
+              Does one slow device<br />hold up the others?
+            </h2>
+            <p>
+              I compare one recovery worker with four, using the same queued
+              operations and faults injected by a separate HTTP proxy. The
+              question is what happens to the unaffected work.
+            </p>
+          </div>
+          <div class="workload-controls">
+            <label
+              >Workload<select id="workload-kind">
+                <option value="mixed">Mixed faults</option>
+                <option value="clean">No injected faults</option>
+              </select></label
+            ><label>Seed<select id="workload-seed"></select></label
+            ><label>Repetition<select id="workload-repetition"></select></label
+            ><span class="micro">ACTUAL LOCAL MEASUREMENTS</span>
+          </div>
+          <div class="plot-card">
+            <div class="plot-top">
+              <h3>Completed operations over time</h3>
+              <div class="plot-legend">
+                <span class="one-worker">1 worker</span
+                ><span class="four-workers">4 workers</span>
+              </div>
             </div>
-            <b>↗</b></a
-          ><a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/lab/service.py"
-            ><span>02</span>
-            <div>
-              <strong>The recovery controller</strong
-              ><small
-                >Durable claims, stale-worker fencing, reconciliation</small
-              >
-            </div>
-            <b>↗</b></a
-          ><a
-            href="https://github.com/B8Z/device-recovery-lab/blob/main/scripts/workload.py"
-            ><span>03</span>
-            <div>
-              <strong>The experiment</strong
-              ><small>Seeded faults, matched workloads, raw observations</small>
-            </div>
-            <b>↗</b></a
+            <svg
+              id="workload-chart"
+              viewBox="0 0 1000 300"
+              role="img"
+              aria-label="Recorded completion curves for one and four recovery workers"
+            ></svg>
+            <p id="plot-caption" class="small"></p>
+          </div>
+          <div class="measurement-strip" id="measurement-strip"></div>
+          <p class="small" id="workload-source">
+            Loading measured workload evidence.
+          </p>
+          <div class="result-note">
+            <p>
+              <strong>Lower typical delay. One important exception.</strong>
+              Four workers finished faster in 8 of 9 mixed-fault pairs. The
+              slowest four-worker batch took 8.009 s against 5.857 s for its
+              one-worker pair. These observations do not isolate the cause of
+              that variation.
+            </p>
+            <button id="inspect-outlier">Inspect the slower run ↗</button>
+          </div>
+          <div class="research-links">
+            <a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/workload.md"
+              >Method, results &amp; limitations ↗</a
+            ><a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/tests/test_external_faults.py"
+              >Inspect the adversarial tests ↗</a
+            >
+          </div>
+        </section>
+
+        <section class="inspection section-block">
+          <div>
+            <span class="eyebrow">OPEN THE IMPLEMENTATION</span>
+            <h2>Every claim has<br />a place to look.</h2>
+            <p>
+              I keep the contract, failure injection, recovery decisions and
+              experimental results available alongside the interface.
+            </p>
+          </div>
+          <div class="inspection-links">
+            <a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/workload-contract.md"
+              ><span>01</span>
+              <div>
+                <strong>The contract</strong
+                ><small>Expected outcomes, written before implementation</small>
+              </div>
+              <b>↗</b></a
+            ><a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/lab/service.py"
+              ><span>02</span>
+              <div>
+                <strong>The recovery controller</strong
+                ><small
+                  >Durable claims, stale-worker fencing, reconciliation</small
+                >
+              </div>
+              <b>↗</b></a
+            ><a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/scripts/workload.py"
+              ><span>03</span>
+              <div>
+                <strong>The experiment</strong
+                ><small
+                  >Seeded faults, matched workloads, raw observations</small
+                >
+              </div>
+              <b>↗</b></a
+            >
+          </div>
+        </section>
+        <footer>
+          <a class="footer-name" href="https://github.com/B8Z"
+            >Adam Bates <span>↗</span></a
           >
-        </div>
-      </section>
-      <footer>
-        <a class="footer-name" href="https://github.com/B8Z"
-          >Adam Bates <span>↗</span></a
-        >
-        <p>
-          Independent personal engineering work · October 2026<br />Synthetic
-          devices. Controlled experiments. No exactly-once or production
-          reliability claim.
-        </p>
-        <a href="https://b8z.github.io/placement-tradeoffs/"
-          >Next: placement under constraints ↗</a
-        >
-      </footer>
-      <details class="provenance">
-        <summary>Capture provenance &amp; playback timing</summary>
-        <p id="provenance" class="small"></p>
-      </details>
+          <p>
+            Independent personal engineering work · October 2026<br />Synthetic
+            devices. Controlled experiments. No exactly-once or production
+            reliability claim.
+          </p>
+          <a href="https://b8z.github.io/placement-tradeoffs/"
+            >Next: placement under constraints ↗</a
+          >
+        </footer>
+        <details class="provenance">
+          <summary>Capture provenance &amp; playback timing</summary>
+          <p id="provenance" class="small"></p>
+        </details>
+      </div>
     </main>
     <script src="viewer.js" defer></script>
     <script src="workload.js" defer></script>

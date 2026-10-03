@@ -3,6 +3,38 @@ let data,
   trace,
   frame = 0,
   timer;
+const cases = {
+  lost_ack: [
+    "The door opened.",
+    "The reply didn’t.",
+    "A missing reply doesn’t tell me whether the device acted. I built a recovery service that checks durable device evidence before deciding whether to resend.",
+  ],
+  duplicate: [
+    "Two deliveries.",
+    "One physical action.",
+    "Retrying a message should not repeat a completed action. I keep the same command identity and let the controller return its existing execution record.",
+  ],
+  disconnected: [
+    "The link is down.",
+    "The intent survives.",
+    "I persist the request before contacting the device. Once communication returns, the service checks the controller journal before deciding whether to send again.",
+  ],
+  crash_before: [
+    "The record stops.",
+    "Did the device act?",
+    "A controller can die after recording intent but before acting. I preserve that uncertainty because the restarted journal cannot establish the physical outcome.",
+  ],
+  crash_after: [
+    "The action happened.",
+    "The record didn’t.",
+    "Here the controller dies after the pulse and before recording completion. The same unfinished journal can also mean no action happened, so I require inspection.",
+  ],
+  healthy: [
+    "A command arrives.",
+    "Completion follows.",
+    "I keep receipt and completion separate. The service first learns that the controller accepted the command, then waits for evidence that the physical action finished.",
+  ],
+};
 const explanations = {
   QUEUED:
     "The service has a durable intent. It does not yet have evidence of device completion.",
@@ -21,6 +53,10 @@ function stop() {
   clearInterval(timer);
   timer = null;
   $("play").textContent = "Play capture";
+  $("resolve").disabled = !trace;
+  $("resolve").firstChild.textContent = trace?.scenario.startsWith("crash_")
+    ? "See why it stops "
+    : "Watch recovery ";
 }
 function render() {
   const captured = trace.frames[frame],
@@ -46,6 +82,35 @@ function render() {
   $("apparatus").classList.toggle("is-open", Boolean(v.device?.pulses));
   $("apparatus").classList.toggle("is-unknown", !v.device);
   $("apparatus").classList.toggle("is-offline", v.device?.online === false);
+  $("apparatus").classList.toggle("is-confirmed", v.state === "COMPLETED");
+  $("apparatus").classList.toggle("is-uncertain", v.state === "UNCERTAIN");
+  $("return-path-label").textContent = {
+    QUEUED: "NOT YET SENT",
+    ACCEPTED: "RECEIPT ACK",
+    UNCERTAIN: "REPLY UNAVAILABLE",
+    COMPLETED: "COMPLETION PROOF",
+    NEEDS_INSPECTION: "IN_DOUBT",
+    NEEDS_ATTENTION: "NO FINAL EVIDENCE",
+  }[v.state];
+  $("service-brief").textContent = {
+    QUEUED: "Intent recorded",
+    ACCEPTED: "Receipt only",
+    UNCERTAIN: "No confirmation",
+    COMPLETED: "Completion confirmed",
+    NEEDS_INSPECTION: "Inspection required",
+    NEEDS_ATTENTION: "Recovery paused",
+  }[v.state];
+  const result = {
+    QUEUED: "Not dispatched",
+    ACCEPTED: "Receipt only",
+    UNCERTAIN: "Unconfirmed",
+    COMPLETED: "Confirmed",
+    NEEDS_INSPECTION: "Inspection required",
+    NEEDS_ATTENTION: "Recovery paused",
+  }[v.state];
+  $("guided-result").textContent =
+    `${result}${v.device ? ` · ${v.device.pulses} action${v.device.pulses === 1 ? "" : "s"}` : ""}`;
+  $("guided-result").classList.toggle("confirmed", v.state === "COMPLETED");
   $("run-label").textContent = v.id.slice(0, 8).toUpperCase();
   $("journal-state").textContent = {
     QUEUED: "NOT YET OBSERVED",
@@ -89,6 +154,16 @@ function render() {
 function choose(scenario) {
   stop();
   trace = data.traces.find((t) => t.scenario === scenario);
+  $("resolve").firstChild.textContent = scenario.startsWith("crash_")
+    ? "See why it stops "
+    : "Watch recovery ";
+  const [first, second, description] = cases[scenario];
+  const line = document.createElement("span");
+  line.textContent = second;
+  $("hero-title").replaceChildren(document.createTextNode(first), line);
+  $("hero-description").textContent = description;
+  document.querySelector(".case-number").textContent =
+    `/ ${["lost_ack", "duplicate", "disconnected", "crash_before", "crash_after", "healthy"].indexOf(scenario) + 1}`;
   frame =
     scenario === "lost_ack"
       ? trace.frames.findIndex(
@@ -98,11 +173,45 @@ function choose(scenario) {
       : 0;
   if (scenario.startsWith("crash_")) frame = trace.frames.length - 1;
   if (frame < 0) frame = 0;
+  $("resolve").disabled = false;
   $("frame").max = trace.frames.length - 1;
   for (const b of document.querySelectorAll("[data-scenario][aria-pressed]"))
     b.setAttribute("aria-pressed", String(b.dataset.scenario === scenario));
   render();
 }
+$("resolve").addEventListener("click", () => {
+  if (!trace) return;
+  if (timer) {
+    stop();
+    return;
+  }
+  // The guided opening starts with the ambiguity, then shows captured recovery.
+  // Other cases replay from their first retained observation.
+  frame =
+    trace.scenario === "lost_ack"
+      ? trace.frames.findIndex(
+          (f) =>
+            f.snapshot.state === "UNCERTAIN" && f.snapshot.device?.pulses === 1,
+        )
+      : 0;
+  if (frame < 0) frame = 0;
+  render();
+  $("resolve").firstChild.textContent = "Pause replay ";
+  $("play").textContent = "Pause capture";
+  timer = setInterval(() => {
+    if (frame >= trace.frames.length - 1) {
+      stop();
+      return;
+    }
+    frame++;
+    render();
+  }, 1400);
+});
+function showScene() {
+  $("hero-title").focus({ preventScroll: true });
+  $("experiment").scrollIntoView({ block: "start" });
+}
+$("back-to-scene").addEventListener("click", showScene);
 $("frame").addEventListener("input", () => {
   if (!trace) return;
   stop();
@@ -128,6 +237,7 @@ $("play").addEventListener("click", () => {
   frame = 0;
   render();
   $("play").textContent = "Pause capture";
+  $("resolve").firstChild.textContent = "Pause replay ";
   // Explicit playback uses one snapshot per 700 ms; this is navigation speed,
   // not a recreation of elapsed time. Timestamps retain actual observations.
   timer = setInterval(() => {
@@ -143,8 +253,7 @@ for (const b of document.querySelectorAll("[data-scenario]"))
   b.addEventListener("click", () => {
     if (data) {
       choose(b.dataset.scenario);
-      if (b.closest(".boundary"))
-        $("experiment").scrollIntoView({ block: "start" });
+      showScene();
     }
   });
 document.addEventListener("visibilitychange", () => {
@@ -170,7 +279,7 @@ document.addEventListener("visibilitychange", () => {
         : "lost_ack",
     );
     $("provenance").textContent =
-      `Captured ${data.captured_at_utc.slice(0, 10)} · source commit ${data.tested_commit} · Python ${data.python}. One demonstration per scenario. Playback advances a snapshot every 700 ms; displayed timestamps retain the observed timing.`;
+      `Captured ${data.captured_at_utc.slice(0, 10)} · source commit ${data.tested_commit} · Python ${data.python}. One demonstration per scenario. Guided recovery advances retained snapshots every 1,400 ms; explorer playback uses 700 ms. These are navigation speeds, not elapsed process time. Displayed timestamps retain the observed timing.`;
   } catch (error) {
     $("error").hidden = false;
     $("error").textContent = error.message;

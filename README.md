@@ -11,6 +11,10 @@ I keep message receipt separate from completion because a device can accept a
 command before it acts, and it can act before the service learns the result.
 The interface makes that gap visible.
 
+**[Step through captured failures in your browser](https://b8z.github.io/device-recovery-lab/)**
+— no installation. The viewer displays real saved API snapshots. Run the local
+lab below to execute the processes and inject your own failures.
+
 ![A real run: the service is uncertain while the simulated device is open after one actuator pulse](docs/demo-uncertain.png)
 
 *The device panel is diagnostic instrumentation. My recovery service must query

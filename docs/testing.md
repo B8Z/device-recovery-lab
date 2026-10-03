@@ -32,6 +32,26 @@ Correctness checks are separate from `scripts/measure.py`. That script records
 loopback end-to-end observation times and recovery counts; it does not establish
 capacity, production latency or reliability probabilities.
 
+## Captured evidence viewer
+
+`demo/` is a static viewer of actual full API snapshots, captured from a local
+run with `python scripts/capture_traces.py`. The script requires a clean checkout;
+start fresh lab processes from that same checkout before capturing. It retains
+changed snapshots at a 100 ms polling interval, restores the disconnected link
+after one second, and checks completion with one pulse in each scenario.
+One run per scenario is demonstration evidence, not a new performance sample.
+
+The JSON retains the source revision, capture date, runtime and capture settings.
+The viewer labels the data as recorded and defaults to the lost-acknowledgment
+snapshot where the service is uncertain but the diagnostic device panel is open.
+Playback advances snapshots every 700 ms; the displayed elapsed times remain the
+original observations. It does not rerun the service in the browser.
+
+Serve `demo/` on port 8879 with `python -m http.server 8879 --bind 127.0.0.1
+--directory demo`, then run `npx playwright test --config playwright.demo.config.js`.
+The check covers all four recorded outcomes, uncertainty, pulse counts, keyboard
+stepping, playback controls and a narrow viewport.
+
 ## First-release verification — October 3, 2026
 
 At commit `bed2e3fe2487ef88596873b1fb57964033cc3d0a`, a fresh local clone and a

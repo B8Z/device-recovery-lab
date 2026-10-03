@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Device Recovery Lab · Adam Bates</title>
+    <meta
+      name="description"
+      content="Inspect actual captured runs of a device failure-and-recovery experiment, including duplicate delivery, lost acknowledgments and reconnect."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <a class="brand" href="https://github.com/B8Z"
+          >ADAM BATES / EXPERIMENT 01</a
+        ><a href="https://github.com/B8Z/device-recovery-lab"
+          >Code &amp; local lab ↗</a
+        >
+      </header>
+      <section class="hero">
+        <p class="eyebrow">DISTRIBUTED SERVICES / DEVICE INTEGRATION</p>
+        <h1>The device acted.<br /><em>The response was lost.</em></h1>
+        <p>
+          I built this lab to inspect the gap between what a service knows and
+          what a device has done. Step through a real captured run, then inspect
+          the evidence that permits recovery.
+        </p>
+      </section>
+      <p class="notice">
+        <strong>Recorded evidence viewer.</strong> These are saved API snapshots
+        from two running Python processes with separate journals. This page does
+        not execute the service or simulator.
+        <a href="https://github.com/B8Z/device-recovery-lab#run-it"
+          >Run the live lab locally</a
+        >
+        to inject your own failures.
+      </p>
+      <noscript
+        >Read the
+        <a
+          href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/behavior.md"
+          >behavior contract</a
+        >
+        and <a href="traces.json">captured JSON</a> without
+        JavaScript.</noscript
+      >
+      <div class="scenarios" role="group" aria-label="Captured scenario">
+        <button data-scenario="healthy" aria-pressed="false">
+          00 / Healthy delivery</button
+        ><button data-scenario="duplicate" aria-pressed="false">
+          01 / Duplicate command</button
+        ><button data-scenario="lost_ack" aria-pressed="true">
+          02 / Lost acknowledgment</button
+        ><button data-scenario="disconnected" aria-pressed="false">
+          03 / Disconnected device
+        </button>
+      </div>
+      <div class="controls">
+        <button id="previous">← Previous</button
+        ><button id="play">Play capture</button><button id="next">Next →</button
+        ><label
+          >Captured snapshot<input
+            type="range"
+            id="frame"
+            min="0"
+            value="0"
+            max="0" /></label
+        ><output id="position" for="frame"></output>
+      </div>
+      <p id="explanation" class="explanation" aria-live="polite"></p>
+      <p id="error" role="alert" hidden></p>
+      <div class="evidence">
+        <article>
+          <p class="eyebrow">SERVICE KNOWLEDGE</p>
+          <h2 id="state">Loading</h2>
+          <p>Completion must follow controller evidence.</p>
+          <div class="numbers">
+            <div><strong id="sends">—</strong><span>commands sent</span></div>
+            <div>
+              <strong id="checks">—</strong><span>journal queries</span>
+            </div>
+          </div>
+        </article>
+        <article>
+          <p class="eyebrow">SIMULATED DEVICE / TEST INSTRUMENT</p>
+          <h2 id="physical">Loading</h2>
+          <p id="online"></p>
+          <div class="numbers">
+            <div>
+              <strong id="pulses">—</strong><span>actuator pulses</span>
+            </div>
+          </div>
+          <p class="small">
+            This diagnostic view sees behind the link fault. The recovery
+            service cannot use it as completion evidence.
+          </p>
+        </article>
+      </div>
+      <section class="timeline">
+        <div class="line">
+          <h2>Observed event timeline</h2>
+          <span>Elapsed · source · evidence</span>
+        </div>
+        <ol id="events"></ol>
+      </section>
+      <footer>
+        <div>
+          <h2>Inspect the decision</h2>
+          <p>
+            Receiving a message establishes receipt. A missing response leaves
+            the physical outcome uncertain. My service queries the controller
+            journal before deciding whether the command can be sent again.
+          </p>
+          <a
+            href="https://github.com/B8Z/device-recovery-lab/blob/main/lab/service.py"
+            >Recovery controller →</a
+          >
+        </div>
+        <div>
+          <h2>What this does not establish</h2>
+          <p>
+            The simulator commits the pulse and completion record atomically.
+            Real hardware may move before durable recording, so its recovery
+            needs device-specific safeguards. This is synthetic personal work,
+            with no exactly-once physical-execution claim.
+          </p>
+          <a
+            href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/architecture.md"
+            >Architecture and limits →</a
+          >
+        </div>
+      </footer>
+      <p id="provenance" class="small"></p>
+      <a href="traces.json" download>Download the captured evidence JSON ↓</a>
+    </main>
+    <script src="viewer.js" defer></script>
+  </body>
+</html>

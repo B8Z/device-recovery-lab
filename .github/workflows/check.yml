@@ -40,3 +40,10 @@ jobs:
         with:
           name: browser-failure
           path: test-results/
+      - run: |
+          python -m http.server 8879 --bind 127.0.0.1 --directory demo > /tmp/demo.log 2>&1 &
+          for i in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:8879/traces.json; then break; fi
+            sleep 0.2
+          done
+          npx playwright test --config playwright.demo.config.js

@@ -58,7 +58,7 @@ machine. It is a diagnostic view, not a globally ordered event log.
 | Option | Benefit | Reason for first-release choice |
 | --- | --- | --- |
 | Python + HTTP + SQLite | Inspectable transport and persistence; no runtime package install | Selected for a complete, inexpensive local experiment |
-| Java/Spring + Kafka | Demonstrates the production stack in Adam's experience; broker redelivery and consumer offsets | Adds JVM/broker setup and hides the actuator boundary behind unrelated setup; a justified later transport experiment |
+| Java/Spring + Kafka | Uses a stack I have worked with professionally; broker redelivery and consumer offsets | Adds JVM/broker setup without resolving the actuator boundary; a possible later transport experiment |
 | Single in-memory simulation | Fastest setup and deterministic clocks | Cannot show process isolation, restart persistence or real response loss |
 | MQTT/device broker | Familiar device messaging semantics | Useful later, but still cannot make a physical effect atomic with broker delivery |
 

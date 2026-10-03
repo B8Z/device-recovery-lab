@@ -351,7 +351,7 @@ footer p {
     padding: 16px;
   }
   li {
-    grid-template-columns: 55px 60px 1fr;
+    grid-template-columns: 55px 78px 1fr;
     gap: 8px;
   }
   header {

@@ -84,3 +84,26 @@ The committed screenshot was captured from the actual local interface. Secret
 and disclosure pattern checks plus manual diff review found no credentials,
 private career data or employer artifacts. These checks reduce publication risk;
 they are not a third-party security certification.
+
+## Crash-boundary extension verification — October 3, 2026
+
+Runtime source `80571a42d337467f1c8e2ad5256411e04662bfef` passed all 16 Python
+checks in a fresh local clone and a new Python 3.12.14 virtual environment without
+third-party runtime packages. The documented launcher ran from that checkout on
+ports 8880/8881. All eight live Playwright 1.63.0 / Chromium 153.0.8010.12 journeys
+passed against it, including both actual process-crash cases and rejected resume.
+The browser runner used the already installed test dependencies outside that
+clone; running the application itself required no package installation.
+
+Independent review found a startup edge case: a previously received crash
+command could exit during readiness polling, before supervision began. The
+launcher now handles the reserved injection exit during startup too. A focused
+regression waits across the real process exit and verifies restart, persisted
+uncertainty, one pulse, service readiness and normal child-process cleanup.
+
+`demo/traces.json` records six fresh demonstrations at that runtime revision.
+The static browser test checks every recorded terminal state, the zero/one pulse
+comparison, keyboard stepping, playback and mobile layout. Screenshots were
+captured from the rendered viewer. The mobile timeline reserves space for the
+new `instrument` event source. These captures are correctness evidence; the
+original four-scenario timing data remains attached to its original revision.

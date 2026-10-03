@@ -49,6 +49,8 @@ test("captured uncertainty and every recovery path remain inspectable", async ({
   await page.locator("#play").click();
   await expect(page.locator("#play")).toHaveText("Play capture");
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('.scenarios [data-scenario="crash_after"]').click();
+  await expect(page.locator("#state")).toHaveText("NEEDS INSPECTION");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

@@ -471,7 +471,7 @@ select {
     padding: 16px;
   }
   .timeline-event {
-    grid-template-columns: 47px 48px 1fr;
+    grid-template-columns: 47px 68px 1fr;
     gap: 8px;
   }
   .timeline-heading > span {

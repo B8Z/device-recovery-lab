@@ -1,6 +1,6 @@
 {
-  "captured_at_utc": "2026-10-03T08:14:45.595928+00:00",
-  "tested_commit": "a5c5e754e9c2210f7bb9b6fae291e0f11943d9d5",
+  "captured_at_utc": "2026-10-03T09:37:57.731778+00:00",
+  "tested_commit": "80571a42d337467f1c8e2ad5256411e04662bfef",
   "python": "3.12.14",
   "os": "Windows",
   "capture": {
@@ -15,13 +15,13 @@
       "scenario": "healthy",
       "frames": [
         {
-          "observed_seconds": 0.0,
+          "observed_seconds": 0.016,
           "snapshot": {
-            "id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
+            "id": "1c792220-fcc0-4934-9146-024dac054628",
             "scenario": "healthy",
             "state": "QUEUED",
-            "created": 1791015279.7911441,
-            "next_at": 1791015279.7911441,
+            "created": 1791020268.9832962,
+            "next_at": 1791020268.9832962,
             "sends": 0,
             "failures": 0,
             "checks": 0,
@@ -30,8 +30,8 @@
             "events": [
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.7911441,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020268.9832962,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
@@ -45,13 +45,13 @@
           }
         },
         {
-          "observed_seconds": 0.11,
+          "observed_seconds": 0.156,
           "snapshot": {
-            "id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
+            "id": "1c792220-fcc0-4934-9146-024dac054628",
             "scenario": "healthy",
             "state": "ACCEPTED",
-            "created": 1791015279.7911441,
-            "next_at": 1791015280.4512432,
+            "created": 1791020268.9832962,
+            "next_at": 1791020269.6414492,
             "sends": 1,
             "failures": 0,
             "checks": 0,
@@ -60,40 +60,40 @@
             "events": [
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.7911441,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020268.9832962,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8532422,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0424492,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 2225c8b9-fe81-40a7-be4a-54c16f76860d",
+                "detail": "Deliver immutable release command 1c792220-fcc0-4934-9146-024dac054628",
                 "source": "service"
               },
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8909152,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.061988,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
@@ -107,13 +107,13 @@
           }
         },
         {
-          "observed_seconds": 0.454,
+          "observed_seconds": 0.531,
           "snapshot": {
-            "id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
+            "id": "1c792220-fcc0-4934-9146-024dac054628",
             "scenario": "healthy",
             "state": "ACCEPTED",
-            "created": 1791015279.7911441,
-            "next_at": 1791015280.4512432,
+            "created": 1791020268.9832962,
+            "next_at": 1791020269.6414492,
             "sends": 1,
             "failures": 0,
             "checks": 0,
@@ -122,48 +122,48 @@
             "events": [
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.7911441,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020268.9832962,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8532422,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0424492,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 2225c8b9-fe81-40a7-be4a-54c16f76860d",
+                "detail": "Deliver immutable release command 1c792220-fcc0-4934-9146-024dac054628",
                 "source": "service"
               },
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8909152,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.061988,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.2410357,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.4310129,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
@@ -177,13 +177,13 @@
           }
         },
         {
-          "observed_seconds": 0.704,
+          "observed_seconds": 0.766,
           "snapshot": {
-            "id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
+            "id": "1c792220-fcc0-4934-9146-024dac054628",
             "scenario": "healthy",
             "state": "ACCEPTED",
-            "created": 1791015279.7911441,
-            "next_at": 1791015280.4512432,
+            "created": 1791020268.9832962,
+            "next_at": 1791020269.6414492,
             "sends": 1,
             "failures": 0,
             "checks": 1,
@@ -192,64 +192,64 @@
             "events": [
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.7911441,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020268.9832962,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8532422,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0424492,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 2225c8b9-fe81-40a7-be4a-54c16f76860d",
+                "detail": "Deliver immutable release command 1c792220-fcc0-4934-9146-024dac054628",
                 "source": "service"
               },
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8909152,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.061988,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.2410357,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.4310129,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 4,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.46127,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.6995273,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 4,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.4913123,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.7294948,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
@@ -263,13 +263,13 @@
           }
         },
         {
-          "observed_seconds": 0.813,
+          "observed_seconds": 0.891,
           "snapshot": {
-            "id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
+            "id": "1c792220-fcc0-4934-9146-024dac054628",
             "scenario": "healthy",
             "state": "COMPLETED",
-            "created": 1791015279.7911441,
-            "next_at": 1791015280.4512432,
+            "created": 1791020268.9832962,
+            "next_at": 1791020269.6414492,
             "sends": 1,
             "failures": 0,
             "checks": 1,
@@ -278,72 +278,72 @@
             "events": [
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.7911441,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020268.9832962,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8532422,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0424492,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 2225c8b9-fe81-40a7-be4a-54c16f76860d",
+                "detail": "Deliver immutable release command 1c792220-fcc0-4934-9146-024dac054628",
                 "source": "service"
               },
               {
                 "seq": 1,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 2,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8818998,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.0534725,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015279.8909152,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.061988,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 3,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.2410357,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.4310129,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 4,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.46127,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.6995273,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 4,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.4913123,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.7294948,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
               },
               {
                 "seq": 5,
-                "run_id": "2225c8b9-fe81-40a7-be4a-54c16f76860d",
-                "at": 1791015280.5023396,
+                "run_id": "1c792220-fcc0-4934-9146-024dac054628",
+                "at": 1791020269.7415268,
                 "kind": "COMPLETION_CONFIRMED",
                 "detail": "Completed journal entry confirms the simulated release pulse",
                 "source": "service"
@@ -362,14 +362,14 @@
       "scenario": "duplicate",
       "frames": [
         {
-          "observed_seconds": 0.031,
+          "observed_seconds": 0.032,
           "snapshot": {
-            "id": "6f70593b-1361-4f17-b47c-b1be77066b74",
+            "id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
             "scenario": "duplicate",
-            "state": "UNCERTAIN",
-            "created": 1791015280.6162317,
-            "next_at": 1791015281.23125,
-            "sends": 1,
+            "state": "QUEUED",
+            "created": 1791020269.8977087,
+            "next_at": 1791020269.8977087,
+            "sends": 0,
             "failures": 0,
             "checks": 0,
             "duplicate_sent": 0,
@@ -377,18 +377,10 @@
             "events": [
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6162317,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.8977087,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
-                "source": "service"
-              },
-              {
-                "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.633408,
-                "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 6f70593b-1361-4f17-b47c-b1be77066b74",
                 "source": "service"
               }
             ],
@@ -400,13 +392,13 @@
           }
         },
         {
-          "observed_seconds": 0.156,
+          "observed_seconds": 0.172,
           "snapshot": {
-            "id": "6f70593b-1361-4f17-b47c-b1be77066b74",
+            "id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
             "scenario": "duplicate",
             "state": "ACCEPTED",
-            "created": 1791015280.6162317,
-            "next_at": 1791015281.23125,
+            "created": 1791020269.8977087,
+            "next_at": 1791020270.543358,
             "sends": 2,
             "failures": 0,
             "checks": 0,
@@ -415,56 +407,56 @@
             "events": [
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6162317,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.8977087,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.633408,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9458678,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 6f70593b-1361-4f17-b47c-b1be77066b74",
+                "detail": "Deliver immutable release command b86bbc44-e8cf-41d2-8869-e9af8340f1da",
                 "source": "service"
               },
               {
                 "seq": 5,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 8,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6725893,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9840248,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 9,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6851032,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9969344,
                 "kind": "DUPLICATE_INJECTED",
                 "detail": "Test transport delivers the same command ID again",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6971183,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.0207565,
                 "kind": "DUPLICATE_SUPPRESSED",
                 "detail": "Existing journal entry returned; no new pulse scheduled",
                 "source": "device"
@@ -478,13 +470,13 @@
           }
         },
         {
-          "observed_seconds": 0.516,
+          "observed_seconds": 0.5,
           "snapshot": {
-            "id": "6f70593b-1361-4f17-b47c-b1be77066b74",
+            "id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
             "scenario": "duplicate",
             "state": "ACCEPTED",
-            "created": 1791015280.6162317,
-            "next_at": 1791015281.23125,
+            "created": 1791020269.8977087,
+            "next_at": 1791020270.543358,
             "sends": 2,
             "failures": 0,
             "checks": 0,
@@ -493,64 +485,64 @@
             "events": [
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6162317,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.8977087,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.633408,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9458678,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 6f70593b-1361-4f17-b47c-b1be77066b74",
+                "detail": "Deliver immutable release command b86bbc44-e8cf-41d2-8869-e9af8340f1da",
                 "source": "service"
               },
               {
                 "seq": 5,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 8,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6725893,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9840248,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 9,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6851032,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9969344,
                 "kind": "DUPLICATE_INJECTED",
                 "detail": "Test transport delivers the same command ID again",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6971183,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.0207565,
                 "kind": "DUPLICATE_SUPPRESSED",
                 "detail": "Existing journal entry returned; no new pulse scheduled",
                 "source": "device"
               },
               {
                 "seq": 8,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015281.021123,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.3492785,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
@@ -564,13 +556,13 @@
           }
         },
         {
-          "observed_seconds": 0.75,
+          "observed_seconds": 0.735,
           "snapshot": {
-            "id": "6f70593b-1361-4f17-b47c-b1be77066b74",
+            "id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
             "scenario": "duplicate",
             "state": "COMPLETED",
-            "created": 1791015280.6162317,
-            "next_at": 1791015281.23125,
+            "created": 1791020269.8977087,
+            "next_at": 1791020270.543358,
             "sends": 2,
             "failures": 0,
             "checks": 1,
@@ -579,88 +571,88 @@
             "events": [
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6162317,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.8977087,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.633408,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9458678,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 6f70593b-1361-4f17-b47c-b1be77066b74",
+                "detail": "Deliver immutable release command b86bbc44-e8cf-41d2-8869-e9af8340f1da",
                 "source": "service"
               },
               {
                 "seq": 5,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 6,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6620798,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9760249,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 8,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6725893,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9840248,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 9,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6851032,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020269.9969344,
                 "kind": "DUPLICATE_INJECTED",
                 "detail": "Test transport delivers the same command ID again",
                 "source": "service"
               },
               {
                 "seq": 7,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015280.6971183,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.0207565,
                 "kind": "DUPLICATE_SUPPRESSED",
                 "detail": "Existing journal entry returned; no new pulse scheduled",
                 "source": "device"
               },
               {
                 "seq": 8,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015281.021123,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.3492785,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 10,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015281.2892067,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.5849245,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 9,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015281.322756,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.5978875,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "6f70593b-1361-4f17-b47c-b1be77066b74",
-                "at": 1791015281.3342733,
+                "run_id": "b86bbc44-e8cf-41d2-8869-e9af8340f1da",
+                "at": 1791020270.6101031,
                 "kind": "COMPLETION_CONFIRMED",
                 "detail": "Completed journal entry confirms the simulated release pulse",
                 "source": "service"
@@ -681,11 +673,11 @@
         {
           "observed_seconds": 0.031,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "QUEUED",
-            "created": 1791015281.378716,
-            "next_at": 1791015281.378716,
+            "created": 1791020270.659701,
+            "next_at": 1791020270.659701,
             "sends": 0,
             "failures": 0,
             "checks": 0,
@@ -694,28 +686,44 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
+              },
+              {
+                "seq": 10,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 11,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
               }
             ],
             "device": {
-              "online": null,
-              "state": "NOT_RECEIVED",
+              "online": true,
+              "state": "RECEIVED",
               "pulses": 0
             }
           }
         },
         {
-          "observed_seconds": 0.14,
+          "observed_seconds": 0.141,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "ACCEPTED",
-            "created": 1791015281.378716,
-            "next_at": 1791015282.0237815,
+            "created": 1791020270.659701,
+            "next_at": 1791020271.2752204,
             "sends": 1,
             "failures": 0,
             "checks": 0,
@@ -724,40 +732,40 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4257824,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6762223,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+                "detail": "Deliver immutable release command 03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
                 "source": "service"
               },
               {
                 "seq": 10,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4473126,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6952333,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
@@ -771,13 +779,13 @@
           }
         },
         {
-          "observed_seconds": 0.531,
+          "observed_seconds": 0.391,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "ACCEPTED",
-            "created": 1791015281.378716,
-            "next_at": 1791015282.0237815,
+            "created": 1791020270.659701,
+            "next_at": 1791020271.2752204,
             "sends": 1,
             "failures": 0,
             "checks": 0,
@@ -786,48 +794,48 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4257824,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6762223,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+                "detail": "Deliver immutable release command 03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
                 "source": "service"
               },
               {
                 "seq": 10,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4473126,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6952333,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.7998881,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.0487108,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
@@ -841,13 +849,13 @@
           }
         },
         {
-          "observed_seconds": 0.781,
+          "observed_seconds": 0.75,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "UNCERTAIN",
-            "created": 1791015281.378716,
-            "next_at": 1791015282.7015371,
+            "created": 1791020270.659701,
+            "next_at": 1791020271.9783692,
             "sends": 1,
             "failures": 1,
             "checks": 1,
@@ -856,72 +864,72 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4257824,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6762223,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+                "detail": "Deliver immutable release command 03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
                 "source": "service"
               },
               {
                 "seq": 10,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4473126,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6952333,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.7998881,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.0487108,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 15,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0825129,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3352911,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0960248,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3688595,
                 "kind": "ACK_DROPPED",
                 "detail": "Completion response lost after durable simulated actuation",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.104534,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.381369,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
@@ -937,11 +945,11 @@
         {
           "observed_seconds": 1.375,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "UNCERTAIN",
-            "created": 1791015281.378716,
-            "next_at": 1791015282.7015371,
+            "created": 1791020270.659701,
+            "next_at": 1791020271.9783692,
             "sends": 1,
             "failures": 1,
             "checks": 2,
@@ -950,88 +958,88 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4257824,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6762223,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+                "detail": "Deliver immutable release command 03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
                 "source": "service"
               },
               {
                 "seq": 10,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4473126,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6952333,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.7998881,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.0487108,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 15,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0825129,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3352911,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0960248,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3688595,
                 "kind": "ACK_DROPPED",
                 "detail": "Completion response lost after durable simulated actuation",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.104534,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.381369,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.738402,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020272.0177045,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.7477994,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020272.0274878,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
@@ -1045,13 +1053,13 @@
           }
         },
         {
-          "observed_seconds": 1.484,
+          "observed_seconds": 1.516,
           "snapshot": {
-            "id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+            "id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
             "scenario": "lost_ack",
             "state": "COMPLETED",
-            "created": 1791015281.378716,
-            "next_at": 1791015282.7015371,
+            "created": 1791020270.659701,
+            "next_at": 1791020271.9783692,
             "sends": 1,
             "failures": 0,
             "checks": 2,
@@ -1060,96 +1068,96 @@
             "events": [
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.378716,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.659701,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4257824,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6762223,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command 78b2c866-2cc2-4213-8d24-bdcd606b10a9",
+                "detail": "Deliver immutable release command 03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
                 "source": "service"
               },
               {
                 "seq": 10,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "LINK_ONLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 11,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4388015,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6877322,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.4473126,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020270.6952333,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 12,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015281.7998881,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.0487108,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 15,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0825129,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3352911,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 13,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.0960248,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.3688595,
                 "kind": "ACK_DROPPED",
                 "detail": "Completion response lost after durable simulated actuation",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.104534,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020271.381369,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.738402,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020272.0177045,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 14,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.7477994,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020272.0274878,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
               },
               {
                 "seq": 18,
-                "run_id": "78b2c866-2cc2-4213-8d24-bdcd606b10a9",
-                "at": 1791015282.762843,
+                "run_id": "03b6bf88-0ce1-4970-840a-5b3cd6ee3559",
+                "at": 1791020272.0480886,
                 "kind": "RECONCILED",
                 "detail": "Completed journal entry confirms the simulated release pulse",
                 "source": "service"
@@ -1170,12 +1178,12 @@
         {
           "observed_seconds": 0.031,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
-            "state": "UNCERTAIN",
-            "created": 1791015282.873674,
-            "next_at": 1791015283.4912133,
-            "sends": 1,
+            "state": "QUEUED",
+            "created": 1791020272.2203465,
+            "next_at": 1791020272.2203465,
+            "sends": 0,
             "failures": 0,
             "checks": 0,
             "duplicate_sent": 0,
@@ -1183,18 +1191,10 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
-                "source": "service"
-              },
-              {
-                "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
-                "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
                 "source": "service"
               }
             ],
@@ -1206,13 +1206,13 @@
           }
         },
         {
-          "observed_seconds": 0.171,
+          "observed_seconds": 0.156,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "UNCERTAIN",
-            "created": 1791015282.873674,
-            "next_at": 1791015283.5351808,
+            "created": 1791020272.2203465,
+            "next_at": 1791020272.8895786,
             "sends": 1,
             "failures": 1,
             "checks": 0,
@@ -1221,40 +1221,40 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
@@ -1268,13 +1268,13 @@
           }
         },
         {
-          "observed_seconds": 0.765,
+          "observed_seconds": 0.859,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "UNCERTAIN",
-            "created": 1791015282.873674,
-            "next_at": 1791015284.7916143,
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.169442,
             "sends": 1,
             "failures": 2,
             "checks": 1,
@@ -1283,56 +1283,56 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 22,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.5595179,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 23,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.594618,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
@@ -1346,13 +1346,13 @@
           }
         },
         {
-          "observed_seconds": 1.14,
+          "observed_seconds": 1.156,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "UNCERTAIN",
-            "created": 1791015282.873674,
-            "next_at": 1791015284.7916143,
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.169442,
             "sends": 1,
             "failures": 2,
             "checks": 1,
@@ -1361,64 +1361,64 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 22,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.5595179,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 23,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.594618,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.9023323,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020273.2677114,
                 "kind": "LINK_RECONNECTED",
                 "detail": "Visitor restored the simulated network link",
                 "source": "device"
@@ -1434,11 +1434,129 @@
         {
           "observed_seconds": 2.062,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+            "scenario": "disconnected",
+            "state": "UNCERTAIN",
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.8577573,
+            "sends": 2,
+            "failures": 2,
+            "checks": 2,
+            "duplicate_sent": 0,
+            "reconciled": 1,
+            "events": [
+              {
+                "seq": 19,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 20,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "source": "service"
+              },
+              {
+                "seq": 15,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
+                "kind": "LINK_OFFLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 16,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
+                "kind": "DELIVERY_BLOCKED",
+                "detail": "Disconnected: command did not reach controller",
+                "source": "device"
+              },
+              {
+                "seq": 21,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
+                "kind": "OUTCOME_UNCERTAIN",
+                "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
+                "source": "service"
+              },
+              {
+                "seq": 22,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
+                "kind": "RECONCILIATION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 23,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
+                "kind": "OUTCOME_UNCERTAIN",
+                "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
+                "source": "service"
+              },
+              {
+                "seq": 17,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020273.2677114,
+                "kind": "LINK_RECONNECTED",
+                "detail": "Visitor restored the simulated network link",
+                "source": "device"
+              },
+              {
+                "seq": 24,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2337236,
+                "kind": "RECONCILIATION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 25,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2480528,
+                "kind": "JOURNAL_ABSENT",
+                "detail": "Controller confirms no record; retry the same immutable command",
+                "source": "service"
+              },
+              {
+                "seq": 26,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2597673,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "source": "service"
+              },
+              {
+                "seq": 18,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2697139,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "RECEIVED",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 2.171,
+          "snapshot": {
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "ACCEPTED",
-            "created": 1791015282.873674,
-            "next_at": 1791015285.4705431,
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.8577573,
             "sends": 2,
             "failures": 0,
             "checks": 2,
@@ -1447,104 +1565,104 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 22,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.5595179,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 23,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.594618,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.9023323,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020273.2677114,
                 "kind": "LINK_RECONNECTED",
                 "detail": "Visitor restored the simulated network link",
                 "source": "device"
               },
               {
                 "seq": 24,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8472056,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2337236,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 25,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8610291,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2480528,
                 "kind": "JOURNAL_ABSENT",
                 "detail": "Controller confirms no record; retry the same immutable command",
                 "source": "service"
               },
               {
                 "seq": 26,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8725426,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2597673,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 18,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8830538,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2697139,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 27,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8945808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.282207,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
@@ -1558,13 +1676,13 @@
           }
         },
         {
-          "observed_seconds": 2.375,
+          "observed_seconds": 2.421,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "ACCEPTED",
-            "created": 1791015282.873674,
-            "next_at": 1791015285.4705431,
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.8577573,
             "sends": 2,
             "failures": 0,
             "checks": 2,
@@ -1573,112 +1691,112 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 22,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.5595179,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 23,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.594618,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.9023323,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020273.2677114,
                 "kind": "LINK_RECONNECTED",
                 "detail": "Visitor restored the simulated network link",
                 "source": "device"
               },
               {
                 "seq": 24,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8472056,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2337236,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 25,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8610291,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2480528,
                 "kind": "JOURNAL_ABSENT",
                 "detail": "Controller confirms no record; retry the same immutable command",
                 "source": "service"
               },
               {
                 "seq": 26,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8725426,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2597673,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 18,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8830538,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2697139,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 27,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8945808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.282207,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015285.2365143,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.6377196,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
@@ -1692,13 +1810,13 @@
           }
         },
         {
-          "observed_seconds": 2.718,
+          "observed_seconds": 2.796,
           "snapshot": {
-            "id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+            "id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
             "scenario": "disconnected",
             "state": "COMPLETED",
-            "created": 1791015282.873674,
-            "next_at": 1791015285.4705431,
+            "created": 1791020272.2203465,
+            "next_at": 1791020274.8577573,
             "sends": 2,
             "failures": 0,
             "checks": 3,
@@ -1707,136 +1825,136 @@
             "events": [
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.873674,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2203465,
                 "kind": "REQUEST_PERSISTED",
                 "detail": "Release requested; no device completion evidence yet",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.8922136,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2363653,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 15,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "LINK_OFFLINE",
                 "detail": "Synthetic device link initialized",
                 "source": "device"
               },
               {
                 "seq": 16,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9256709,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.2829568,
                 "kind": "DELIVERY_BLOCKED",
                 "detail": "Disconnected: command did not reach controller",
                 "source": "device"
               },
               {
                 "seq": 21,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015282.9371808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.290586,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 22,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.5595179,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9408321,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 23,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.594618,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020272.9714437,
                 "kind": "OUTCOME_UNCERTAIN",
                 "detail": "Device response unavailable; action outcome is unknown; query journal before any resend",
                 "source": "service"
               },
               {
                 "seq": 17,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015283.9023323,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020273.2677114,
                 "kind": "LINK_RECONNECTED",
                 "detail": "Visitor restored the simulated network link",
                 "source": "device"
               },
               {
                 "seq": 24,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8472056,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2337236,
                 "kind": "RECONCILIATION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 25,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8610291,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2480528,
                 "kind": "JOURNAL_ABSENT",
                 "detail": "Controller confirms no record; retry the same immutable command",
                 "source": "service"
               },
               {
                 "seq": 26,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8725426,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2597673,
                 "kind": "COMMAND_SENT",
-                "detail": "Deliver immutable release command ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
+                "detail": "Deliver immutable release command f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
                 "source": "service"
               },
               {
                 "seq": 18,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8830538,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.2697139,
                 "kind": "COMMAND_RECEIVED",
                 "detail": "Receipt only: actuator has not completed",
                 "source": "device"
               },
               {
                 "seq": 27,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015284.8945808,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.282207,
                 "kind": "RECEIPT_ACKNOWLEDGED",
                 "detail": "Device received the command; completion still requires journal evidence",
                 "source": "service"
               },
               {
                 "seq": 19,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015285.2365143,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.6377196,
                 "kind": "PHYSICAL_ACTION_PERFORMED",
                 "detail": "Release pulse applied; simulated locker is OPEN",
                 "source": "device"
               },
               {
                 "seq": 28,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015285.518494,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.9153898,
                 "kind": "COMPLETION_QUERY",
                 "detail": "Read controller journal by command ID",
                 "source": "service"
               },
               {
                 "seq": 20,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015285.5304594,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.9259107,
                 "kind": "COMPLETION_REPORTED",
                 "detail": "Completed command journal entry returned",
                 "source": "device"
               },
               {
                 "seq": 29,
-                "run_id": "ecdcffe8-9bcc-4bc4-ad09-98f4bf94a6ee",
-                "at": 1791015285.5388055,
+                "run_id": "f3e0c925-1a5d-409d-b3dd-7330a2a02d02",
+                "at": 1791020274.934908,
                 "kind": "RECONCILED",
                 "detail": "Completed journal entry confirms the simulated release pulse",
                 "source": "service"
@@ -1845,6 +1963,782 @@
             "device": {
               "online": true,
               "state": "COMPLETED",
+              "pulses": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "crash_before",
+      "frames": [
+        {
+          "observed_seconds": 0.032,
+          "snapshot": {
+            "id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+            "scenario": "crash_before",
+            "state": "QUEUED",
+            "created": 1791020275.0270095,
+            "next_at": 1791020275.0270095,
+            "sends": 0,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 30,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0270095,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": null,
+              "state": "NOT_RECEIVED",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 0.157,
+          "snapshot": {
+            "id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+            "scenario": "crash_before",
+            "state": "ACCEPTED",
+            "created": 1791020275.0270095,
+            "next_at": 1791020275.6702237,
+            "sends": 1,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 30,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0270095,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 31,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0722241,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 9753b301-5d38-47b0-923a-093a57a9a25d",
+                "source": "service"
+              },
+              {
+                "seq": 21,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 22,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 32,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0947506,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "RECEIVED",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 1.063,
+          "snapshot": {
+            "id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+            "scenario": "crash_before",
+            "state": "ACCEPTED",
+            "created": 1791020275.0270095,
+            "next_at": 1791020275.6702237,
+            "sends": 1,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 30,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0270095,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 31,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0722241,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 9753b301-5d38-47b0-923a-093a57a9a25d",
+                "source": "service"
+              },
+              {
+                "seq": 21,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 22,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 32,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0947506,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 23,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.461917,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 24,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.727889,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 1.204,
+          "snapshot": {
+            "id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+            "scenario": "crash_before",
+            "state": "ACCEPTED",
+            "created": 1791020275.0270095,
+            "next_at": 1791020275.6702237,
+            "sends": 1,
+            "failures": 0,
+            "checks": 1,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 30,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0270095,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 31,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0722241,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 9753b301-5d38-47b0-923a-093a57a9a25d",
+                "source": "service"
+              },
+              {
+                "seq": 21,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 22,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 32,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0947506,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 23,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.461917,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 33,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.7253788,
+                "kind": "COMPLETION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 24,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.727889,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 1.329,
+          "snapshot": {
+            "id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+            "scenario": "crash_before",
+            "state": "NEEDS_INSPECTION",
+            "created": 1791020275.0270095,
+            "next_at": 1791020275.6702237,
+            "sends": 1,
+            "failures": 0,
+            "checks": 1,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 30,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0270095,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 31,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0722241,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 9753b301-5d38-47b0-923a-093a57a9a25d",
+                "source": "service"
+              },
+              {
+                "seq": 21,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 22,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.083735,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 32,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.0947506,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 23,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.461917,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 33,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.7253788,
+                "kind": "COMPLETION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 24,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020275.727889,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              },
+              {
+                "seq": 34,
+                "run_id": "9753b301-5d38-47b0-923a-093a57a9a25d",
+                "at": 1791020276.2812989,
+                "kind": "PHYSICAL_OUTCOME_UNRESOLVED",
+                "detail": "Controller restarted without completion evidence; do not resend or infer success. Independent physical inspection is required.",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
+              "pulses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "crash_after",
+      "frames": [
+        {
+          "observed_seconds": 0.047,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "QUEUED",
+            "created": 1791020276.3629987,
+            "next_at": 1791020276.3629987,
+            "sends": 0,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": null,
+              "state": "NOT_RECEIVED",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 0.203,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "ACCEPTED",
+            "created": 1791020276.3629987,
+            "next_at": 1791020277.0277748,
+            "sends": 1,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 36,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4287763,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "source": "service"
+              },
+              {
+                "seq": 25,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 26,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 37,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4559917,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "RECEIVED",
+              "pulses": 0
+            }
+          }
+        },
+        {
+          "observed_seconds": 0.469,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "ACCEPTED",
+            "created": 1791020276.3629987,
+            "next_at": 1791020277.0277748,
+            "sends": 1,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 36,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4287763,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "source": "service"
+              },
+              {
+                "seq": 37,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4559917,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              }
+            ],
+            "device": null
+          }
+        },
+        {
+          "observed_seconds": 1.094,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "ACCEPTED",
+            "created": 1791020276.3629987,
+            "next_at": 1791020277.0277748,
+            "sends": 1,
+            "failures": 0,
+            "checks": 0,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 36,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4287763,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "source": "service"
+              },
+              {
+                "seq": 25,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 26,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 37,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4559917,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 27,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8210206,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 1,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8334491,
+                "kind": "PHYSICAL_ACTION_PERFORMED",
+                "detail": "Independent test instrument observed a release pulse; controller completion is not committed",
+                "source": "instrument"
+              },
+              {
+                "seq": 28,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.23321,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
+              "pulses": 1
+            }
+          }
+        },
+        {
+          "observed_seconds": 1.219,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "ACCEPTED",
+            "created": 1791020276.3629987,
+            "next_at": 1791020277.0277748,
+            "sends": 1,
+            "failures": 0,
+            "checks": 1,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 36,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4287763,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "source": "service"
+              },
+              {
+                "seq": 25,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 26,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 37,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4559917,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 27,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8210206,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 1,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8334491,
+                "kind": "PHYSICAL_ACTION_PERFORMED",
+                "detail": "Independent test instrument observed a release pulse; controller completion is not committed",
+                "source": "instrument"
+              },
+              {
+                "seq": 38,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.0805051,
+                "kind": "COMPLETION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 28,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.23321,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
+              "pulses": 1
+            }
+          }
+        },
+        {
+          "observed_seconds": 1.36,
+          "snapshot": {
+            "id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+            "scenario": "crash_after",
+            "state": "NEEDS_INSPECTION",
+            "created": 1791020276.3629987,
+            "next_at": 1791020277.0277748,
+            "sends": 1,
+            "failures": 0,
+            "checks": 1,
+            "duplicate_sent": 0,
+            "reconciled": 0,
+            "events": [
+              {
+                "seq": 35,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.3629987,
+                "kind": "REQUEST_PERSISTED",
+                "detail": "Release requested; no device completion evidence yet",
+                "source": "service"
+              },
+              {
+                "seq": 36,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4287763,
+                "kind": "COMMAND_SENT",
+                "detail": "Deliver immutable release command 19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "source": "service"
+              },
+              {
+                "seq": 25,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "LINK_ONLINE",
+                "detail": "Synthetic device link initialized",
+                "source": "device"
+              },
+              {
+                "seq": 26,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4392827,
+                "kind": "COMMAND_RECEIVED",
+                "detail": "Receipt only: actuator has not completed",
+                "source": "device"
+              },
+              {
+                "seq": 37,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.4559917,
+                "kind": "RECEIPT_ACKNOWLEDGED",
+                "detail": "Device received the command; completion still requires journal evidence",
+                "source": "service"
+              },
+              {
+                "seq": 27,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8210206,
+                "kind": "EXECUTION_INTENT_DURABLE",
+                "detail": "Controller recorded intent; this is not evidence of a physical action",
+                "source": "device"
+              },
+              {
+                "seq": 1,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020276.8334491,
+                "kind": "PHYSICAL_ACTION_PERFORMED",
+                "detail": "Independent test instrument observed a release pulse; controller completion is not committed",
+                "source": "instrument"
+              },
+              {
+                "seq": 38,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.0805051,
+                "kind": "COMPLETION_QUERY",
+                "detail": "Read controller journal by command ID",
+                "source": "service"
+              },
+              {
+                "seq": 28,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.23321,
+                "kind": "CONTROLLER_RESTARTED",
+                "detail": "Unfinished execution intent found; physical outcome cannot be inferred",
+                "source": "device"
+              },
+              {
+                "seq": 39,
+                "run_id": "19788a78-69d3-4dc1-bfa5-56541c1c3c9d",
+                "at": 1791020277.6118927,
+                "kind": "PHYSICAL_OUTCOME_UNRESOLVED",
+                "detail": "Controller restarted without completion evidence; do not resend or infer success. Independent physical inspection is required.",
+                "source": "service"
+              }
+            ],
+            "device": {
+              "online": true,
+              "state": "IN_DOUBT",
               "pulses": 1
             }
           }

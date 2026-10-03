@@ -81,6 +81,11 @@ under the same settings for all four scenarios. Raw data includes the tested
 commit and environment; timings include polling and intentional fault delays.
 They are not a production latency benchmark.
 
+The [October 3, 2026 recorded run](measurements/README.md#recorded-run--october-3-2026)
+completed 32 measured trials (eight per scenario) with one simulated actuator
+pulse each. Lost-ack trials reconciled without a second command send. This finite
+sample is evidence for these settings, not a universal execution guarantee.
+
 ## Limits and next questions
 
 **Receiving a message is not completing a physical action.** The simulator makes

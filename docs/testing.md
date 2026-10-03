@@ -31,3 +31,24 @@ processes. There is no hardware-in-the-loop test and no full accessibility audit
 Correctness checks are separate from `scripts/measure.py`. That script records
 loopback end-to-end observation times and recovery counts; it does not establish
 capacity, production latency or reliability probabilities.
+
+## First-release verification — October 3, 2026
+
+At commit `bed2e3fe2487ef88596873b1fb57964033cc3d0a`, a fresh local clone and a
+new Python 3.12.14 virtual environment with no third-party packages passed all
+12 Python checks. `python run.py` started the real service and simulator processes
+on two loopback ports. A clean `npm ci` followed by Playwright 1.63.0 / Chromium
+153.0.8010.12 passed all six browser checks against that checkout. Ports were
+changed to 8875/8876 using the documented options to avoid development instances.
+
+An independent code review found command-conflict status, worker failure handling,
+and stale-export issues; those were corrected before this candidate was tested.
+Browser verification also exposed stale status text while creating a new run;
+the UI now clears prior evidence immediately. One earlier browser run encountered
+a transient Windows `ERR_NO_BUFFER_SPACE` during navigation. The complete final
+suite passed, including the clean-checkout run, without test retries.
+
+The committed screenshot was captured from the actual local interface. Secret
+and disclosure pattern checks plus manual diff review found no credentials,
+private career data or employer artifacts. These checks reduce publication risk;
+they are not a third-party security certification.

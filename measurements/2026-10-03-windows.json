@@ -1,0 +1,2707 @@
+{
+  "recorded_at_utc": "2026-10-03T04:59:24.885582+00:00",
+  "tested_commit": "bed2e3fe2487ef88596873b1fb57964033cc3d0a",
+  "environment": {
+    "os": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+    "logical_cpus": 32,
+    "python": "3.12.14",
+    "sqlite": "3.53.1",
+    "runtime_dependencies": "Python standard library only"
+  },
+  "configuration": {
+    "service_interval_seconds": 0.6,
+    "device_action_delay_seconds": 0.35,
+    "device_tick_seconds": 0.025,
+    "service_tick_seconds": 0.05,
+    "max_consecutive_failures": 6,
+    "max_backoff_seconds": 2.4,
+    "http_timeout_seconds": 1,
+    "observer_poll_seconds": 0.05,
+    "disconnect_reconnect_after_seconds": 0.75,
+    "trial_timeout_seconds": 20,
+    "concurrent_operations": 1,
+    "warmups_per_scenario": 1,
+    "repetitions_per_scenario": 8,
+    "seed": null,
+    "seed_note": "No randomized fault schedule or workload; UUIDs identify operations only.",
+    "order": "One warmup per scenario, then round-robin scenario order each repetition."
+  },
+  "timing_boundary": "Client before POST intent to first GET observing terminal service state; process startup excluded.",
+  "trials": [
+    {
+      "scenario": "healthy",
+      "warmup": true,
+      "repetition": 0,
+      "observation_seconds": 0.836881,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.045789
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.0593
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.0593
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.071324
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.422001
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.703514
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.732093
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.743609
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": true,
+      "repetition": 0,
+      "observation_seconds": 0.805244,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.041058
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.07076
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.07076
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.084836
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.096889
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.131576
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.440174
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.691443
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.705225
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.735772
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": true,
+      "repetition": 0,
+      "observation_seconds": 1.379588,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.024549
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.052769
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.052769
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.067244
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.406837
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.639673
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.670039
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.678553
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.303117
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.34761
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.359125
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": true,
+      "repetition": 0,
+      "observation_seconds": 2.720351,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.033255
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.048517
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.048517
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.061077
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.680368
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.696393
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.816186
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.898563
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.929355
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 1.945876
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 1.978282
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 1.994376
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.345704
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.563402
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.593062
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.605092
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 1,
+      "observation_seconds": 0.726029,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.017064
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.028579
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.028579
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.036094
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.38492
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.664697
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.676661
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.685173
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 1,
+      "observation_seconds": 0.799809,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.03816
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.050406
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.050406
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.061917
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.074081
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.085608
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.416231
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.666358
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.696018
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.708051
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 1,
+      "observation_seconds": 1.429771,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.048028
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.060547
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.060547
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.071142
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.417526
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.696449
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.72607
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.733083
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.361778
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.390266
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.401793
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 1,
+      "observation_seconds": 2.843686,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.021536
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.050213
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.050213
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.062724
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.712907
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.746478
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.748481
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.965296
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.997226
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 2.010244
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 2.021266
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.034913
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.400794
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.663928
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.694134
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.702132
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 2,
+      "observation_seconds": 0.815143,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.048759
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.081183
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.081183
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.09324
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.449089
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.667288
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.69584
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.706378
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 2,
+      "observation_seconds": 0.781508,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.040483
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.05455
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.05455
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.068141
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.079683
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.091299
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.41855
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.652181
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.665273
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.678286
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 2,
+      "observation_seconds": 1.456487,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.1329
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.175355
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.175355
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.187394
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.531472
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.747831
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.75743
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.774082
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.411082
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.424594
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.436597
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 2,
+      "observation_seconds": 2.815887,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.046048
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.090766
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.090766
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.099803
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.735152
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.761283
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.79083
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 2.015424
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 2.061502
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 2.077562
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 2.090587
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.1021
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.446689
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.728642
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.757304
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.768819
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 3,
+      "observation_seconds": 0.79644,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.079158
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.091812
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.091812
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.099814
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.448362
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.682619
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.69515
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.709235
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 3,
+      "observation_seconds": 0.781391,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.014514
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.027539
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.027539
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.036547
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.04775
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.073041
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.392577
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.63982
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.651213
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.659737
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 3,
+      "observation_seconds": 1.397565,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.015066
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.027097
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.027097
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.03861
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.399275
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.663564
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.681599
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.695117
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.329329
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.357356
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.369527
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 3,
+      "observation_seconds": 2.76604,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.033159
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.061196
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.062199
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.073717
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.702107
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.746165
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.7717
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.993514
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 2.007135
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 2.019649
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 2.052792
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.064492
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.425814
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.631409
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.640924
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.656592
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 4,
+      "observation_seconds": 0.813033,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.018521
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.032576
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.032576
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.045593
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.401674
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.681015
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.692532
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.709255
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 4,
+      "observation_seconds": 0.732252,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.047346
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.059725
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.059725
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.073236
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.083747
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.09453
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.432225
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.666052
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.693748
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.705978
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 4,
+      "observation_seconds": 1.412788,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.056692
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.06986
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.06986
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.077814
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.426401
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.708276
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.721749
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.733263
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.361345
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.373853
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.382586
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 4,
+      "observation_seconds": 2.741168,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.047164
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.060222
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.060222
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.068583
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.717494
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.751529
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.798615
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 2.008775
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 2.037579
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 2.050097
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 2.098366
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.111227
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.452668
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.673561
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.68719
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.695702
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 5,
+      "observation_seconds": 0.741859,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.037624
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.066686
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.066686
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.074699
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.439626
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.659266
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.672295
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.680301
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 5,
+      "observation_seconds": 0.798103,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.050086
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.061598
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.061598
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.073117
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.085785
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.09781
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.437918
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.672801
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.68485
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.693941
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 5,
+      "observation_seconds": 1.416857,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.055185
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.066696
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.066696
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.078718
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.422928
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.706377
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.719306
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.731322
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.361066
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.37924
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.390262
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 5,
+      "observation_seconds": 2.730371,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.049826
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.061867
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.061867
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.071142
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.722727
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.738783
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.818926
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.955459
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.97107
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 1.984582
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 1.995471
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.007593
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.358361
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.590928
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.623475
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.642025
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 6,
+      "observation_seconds": 0.791032,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.049767
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.061294
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.061294
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.075186
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.435699
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.656703
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.698481
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.705706
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 6,
+      "observation_seconds": 0.695218,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.027039
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.031749
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.031749
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.042867
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.054968
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.070478
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.399112
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.635731
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.654133
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.667653
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 6,
+      "observation_seconds": 1.465535,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.035089
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.047971
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.047971
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.060685
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.404748
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.68688
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.70316
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.714677
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.338619
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.34764
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.361675
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 6,
+      "observation_seconds": 2.6694,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.027546
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.039564
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.039564
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.05108
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.682774
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.714449
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.78413
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.920096
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.955065
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 1.96558
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 1.99922
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.010734
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.379206
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.595644
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.628182
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.639699
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 7,
+      "observation_seconds": 0.724428,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.021744
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.035254
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.035254
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.047766
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.385698
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.623081
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.638594
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.650666
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 7,
+      "observation_seconds": 0.73213,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.025026
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.05512
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.05512
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.068148
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.081678
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.095214
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.426841
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.676712
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.688594
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.700636
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 7,
+      "observation_seconds": 1.442567,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.043695
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.057724
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.057724
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.070279
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.41313
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.695389
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.723348
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.734869
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.362981
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.376995
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.38852
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 7,
+      "observation_seconds": 2.718645,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.001001
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.015585
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.029096
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.029096
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.037213
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.668424
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.700966
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.843544
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.948242
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.966877
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 1.978904
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 1.991621
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.003642
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.368827
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.635317
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.678475
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.689987
+        }
+      ]
+    },
+    {
+      "scenario": "healthy",
+      "warmup": false,
+      "repetition": 8,
+      "observation_seconds": 0.761711,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.041721
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.085658
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.085658
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.094163
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.459903
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.665084
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.683624
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.691638
+        }
+      ]
+    },
+    {
+      "scenario": "duplicate",
+      "warmup": false,
+      "repetition": 8,
+      "observation_seconds": 0.765423,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 1,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.000998
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.059298
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.089359
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.089359
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.100879
+        },
+        {
+          "source": "service",
+          "kind": "DUPLICATE_INJECTED",
+          "elapsed_seconds": 0.113394
+        },
+        {
+          "source": "device",
+          "kind": "DUPLICATE_SUPPRESSED",
+          "elapsed_seconds": 0.149699
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.444818
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.712469
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 0.728491
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_CONFIRMED",
+          "elapsed_seconds": 0.740508
+        }
+      ]
+    },
+    {
+      "scenario": "lost_ack",
+      "warmup": false,
+      "repetition": 8,
+      "observation_seconds": 1.447203,
+      "classification": "completed",
+      "command_sends": 1,
+      "journal_queries": 2,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.023026
+        },
+        {
+          "source": "device",
+          "kind": "LINK_ONLINE",
+          "elapsed_seconds": 0.060363
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 0.060363
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 0.072386
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 0.421243
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 0.642331
+        },
+        {
+          "source": "device",
+          "kind": "ACK_DROPPED",
+          "elapsed_seconds": 0.66038
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.67089
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.288687
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 1.304473
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 1.315993
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "warmup": false,
+      "repetition": 8,
+      "observation_seconds": 2.693316,
+      "classification": "completed",
+      "command_sends": 2,
+      "journal_queries": 3,
+      "actuator_pulses": 1,
+      "events": [
+        {
+          "source": "service",
+          "kind": "REQUEST_PERSISTED",
+          "elapsed_seconds": 0.0
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 0.023076
+        },
+        {
+          "source": "device",
+          "kind": "LINK_OFFLINE",
+          "elapsed_seconds": 0.0522
+        },
+        {
+          "source": "device",
+          "kind": "DELIVERY_BLOCKED",
+          "elapsed_seconds": 0.0522
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.064719
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 0.689201
+        },
+        {
+          "source": "service",
+          "kind": "OUTCOME_UNCERTAIN",
+          "elapsed_seconds": 0.710239
+        },
+        {
+          "source": "device",
+          "kind": "LINK_RECONNECTED",
+          "elapsed_seconds": 0.801562
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILIATION_QUERY",
+          "elapsed_seconds": 1.970084
+        },
+        {
+          "source": "service",
+          "kind": "JOURNAL_ABSENT",
+          "elapsed_seconds": 1.98413
+        },
+        {
+          "source": "service",
+          "kind": "COMMAND_SENT",
+          "elapsed_seconds": 1.996643
+        },
+        {
+          "source": "device",
+          "kind": "COMMAND_RECEIVED",
+          "elapsed_seconds": 2.005159
+        },
+        {
+          "source": "service",
+          "kind": "RECEIPT_ACKNOWLEDGED",
+          "elapsed_seconds": 2.018671
+        },
+        {
+          "source": "device",
+          "kind": "PHYSICAL_ACTION_PERFORMED",
+          "elapsed_seconds": 2.367055
+        },
+        {
+          "source": "service",
+          "kind": "COMPLETION_QUERY",
+          "elapsed_seconds": 2.649126
+        },
+        {
+          "source": "device",
+          "kind": "COMPLETION_REPORTED",
+          "elapsed_seconds": 2.661663
+        },
+        {
+          "source": "service",
+          "kind": "RECONCILED",
+          "elapsed_seconds": 2.674176
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "healthy": {
+      "sample_size": 8,
+      "completed": 8,
+      "median_seconds": 0.7763715,
+      "min_seconds": 0.724428,
+      "max_seconds": 0.815143,
+      "sample_stdev_seconds": 0.03758861318058016
+    },
+    "duplicate": {
+      "sample_size": 8,
+      "completed": 8,
+      "median_seconds": 0.773407,
+      "min_seconds": 0.695218,
+      "max_seconds": 0.799809,
+      "sample_stdev_seconds": 0.03727372580460857
+    },
+    "lost_ack": {
+      "sample_size": 8,
+      "completed": 8,
+      "median_seconds": 1.436169,
+      "min_seconds": 1.397565,
+      "max_seconds": 1.465535,
+      "sample_stdev_seconds": 0.023408659752551318
+    },
+    "disconnected": {
+      "sample_size": 8,
+      "completed": 8,
+      "median_seconds": 2.7357695,
+      "min_seconds": 2.6694,
+      "max_seconds": 2.843686,
+      "sample_stdev_seconds": 0.05912892368723378
+    }
+  }
+}

@@ -111,7 +111,7 @@ input:focus-visible {
 }
 .scenarios {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   font-size: 13px;
 }
@@ -251,6 +251,90 @@ footer p {
 #error {
   color: var(--orange);
 }
+.boundary {
+  margin: 32px 0;
+  padding: 26px;
+  border: 1px solid #647264;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #162a2b, #172126);
+}
+.boundary h2 {
+  font-size: clamp(23px, 3vw, 34px);
+  font-weight: 550;
+  letter-spacing: -0.6px;
+}
+.boundary-intro {
+  color: var(--muted);
+  max-width: 860px;
+  font-size: 14px;
+}
+.boundary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin: 28px 0;
+}
+.boundary article {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px;
+  background: #0b161a80;
+}
+.boundary article > p {
+  font-size: 14px;
+  color: var(--muted);
+}
+.boundary code {
+  color: var(--orange);
+}
+.boundary button {
+  font-size: 12px;
+  margin-top: 12px;
+}
+.pulse-count {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 12px 0;
+}
+.pulse-count strong {
+  font-size: 80px;
+  line-height: 1;
+  font-weight: 450;
+  color: var(--green);
+}
+.pulse-count span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.boundary-decision {
+  text-align: center;
+  align-self: center;
+}
+.boundary-decision strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 550;
+}
+.boundary-decision p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.boundary-decision a {
+  font-size: 13px;
+}
+.decision-mark {
+  display: inline-block;
+  color: var(--orange);
+  font:
+    36px Georgia,
+    serif;
+  border: 1px solid #785d43;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 16px;
+}
 @media (max-width: 700px) {
   main {
     padding: 22px;
@@ -259,6 +343,7 @@ footer p {
     grid-template-columns: 1fr 1fr;
   }
   .evidence,
+  .boundary-grid,
   footer {
     grid-template-columns: 1fr;
   }
@@ -286,5 +371,11 @@ footer p {
   }
   footer {
     gap: 24px;
+  }
+  .boundary {
+    padding: 20px;
+  }
+  .boundary-decision {
+    order: 3;
   }
 }

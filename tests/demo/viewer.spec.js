@@ -10,6 +10,19 @@ test("captured uncertainty and every recovery path remain inspectable", async ({
   await expect(page.locator("#physical")).toHaveText("Open");
   await expect(page.locator("#pulses")).toHaveText("1");
   await expect(page.locator(".notice")).toContainText("does not execute");
+  await expect(page.locator('[data-pulses="crash_before"]')).toHaveText("0");
+  await expect(page.locator('[data-pulses="crash_after"]')).toHaveText("1");
+  for (const [scenario, pulses] of [
+    ["crash_before", "0"],
+    ["crash_after", "1"],
+  ]) {
+    await page.locator(`.scenarios [data-scenario="${scenario}"]`).click();
+    await expect(page.locator("#state")).toHaveText("NEEDS INSPECTION");
+    await expect(page.locator("#pulses")).toHaveText(pulses);
+    await expect(
+      page.locator('[data-kind="PHYSICAL_OUTCOME_UNRESOLVED"]'),
+    ).toHaveCount(1);
+  }
   for (const scenario of ["healthy", "duplicate", "lost_ack", "disconnected"]) {
     await page.locator(`[data-scenario="${scenario}"]`).click();
     await page.locator("#frame").focus();
@@ -25,8 +38,12 @@ test("captured uncertainty and every recovery path remain inspectable", async ({
     await expect(page.locator(`[data-kind="${expected}"]`)).toHaveCount(1);
   }
   await page.locator('[data-scenario="lost_ack"]').click();
-  if (process.env.CAPTURE_DEMO)
+  if (process.env.CAPTURE_DEMO) {
     await page.screenshot({ path: "docs/recorded-viewer.png", fullPage: true });
+    await page
+      .locator("#boundary")
+      .screenshot({ path: "docs/crash-boundary.png" });
+  }
   await page.locator("#play").click();
   await expect(page.locator("#play")).toHaveText("Pause capture");
   await page.locator("#play").click();

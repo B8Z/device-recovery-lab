@@ -50,11 +50,13 @@ def main():
                 if code != 200:
                     raise RuntimeError("Reconnect failed")
                 reconnected = True
-            if value["state"] == "COMPLETED":
+            if value["state"] in ("COMPLETED", "NEEDS_INSPECTION"):
                 break
             time.sleep(.1)
-        if value["state"] != "COMPLETED" or value["device"]["pulses"] != 1:
-            raise RuntimeError("Capture did not reach expected completion")
+        expected_state = "NEEDS_INSPECTION" if scenario.startswith("crash_") else "COMPLETED"
+        expected_pulses = 0 if scenario == "crash_before" else 1
+        if value["state"] != expected_state or not value["device"] or value["device"]["pulses"] != expected_pulses:
+            raise RuntimeError("Capture did not reach the contract's expected outcome")
         traces.append({"scenario": scenario, "frames": frames})
     result = {"captured_at_utc": datetime.now(timezone.utc).isoformat(), "tested_commit": commit,
               "python": platform.python_version(), "os": platform.system(),

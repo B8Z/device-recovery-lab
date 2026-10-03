@@ -17,7 +17,11 @@ import time
 import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lab.common import SCENARIOS, request
+from lab.common import request
+
+# Completion measurements cover the original messaging experiments. Crash
+# boundaries intentionally do not complete and belong to the correctness suite.
+SCENARIOS = ("healthy", "duplicate", "lost_ack", "disconnected")
 
 
 def trial(base, scenario, warmup, repetition):

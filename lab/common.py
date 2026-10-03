@@ -10,7 +10,9 @@ import urllib.error
 import urllib.request
 import uuid
 
-SCENARIOS = ("healthy", "duplicate", "lost_ack", "disconnected")
+SCENARIOS = ("healthy", "duplicate", "lost_ack", "disconnected", "crash_before", "crash_after")
+# Reserved for an intentional crash in the local experiment, not generic failures.
+INJECTED_CRASH_EXIT = 73
 
 
 class Problem(Exception):

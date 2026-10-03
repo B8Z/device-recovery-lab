@@ -8,12 +8,18 @@ const expectations = {
     "Expect: the locker opens, the service becomes uncertain, then a journal query confirms completion.",
   disconnected:
     "Expect: uncertainty and zero pulses while offline. Reconnect the device to recover.",
+  crash_before:
+    "Expect: a real controller-process exit before the pulse. Restart preserves uncertainty; inspection is required.",
+  crash_after:
+    "Expect: one pulse, then a real controller-process exit before completion is recorded. No automatic repeat.",
 };
 const labels = {
   healthy: "Healthy delivery",
   duplicate: "Duplicate command",
   lost_ack: "Lost acknowledgment",
   disconnected: "Disconnected device",
+  crash_before: "Crash before pulse",
+  crash_after: "Crash after pulse",
 };
 let scenario = "healthy",
   current = null,
@@ -35,6 +41,8 @@ const descriptions = {
     "A completed controller journal entry confirms the simulated release.",
   NEEDS_ATTENTION:
     "Automatic recovery paused. Restore the link or investigate, then resume journal queries.",
+  NEEDS_INSPECTION:
+    "The controller restarted with execution intent but no completion record. The action may or may not have happened. Further retries cannot resolve this; independent physical inspection is required.",
 };
 async function api(path, body) {
   const response = await fetch(
@@ -62,7 +70,9 @@ function chooseRun(id) {
   $("service-state").textContent = "Loading evidence";
   $("service-state").className = "";
   $("interpretation").textContent = "Waiting for this experiment's evidence.";
-  $("command-id").textContent = id ? `command / ${id}` : "Submitting a new request";
+  $("command-id").textContent = id
+    ? `command / ${id}`
+    : "Submitting a new request";
   for (const name of ["sends", "checks", "pulses"]) $(name).textContent = "—";
   $("physical-state").textContent = "Unknown";
   $("link-state").textContent = "Loading device evidence";
@@ -119,7 +129,10 @@ $("run").addEventListener("click", async () => {
     await refresh();
   } catch (e) {
     error(e.message);
-    if (previous) { chooseRun(previous); await refresh(); }
+    if (previous) {
+      chooseRun(previous);
+      await refresh();
+    }
   } finally {
     busy = false;
     $("run").disabled = false;
@@ -145,7 +158,9 @@ function render(value) {
   $("service-state").className =
     value.state === "COMPLETED"
       ? "completed"
-      : ["UNCERTAIN", "NEEDS_ATTENTION"].includes(value.state)
+      : ["UNCERTAIN", "NEEDS_ATTENTION", "NEEDS_INSPECTION"].includes(
+            value.state,
+          )
         ? "uncertain"
         : "";
   $("interpretation").textContent = descriptions[value.state];
@@ -177,7 +192,7 @@ function render(value) {
     item.dataset.kind = e.kind;
     item.classList.toggle(
       "fault",
-      /DROPPED|UNCERTAIN|BLOCKED|EXHAUSTED/.test(e.kind),
+      /DROPPED|UNCERTAIN|BLOCKED|EXHAUSTED|UNRESOLVED|RESTARTED/.test(e.kind),
     );
     const time = document.createElement("span");
     time.className = "time";

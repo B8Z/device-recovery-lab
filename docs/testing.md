@@ -5,8 +5,9 @@ the code. Tests count physical pulses and verify intermediate evidence, rather
 than accepting only a final green status.
 
 Run `python -m unittest -v`. These checks exercise real loopback HTTP connections
-and temporary SQLite journals. Explicit worker ticks control ordering without
-sleep-based timing assertions. Coverage includes all four workflows, client and
+and temporary SQLite journals. The original checks use explicit worker ticks.
+The crash checks launch subprocesses and wait for actual exits with bounded
+deadlines; they do not assert a latency threshold. Coverage includes all six workflows, client and
 device duplicate handling, concurrent requests, conflict handling, restart
 persistence, bounded recovery and HTTP input/origin/path boundaries.
 
@@ -23,10 +24,13 @@ history after reload, evidence download, keyboard scenario selection and a narro
 viewport. `CAPTURE_DEMO=1` enables screenshot capture to `docs/demo-lost-ack.png`
 (PowerShell: `$env:CAPTURE_DEMO='1'`). This is a real rendered app screenshot.
 
-Restart tests reopen the persisted controller and service objects with the same
-database files. They model restart at known boundaries; they are not power-loss
-tests. A separate clean-checkout journey verifies the launcher starts two actual
-processes. There is no hardware-in-the-loop test and no full accessibility audit.
+The original restart tests reopen persisted controller and service objects.
+`tests/test_crash_boundary.py` additionally kills the device process at explicit
+injection boundaries using `os._exit`, checks its exit code and journal on disk,
+then starts a new process against those files. Both pulse counts, duplicate
+handling, blocked resume and unrelated queued work are checked. These are not
+power-loss tests. The browser crash journeys also exercise automatic restart in
+the launcher. There is no hardware-in-the-loop test and no full accessibility audit.
 
 Correctness checks are separate from `scripts/measure.py`. That script records
 loopback end-to-end observation times and recovery counts; it does not establish
@@ -38,7 +42,9 @@ capacity, production latency or reliability probabilities.
 run with `python scripts/capture_traces.py`. The script requires a clean checkout;
 start fresh lab processes from that same checkout before capturing. It retains
 changed snapshots at a 100 ms polling interval, restores the disconnected link
-after one second, and checks completion with one pulse in each scenario.
+after one second, and checks each terminal outcome against the contract:
+completion with one pulse for the four messaging cases; inspection with zero
+or one pulses for the before/after crash cases.
 One run per scenario is demonstration evidence, not a new performance sample.
 
 The JSON retains the source revision, capture date, runtime and capture settings.
@@ -55,7 +61,7 @@ npx playwright test --config playwright.demo.config.js
 ```
 
 Run the second command in another terminal while the server is running.
-The check covers all four recorded outcomes, uncertainty, pulse counts, keyboard
+The check covers all six recorded outcomes, uncertainty, pulse counts, keyboard
 stepping, playback controls and a narrow viewport.
 
 ## First-release verification — October 3, 2026

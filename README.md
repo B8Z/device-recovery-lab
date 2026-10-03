@@ -20,13 +20,27 @@ lab below to execute the processes and inject your own failures.
 *The device panel is diagnostic instrumentation. My recovery service must query
 the device journal; it cannot use this panel as completion evidence.*
 
-## Three failures to explore
+## Start with three communication failures
 
 | Inject a failure | What to inspect |
 | --- | --- |
 | **Duplicate command** | Two deliveries share one command ID. The controller suppresses the duplicate and records one pulse. |
 | **Lost acknowledgment** | The device acts, then its completion response is dropped. The service enters UNCERTAIN and reconciles from the journal without resending. |
 | **Disconnected device** | The service backs off while the device remains closed. Restore the link and watch it query the journal before retrying the same command. |
+
+## Then break the assumption that permits recovery
+
+**What if the controller dies between applying a pulse and recording completion?**
+I terminate the actual controller process just before or just after the pulse.
+After restart, both journals say `IN_DOUBT`, but the diagnostic instrument shows
+zero pulses in one run and one in the other. The service stops at
+`NEEDS_INSPECTION` because neither a retry nor a success claim follows from that evidence.
+
+[![Actual captured crash runs: the same IN_DOUBT journal state with zero versus one physical pulses](docs/crash-boundary.png)](https://b8z.github.io/device-recovery-lab/#crash_after)
+
+**[Inspect the crash comparison](https://b8z.github.io/device-recovery-lab/#boundary)**
+· [Read my reasoning](docs/crash-boundary.md)
+· [Check the actual process-exit tests](tests/test_crash_boundary.py)
 
 <details>
 <summary>See a complete captured run and its recovery timeline</summary>
@@ -63,7 +77,10 @@ command instead; Windows also supports `py -3 run.py`.
 3. Select **Disconnected device**, request release, then **Reconnect device**.
    Leaving it disconnected eventually pauses automatic recovery; reconnect also
    resumes reconciliation.
-4. Use **Export evidence JSON** or **Recent run** to inspect and compare runs.
+4. Compare **Crash before pulse** with **Crash after pulse**. The launcher restarts
+   the device process; both runs require inspection, with zero and one pulses
+   respectively. The ordinary resume action cannot supply missing evidence.
+5. Use **Export evidence JSON** or **Recent run** to inspect and compare runs.
 
 Stop both processes with Ctrl+C. Journals persist in `.lab/` (ignored by Git).
 For a fresh session use `python run.py --data-dir .lab/fresh`. Busy ports can be
@@ -97,7 +114,10 @@ and database. Each run uses one fresh synthetic locker and one release command.
 - [Recovery controller](lab/service.py): durable intent before I/O, bounded backoff,
   ambiguous outcomes, journal-first retries and explicit attention state.
 - [Device journal](lab/device.py): asynchronous receipt versus execution, durable
-  duplicate suppression, and an actual dropped HTTP response.
+  duplicate suppression, an actual dropped HTTP response, and abrupt process exit
+  before completion is journaled.
+- [Crash-boundary tests](tests/test_crash_boundary.py): distinguish a lost response
+  from missing physical evidence; demonstrate when recovery must stop.
 - [Acceptance tests](tests/test_recovery.py): pulse-count invariants, restarts,
   conflicts, concurrent requests, failure budgets and HTTP boundaries.
 - [Architecture and alternatives](docs/architecture.md): why this slice uses two
@@ -110,7 +130,7 @@ and database. Each run uses one fresh synthetic locker and one release command.
 python -m unittest -v
 ```
 
-I check correctness with 12 Python tests and six Playwright browser tests,
+I check correctness with 16 Python tests and eight live Playwright browser tests,
 including duplicate suppression, process restarts, recovery budgets, and the
 visible user journey. The browser checks are optional; setup and coverage are in
 [docs/testing.md](docs/testing.md).
@@ -131,17 +151,18 @@ it does not establish a universal execution guarantee.
 
 ## Limits and next questions
 
-**Receiving a message is not completing a physical action.** I made the
-simulator’s pulse counter and completion record atomic in SQLite. Real hardware
-usually cannot join that transaction. Controller journal loss, a crash between
-motor movement and durable recording, and ambiguous sensor readings need
-additional device-specific safeguards or human intervention. I don’t claim
-exactly-once physical execution.
+**Receiving a message is not completing a physical action.** The four messaging
+cases commit their simulated pulse and completion together. The two crash cases
+deliberately separate the action from the completion record, then demonstrate
+why unresolved execution requires independent inspection. They do not implement
+a sensor or an operator-resolution workflow. I don’t claim exactly-once physical
+execution, power-loss safety, or resilience to controller journal loss.
 
-Completed here: three injected failures, healthy baseline, restartable journals,
-bounded recovery, visible evidence, automated acceptance and browser checks.
-Future experiments, **not implemented**: controller storage loss, actuator/journal
-crash gaps, multiple devices/controllers, and alternative broker transports.
+Completed here: three communication failures, two actual process-crash boundaries,
+a healthy baseline, restartable journals, bounded recovery, visible evidence,
+automated acceptance and browser checks.
+Future experiments, **not implemented**: independent physical resolution,
+controller storage loss, multiple devices/controllers, and alternative broker transports.
 
 I created this independent personal demonstration with synthetic data in October
 2026. It contains no employer code, interfaces, or incident reconstructions, and

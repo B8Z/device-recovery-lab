@@ -67,6 +67,42 @@ test("narrow viewport has no horizontal overflow", async ({ page }) => {
     page.getByRole("button", { name: "Duplicate command" }),
   ).toHaveAttribute("aria-pressed", "true");
 });
+for (const [scenario, pulses] of [
+  ["crash_before", "0"],
+  ["crash_after", "1"],
+]) {
+  test(`actual process ${scenario} requires inspection without retry`, async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.locator(`[data-scenario="${scenario}"]`).click();
+    await page.getByRole("button", { name: "Request release" }).click();
+    await expect(page.locator("#service-state")).toHaveText(
+      "NEEDS INSPECTION",
+      { timeout: 15000 },
+    );
+    await expect(page.locator("#pulses")).toHaveText(pulses);
+    await expect(page.locator("#sends")).toHaveText("1");
+    await expect(page.locator("#resume")).toBeHidden();
+    await expect(
+      page.locator('[data-kind="CONTROLLER_RESTARTED"]'),
+    ).toHaveCount(1);
+    const wait = page.waitForEvent("download");
+    await page.locator("#export").click();
+    const file = await wait;
+    const evidence = JSON.parse(await fs.readFile(await file.path(), "utf8"));
+    expect(evidence.state).toBe("NEEDS_INSPECTION");
+    expect(evidence.device.pulses).toBe(Number(pulses));
+    const resume = await page.request.post(`/api/runs/${evidence.id}/resume`, {
+      data: {},
+    });
+    expect(resume.status()).toBe(409);
+    await page.reload();
+    await expect(page.locator("#service-state")).toHaveText("NEEDS INSPECTION");
+    await expect(page.locator("#pulses")).toHaveText(pulses);
+    await expect(page.locator("#sends")).toHaveText("1");
+  });
+}
 test("changing runs disables export until matching evidence arrives", async ({
   page,
 }) => {

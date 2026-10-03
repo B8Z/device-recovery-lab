@@ -74,7 +74,8 @@ the need for the controller journal, reconciliation, and ambiguous-outcome polic
   replacement journal could authorize an unsafe repeat on real hardware.
 - A real actuator can move between writing its intent and completion record.
   That crash gap needs device-specific sensing, durable controller semantics,
-  safe idempotent operations or manual intervention. This demo does not solve it.
+  safe idempotent operations or manual intervention. ADR-002 below demonstrates
+  the ambiguous state; this demo does not automatically resolve it.
 - The diagnostic `/lab` endpoints intentionally bypass the simulated broken link
   for visitor inspection. The recovery algorithm uses only `/commands`.
 - Standard-library HTTP servers are local development servers. Both bind to
@@ -89,3 +90,44 @@ the need for the controller journal, reconciliation, and ambiguous-outcome polic
 [Python SQLite transactions](https://docs.python.org/3/library/sqlite3.html#transaction-control)
 and [HTTP server limitations](https://docs.python.org/3/library/http.server.html),
 consulted October 3, 2026. The behavior contract remains the acceptance oracle.
+
+# ADR-002: Stop when execution intent outlives completion evidence
+
+**Status:** Accepted · **Date:** October 3, 2026 · **Owner:** Adam Bates
+
+The original atomic pulse/journal model isolates transport failures but cannot
+demonstrate a controller dying across a physical side effect. I added two targeted
+fault cases without changing the original four cases or relabeling their measurements.
+
+```text
+Controller journal: RECEIVED → EXECUTING [committed] ─────────→ COMPLETED
+                                         │         │
+Crash before pulse:                      ×         │
+Independent test instrument:                 pulse [committed separately]
+Crash after pulse:                                 ×
+On restart: EXECUTING → IN_DOUBT → service NEEDS_INSPECTION
+```
+
+The device process exits abruptly with the reserved injection code `73`.
+`run.py` restarts only this deliberate exit; unexpected failures still stop the
+lab. The restarted controller converts unfinished EXECUTING records to IN_DOUBT.
+It does not read the instrument to choose that state. Command responses now
+contain only ID and state, while the visitor's diagnostic snapshot includes the
+separate instrument count and events.
+
+The instrument uses its own SQLite file to persist a synthetic physical effect
+outside the completion transaction. It is a test observer, not a physical device
+driver or an additional source of execution authority. Existing journal files
+remain compatible; no existing operations are rewritten or deleted.
+
+NEEDS_INSPECTION is separate from NEEDS_ATTENTION: replenishing a query budget
+cannot repair missing completion evidence. Resume returns HTTP 409. Duplicate
+delivery of the same command ID returns IN_DOUBT without scheduling another pulse.
+The original normal execution transaction commits before an injected crash is
+attempted, so unrelated received commands survive the crash.
+
+I considered an in-memory crash flag, but it would not test process survival or
+on-disk recovery. I also considered automatic reconciliation from the diagnostic
+counter, but that would give the controller an observation the modeled device
+protocol does not supply. Both would hide the uncertainty this experiment needs
+to expose. See the [walkthrough and limits](crash-boundary.md).

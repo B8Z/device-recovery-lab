@@ -14,6 +14,8 @@ const explanations = {
     "The service has completion evidence from the controller journal. The simulated pulse count is one.",
   NEEDS_ATTENTION:
     "Automatic recovery has paused. The live lab requires reconnection or an explicit resume.",
+  NEEDS_INSPECTION:
+    "The controller restarted with intent but no completion record. This same evidence can mean zero or one physical actions. The service stops; retrying cannot resolve the missing fact.",
 };
 function stop() {
   clearInterval(timer);
@@ -50,7 +52,7 @@ function render() {
       li.dataset.kind = event.kind;
       li.classList.toggle(
         "fault",
-        /DROPPED|UNCERTAIN|BLOCKED/.test(event.kind),
+        /DROPPED|UNCERTAIN|BLOCKED|UNRESOLVED|RESTARTED/.test(event.kind),
       );
       const time = document.createElement("span");
       time.textContent = `+${(event.at - v.created).toFixed(2)}s`;
@@ -77,9 +79,10 @@ function choose(scenario) {
             f.snapshot.state === "UNCERTAIN" && f.snapshot.device?.pulses === 1,
         )
       : 0;
+  if (scenario.startsWith("crash_")) frame = trace.frames.length - 1;
   if (frame < 0) frame = 0;
   $("frame").max = trace.frames.length - 1;
-  for (const b of document.querySelectorAll("[data-scenario]"))
+  for (const b of document.querySelectorAll("[data-scenario][aria-pressed]"))
     b.setAttribute("aria-pressed", String(b.dataset.scenario === scenario));
   render();
 }
@@ -121,7 +124,11 @@ $("play").addEventListener("click", () => {
 });
 for (const b of document.querySelectorAll("[data-scenario]"))
   b.addEventListener("click", () => {
-    if (data) choose(b.dataset.scenario);
+    if (data) {
+      choose(b.dataset.scenario);
+      if (b.closest(".boundary"))
+        document.querySelector(".controls").scrollIntoView({ block: "center" });
+    }
   });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) stop();
@@ -131,7 +138,20 @@ document.addEventListener("visibilitychange", () => {
     const response = await fetch("traces.json");
     if (!response.ok) throw new Error("Captured evidence could not be loaded.");
     data = await response.json();
-    choose("lost_ack");
+    for (const scenario of ["crash_before", "crash_after"]) {
+      const capture = data.traces.find((t) => t.scenario === scenario);
+      const v = capture.frames.at(-1).snapshot;
+      document.querySelector(`[data-pulses="${scenario}"]`).textContent =
+        v.device.pulses;
+      document.querySelector(`[data-journal="${scenario}"]`).textContent =
+        v.device.state;
+    }
+    const requested = location.hash.slice(1);
+    choose(
+      data.traces.some((t) => t.scenario === requested)
+        ? requested
+        : "lost_ack",
+    );
     $("provenance").textContent =
       `Captured ${data.captured_at_utc.slice(0, 10)} · source commit ${data.tested_commit} · Python ${data.python}. One demonstration per scenario. Playback advances a snapshot every 700 ms; displayed timestamps retain the observed timing.`;
   } catch (error) {

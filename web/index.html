@@ -67,6 +67,32 @@
             ><span>Restore the link. Reconcile.</span>
           </button>
         </div>
+        <div class="boundary-label">
+          Controller crash boundary / same journal evidence, different physical
+          outcomes
+        </div>
+        <div
+          class="scenarios crash-scenarios"
+          role="group"
+          aria-label="Controller crash experiment"
+        >
+          <button
+            class="scenario"
+            data-scenario="crash_before"
+            aria-pressed="false"
+          >
+            <span class="number">04</span><strong>Crash before pulse</strong
+            ><span>Intent survives. No action occurs.</span>
+          </button>
+          <button
+            class="scenario"
+            data-scenario="crash_after"
+            aria-pressed="false"
+          >
+            <span class="number">05</span><strong>Crash after pulse</strong
+            ><span>The action occurs. Completion is never recorded.</span>
+          </button>
+        </div>
         <div class="run-controls">
           <p id="expectation">
             Expect: receipt first, then one release pulse and confirmed
@@ -148,9 +174,9 @@
           evidence instead of treating a timeout as a failed action.
         </p>
         <p>
-          Synthetic simulation. No real hardware. The simulator commits
-          actuation and its journal atomically; a physical controller needs its
-          own crash-safety strategy. No exactly-once claim.
+          Synthetic simulation. No real hardware. Messaging scenarios commit the
+          pulse and completion together. Crash scenarios deliberately separate
+          them and stop for inspection. No exactly-once claim.
         </p>
         <a
           href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/behavior.md"

@@ -88,8 +88,12 @@ class Service:
                 self.dispatch(row)
             elif status != 200:
                 raise Problem(status, value.get("error", "Journal lookup rejected"))
-            elif value.get("id") != run_id or value.get("state") not in ("RECEIVED", "COMPLETED"):
+            elif value.get("id") != run_id or value.get("state") not in ("RECEIVED", "EXECUTING", "IN_DOUBT", "COMPLETED"):
                 raise Problem(502, "Invalid controller evidence")
+            elif value["state"] == "IN_DOUBT":
+                self.record(run_id, "PHYSICAL_OUTCOME_UNRESOLVED",
+                            "Controller restarted without completion evidence; do not resend or infer success. Independent physical inspection is required.",
+                            state="NEEDS_INSPECTION")
             elif value["state"] == "COMPLETED":
                 reconciled = row["reconciled"] or row["state"] == "UNCERTAIN"
                 self.record(run_id, "RECONCILED" if reconciled else "COMPLETION_CONFIRMED",
@@ -140,6 +144,8 @@ class Service:
             row = con.execute("SELECT state FROM runs WHERE id=?", (run_id,)).fetchone()
             if not row:
                 raise Problem(404, "Unknown experiment")
+            if row["state"] == "NEEDS_INSPECTION":
+                raise Problem(409, "Unresolved physical outcome: journal retries cannot supply missing evidence")
             if row["state"] == "NEEDS_ATTENTION":
                 con.execute("UPDATE runs SET state='UNCERTAIN',failures=0,checks=0,next_at=? WHERE id=?", (time.time(), run_id))
                 event(con, run_id, "RECONCILIATION_RESUMED", "Visitor resumed journal queries; command identity preserved")

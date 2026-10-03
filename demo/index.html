@@ -56,6 +56,12 @@
         ><button data-scenario="disconnected" aria-pressed="false">
           03 / Disconnected device
         </button>
+        <button data-scenario="crash_before" aria-pressed="false">
+          04 / Crash before pulse
+        </button>
+        <button data-scenario="crash_after" aria-pressed="false">
+          05 / Crash after pulse
+        </button>
       </div>
       <div class="controls">
         <button id="previous">← Previous</button
@@ -98,6 +104,58 @@
           </p>
         </article>
       </div>
+      <section id="boundary" class="boundary" aria-labelledby="boundary-title">
+        <p class="eyebrow">
+          THE LIMIT OF AUTOMATIC RECOVERY / ACTUAL PROCESS CRASHES
+        </p>
+        <h2 id="boundary-title">Same evidence. Different physical outcomes.</h2>
+        <p class="boundary-intro">
+          I terminate the controller at two points around the simulated pulse.
+          After restart, neither journal contains completion evidence. These
+          cards show the final captured snapshots.
+        </p>
+        <div class="boundary-grid">
+          <article>
+            <span class="eyebrow">CRASH BEFORE THE PULSE</span>
+            <div class="pulse-count">
+              <strong data-pulses="crash_before">—</strong
+              ><span>physical pulses<br />test instrument</span>
+            </div>
+            <p>Journal: <code data-journal="crash_before">Loading</code></p>
+            <button data-scenario="crash_before">
+              Inspect before-pulse run →
+            </button>
+          </article>
+          <div class="boundary-decision">
+            <span class="decision-mark" aria-hidden="true">?</span>
+            <strong>The service cannot distinguish them.</strong>
+            <p>
+              Preserve uncertainty.<br />Do not repeat the action.<br />Require
+              independent inspection.
+            </p>
+            <a
+              href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/crash-boundary.md"
+              >Why I stop here →</a
+            >
+          </div>
+          <article>
+            <span class="eyebrow">CRASH AFTER THE PULSE</span>
+            <div class="pulse-count">
+              <strong data-pulses="crash_after">—</strong
+              ><span>physical pulses<br />test instrument</span>
+            </div>
+            <p>Journal: <code data-journal="crash_after">Loading</code></p>
+            <button data-scenario="crash_after">
+              Inspect after-pulse run →
+            </button>
+          </article>
+        </div>
+        <p class="small">
+          The instrument is a separate store. Its pulse count is visible to you,
+          but is absent from the controller's command response and excluded from
+          recovery decisions. No real hardware is involved.
+        </p>
+      </section>
       <section class="timeline">
         <div class="line">
           <h2>Observed event timeline</h2>
@@ -121,10 +179,10 @@
         <div>
           <h2>What this does not establish</h2>
           <p>
-            The simulator commits the pulse and completion record atomically.
-            Real hardware may move before durable recording, so its recovery
-            needs device-specific safeguards. This is synthetic personal work,
-            with no exactly-once physical-execution claim.
+            Messaging experiments commit the simulated pulse and completion
+            together. The two crash experiments remove that assumption and stop
+            for inspection. Real hardware needs device-specific safeguards; this
+            personal simulation makes no exactly-once physical-execution claim.
           </p>
           <a
             href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/architecture.md"

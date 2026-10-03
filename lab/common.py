@@ -90,8 +90,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Content-Security-Policy", "default-src 'self'; style-src 'self'; img-src 'self'; frame-ancestors 'none'")
-        self.end_headers()
         try:
+            self.end_headers()
             self.wfile.write(body)
         except ConnectionError:
             pass
@@ -135,7 +135,7 @@ class Server(ThreadingHTTPServer):
         self.app = app
 
 
-def run_server(server, interval):
+def run_server(server, interval, workers=1):
     """Fail the process if its worker fails, rather than serve a dead controller."""
     stop = threading.Event()
     failures = []
@@ -148,13 +148,15 @@ def run_server(server, interval):
             failures.append(exc)
             server.shutdown()
 
-    thread = threading.Thread(target=worker, daemon=True)
-    thread.start()
+    threads = [threading.Thread(target=worker, daemon=True) for _ in range(workers)]
+    for thread in threads:
+        thread.start()
     try:
         server.serve_forever(poll_interval=0.1)
     finally:
         stop.set()
-        thread.join(timeout=3)
+        for thread in threads:
+            thread.join(timeout=3)
         server.server_close()
     if failures:
         raise RuntimeError("Recovery worker failed; HTTP server stopped") from failures[0]

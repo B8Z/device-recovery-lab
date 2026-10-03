@@ -4,6 +4,7 @@ import http.client
 from pathlib import Path
 import time
 import urllib.error
+import uuid
 
 from .common import Handler, Problem, SCENARIOS, Server, database, event, events, identifier, initialize, request, run_server
 
@@ -11,15 +12,28 @@ TRANSPORT_ERRORS = (OSError, urllib.error.URLError, http.client.HTTPException)
 STATIC = Path(__file__).resolve().parent.parent / "web"
 
 
+class LostLease(Exception):
+    """A former worker cannot record evidence after its ownership expires."""
+
+
 class Service:
-    def __init__(self, path, device_url, interval=0.6, max_failures=6, max_backoff=2.4):
+    def __init__(self, path, device_url, interval=0.6, max_failures=6, max_backoff=2.4, lease_seconds=5):
         self.path, self.device_url = path, device_url
         self.interval, self.max_failures, self.max_backoff = interval, max_failures, max_backoff
+        self.lease_seconds = lease_seconds
         initialize(path, """CREATE TABLE IF NOT EXISTS runs (
             id TEXT PRIMARY KEY, scenario TEXT NOT NULL, state TEXT NOT NULL,
             created REAL NOT NULL, next_at REAL NOT NULL, sends INTEGER NOT NULL DEFAULT 0,
             failures INTEGER NOT NULL DEFAULT 0, checks INTEGER NOT NULL DEFAULT 0,
             duplicate_sent INTEGER NOT NULL DEFAULT 0, reconciled INTEGER NOT NULL DEFAULT 0)""")
+        with database(path) as con:
+            con.execute("BEGIN IMMEDIATE")
+            columns = {r["name"] for r in con.execute("PRAGMA table_info(runs)")}
+            for name, definition in (("lease_owner", "TEXT"), ("lease_until", "REAL NOT NULL DEFAULT 0"),
+                                     ("epoch", "INTEGER NOT NULL DEFAULT 0")):
+                if name not in columns:
+                    con.execute(f"ALTER TABLE runs ADD COLUMN {name} {definition}")
+            con.execute("CREATE INDEX IF NOT EXISTS ready_work ON runs(state,next_at,lease_until)")
 
     def create(self, body):
         run_id = identifier(body.get("id"))
@@ -39,19 +53,44 @@ class Service:
             event(con, run_id, "REQUEST_PERSISTED", "Release requested; no device completion evidence yet")
             return dict(con.execute("SELECT * FROM runs WHERE id=?", (run_id,)).fetchone())
 
-    def record(self, run_id, kind, detail, **changes):
+    def record(self, run_id, kind, detail, *, owner=None, **changes):
         with database(self.path) as con:
+            con.execute("BEGIN IMMEDIATE")
+            if owner is not None and not con.execute(
+                    "SELECT 1 FROM runs WHERE id=? AND lease_owner=? AND lease_until>?",
+                    (run_id, owner, time.time())).fetchone():
+                raise LostLease(run_id)
             # Column names are exclusively internal keyword arguments.
             if changes:
                 con.execute("UPDATE runs SET " + ",".join(f"{k}=?" for k in changes) + " WHERE id=?",
                             (*changes.values(), run_id))
             event(con, run_id, kind, detail)
 
+    def record_owned(self, row, kind, detail, **changes):
+        self.record(row["id"], kind, detail, owner=row["lease_owner"], **changes)
+
+    def claim(self, run_id, epoch):
+        now, owner = time.time(), str(uuid.uuid4())
+        with database(self.path) as con:
+            con.execute("BEGIN IMMEDIATE")
+            changed = con.execute("""UPDATE runs SET lease_owner=?,lease_until=?,epoch=epoch+1
+                WHERE id=? AND epoch=? AND lease_until<=? AND next_at<=?
+                AND state IN ('QUEUED','ACCEPTED','UNCERTAIN')""",
+                (owner, now + self.lease_seconds, run_id, epoch, now, now)).rowcount
+            if not changed:
+                return None
+            return dict(con.execute("SELECT * FROM runs WHERE id=?", (run_id,)).fetchone())
+
+    def release(self, row):
+        with database(self.path) as con:
+            con.execute("UPDATE runs SET lease_owner=NULL,lease_until=0 WHERE id=? AND lease_owner=?",
+                        (row["id"], row["lease_owner"]))
+
     def uncertain(self, row, detail):
         failures = row["failures"] + 1
         exhausted = failures >= self.max_failures
         delay = min(self.max_backoff, self.interval * 2 ** (failures - 1))
-        self.record(row["id"], "RETRY_BUDGET_EXHAUSTED" if exhausted else "OUTCOME_UNCERTAIN",
+        self.record_owned(row, "RETRY_BUDGET_EXHAUSTED" if exhausted else "OUTCOME_UNCERTAIN",
                     detail + ("; resume reconciliation after investigation" if exhausted else "; query journal before any resend"),
                     state="NEEDS_ATTENTION" if exhausted else "UNCERTAIN", failures=failures,
                     next_at=time.time() + delay, reconciled=1)
@@ -59,16 +98,16 @@ class Service:
     def dispatch(self, row):
         run_id = row["id"]
         # Persist intent before I/O. A crash now resumes with a journal query.
-        self.record(run_id, "COMMAND_SENT", "Deliver immutable release command " + run_id,
+        self.record_owned(row, "COMMAND_SENT", "Deliver immutable release command " + run_id,
                     state="UNCERTAIN", sends=row["sends"] + 1, next_at=time.time() + self.interval)
         body = {"id": run_id, "locker": run_id, "action": "release", "scenario": row["scenario"]}
         status, value = request(self.device_url + "/commands", body)
         if status != 202:
             raise Problem(status, value.get("error", "Device rejected command"))
-        self.record(run_id, "RECEIPT_ACKNOWLEDGED", "Device received the command; completion still requires journal evidence",
+        self.record_owned(row, "RECEIPT_ACKNOWLEDGED", "Device received the command; completion still requires journal evidence",
                     state="ACCEPTED", failures=0)
         if row["scenario"] == "duplicate" and not row["duplicate_sent"]:
-            self.record(run_id, "DUPLICATE_INJECTED", "Test transport delivers the same command ID again",
+            self.record_owned(row, "DUPLICATE_INJECTED", "Test transport delivers the same command ID again",
                         duplicate_sent=1, sends=row["sends"] + 2)
             status, value = request(self.device_url + "/commands", body)
             if status != 202:
@@ -80,44 +119,52 @@ class Service:
             if row["state"] == "QUEUED":
                 self.dispatch(row)
                 return
-            self.record(run_id, "RECONCILIATION_QUERY" if row["state"] == "UNCERTAIN" else "COMPLETION_QUERY",
+            self.record_owned(row, "RECONCILIATION_QUERY" if row["state"] == "UNCERTAIN" else "COMPLETION_QUERY",
                         "Read controller journal by command ID", checks=row["checks"] + 1)
             status, value = request(self.device_url + "/commands/" + run_id)
             if status == 404:
-                self.record(run_id, "JOURNAL_ABSENT", "Controller confirms no record; retry the same immutable command")
+                self.record_owned(row, "JOURNAL_ABSENT", "Controller confirms no record; retry the same immutable command")
                 self.dispatch(row)
             elif status != 200:
                 raise Problem(status, value.get("error", "Journal lookup rejected"))
             elif value.get("id") != run_id or value.get("state") not in ("RECEIVED", "EXECUTING", "IN_DOUBT", "COMPLETED"):
                 raise Problem(502, "Invalid controller evidence")
             elif value["state"] == "IN_DOUBT":
-                self.record(run_id, "PHYSICAL_OUTCOME_UNRESOLVED",
+                self.record_owned(row, "PHYSICAL_OUTCOME_UNRESOLVED",
                             "Controller restarted without completion evidence; do not resend or infer success. Independent physical inspection is required.",
                             state="NEEDS_INSPECTION")
             elif value["state"] == "COMPLETED":
                 reconciled = row["reconciled"] or row["state"] == "UNCERTAIN"
-                self.record(run_id, "RECONCILED" if reconciled else "COMPLETION_CONFIRMED",
+                self.record_owned(row, "RECONCILED" if reconciled else "COMPLETION_CONFIRMED",
                             "Completed journal entry confirms the simulated release pulse",
                             state="COMPLETED", failures=0, reconciled=int(reconciled))
             else:
                 # Bound total unanswered completion polls as well as transport failures.
                 if row["checks"] + 1 >= 30:
-                    self.record(run_id, "COMPLETION_DEADLINE", "Receipt persisted but completion not observed; investigate controller",
+                    self.record_owned(row, "COMPLETION_DEADLINE", "Receipt persisted but completion not observed; investigate controller",
                                 state="NEEDS_ATTENTION")
                 else:
-                    self.record(run_id, "AWAITING_COMPLETION", "Receipt exists; actuator completion not yet recorded",
+                    self.record_owned(row, "AWAITING_COMPLETION", "Receipt exists; actuator completion not yet recorded",
                                 state="ACCEPTED", failures=0, next_at=time.time() + self.interval)
         except TRANSPORT_ERRORS:
             self.uncertain(row, "Device response unavailable; action outcome is unknown")
         except Problem as exc:
-            self.record(run_id, "PROTOCOL_REJECTED", exc.message, state="NEEDS_ATTENTION")
+            self.record_owned(row, "PROTOCOL_REJECTED", exc.message, state="NEEDS_ATTENTION")
 
     def tick(self):
         with database(self.path) as con:
-            rows = con.execute("""SELECT * FROM runs WHERE state IN ('QUEUED','ACCEPTED','UNCERTAIN')
-                AND next_at<=? ORDER BY created LIMIT 20""", (time.time(),)).fetchall()
+            rows = con.execute("""SELECT id,epoch FROM runs WHERE state IN ('QUEUED','ACCEPTED','UNCERTAIN')
+                AND next_at<=? AND lease_until<=? ORDER BY next_at,created LIMIT 20""",
+                               (time.time(), time.time())).fetchall()
         for row in rows:
-            self.step(dict(row))
+            owned = self.claim(row["id"], row["epoch"])
+            if owned:
+                try:
+                    self.step(owned)
+                except LostLease:
+                    pass  # The successor must decide from durable evidence.
+                finally:
+                    self.release(owned)
 
     def snapshot(self, run_id):
         with database(self.path) as con:
@@ -192,10 +239,10 @@ class ServiceHandler(Handler):
             raise Problem(404, "Unknown endpoint")
 
 
-def serve(port, path, device_url):
+def serve(port, path, device_url, workers=4):
     app = Service(path, device_url)
     server = Server(port, ServiceHandler, app)
-    run_server(server, 0.05)
+    run_server(server, 0.05, workers)
 
 
 if __name__ == "__main__":
@@ -203,5 +250,6 @@ if __name__ == "__main__":
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--device-port", type=int, default=8766)
     parser.add_argument("--data", default=".lab/service.sqlite3")
+    parser.add_argument("--workers", type=int, choices=range(1,17), default=4)
     args = parser.parse_args()
-    serve(args.port, args.data, f"http://127.0.0.1:{args.device_port}")
+    serve(args.port, args.data, f"http://127.0.0.1:{args.device_port}", args.workers)

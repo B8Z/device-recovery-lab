@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--device-port", type=int, default=8766)
     parser.add_argument("--data-dir", default=".lab")
+    parser.add_argument("--workers", type=int, choices=range(1,17), default=4)
     args = parser.parse_args()
     if args.port == args.device_port or not all(1024 <= p <= 65535 for p in (args.port, args.device_port)):
         parser.error("Choose two distinct ports between 1024 and 65535")
@@ -33,7 +34,7 @@ def main():
         for role, port in (("device", args.device_port), ("service", args.port)):
             command = [sys.executable, "-m", f"lab.{role}", "--port", str(port), "--data", str(data / f"{role}.sqlite3")]
             if role == "service":
-                command += ["--device-port", str(args.device_port)]
+                command += ["--device-port", str(args.device_port), "--workers", str(args.workers)]
             child = subprocess.Popen(command, cwd=root)
             children.append(child)
             commands.append(command)

@@ -13,6 +13,8 @@ test("the opening explains the disagreement and shows recovery without another a
   await expect(page.locator("#service-brief")).toHaveText("No confirmation");
   for (const viewport of [
     { width: 1366, height: 900 },
+    { width: 821, height: 870 },
+    { width: 768, height: 1024 },
     { width: 390, height: 844 },
     { width: 375, height: 812 },
   ]) {

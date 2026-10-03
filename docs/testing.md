@@ -155,7 +155,8 @@ explorer still uses 700 ms. Neither interval represents elapsed process time.
 The device drawing, displayed outcome and counters all use the same snapshot.
 
 Four static browser tests pass, including a new journey that checks the opening's
-action and physical-state readout fit within 1366×900, 390×844 and 375×812 viewports.
+action and physical-state readout fit within 1366×900, 821×870, 768×1024,
+390×844 and 375×812 viewports, including the actual in-app browser panel width.
 It activates recovery by keyboard, verifies confirmation with one command send
 and one physical action, then changes to a controller-crash case and checks focus
 reaches the new replay action. The hero is inside the main landmark, and a compact

@@ -1,0 +1,12 @@
+{
+  "name": "device-recovery-lab-browser-checks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional browser verification; the lab runtime has no npm dependencies",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

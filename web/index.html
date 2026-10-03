@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Device Recovery Lab</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="eyebrow">ADAM BATES / ENGINEERING LAB 01</span
+        ><a href="https://github.com/B8Z/device-recovery-lab"
+          >Inspect the source ↗</a
+        >
+      </header>
+      <section class="intro">
+        <div>
+          <h1>A message arrived.<br />Did the locker open?</h1>
+          <p>
+            Break a simulated device workflow. Follow the evidence from request
+            to receipt, physical action, and recovery.
+          </p>
+        </div>
+        <div class="lab-label">
+          <span class="dot"></span> LOCAL LAB<span
+            >Two processes · separate journals</span
+          >
+        </div>
+      </section>
+      <section aria-labelledby="scenario-heading" class="experiment">
+        <div class="section-label">
+          <h2 id="scenario-heading">01 / Choose an experiment</h2>
+          <span>Each run uses a fresh synthetic locker</span>
+        </div>
+        <div class="scenarios" role="group" aria-label="Failure scenario">
+          <button
+            class="scenario selected"
+            data-scenario="healthy"
+            aria-pressed="true"
+          >
+            <span class="number">00</span><strong>Healthy delivery</strong
+            ><span>Establish the baseline.</span>
+          </button>
+          <button
+            class="scenario"
+            data-scenario="duplicate"
+            aria-pressed="false"
+          >
+            <span class="number">01</span><strong>Duplicate command</strong
+            ><span>Two deliveries. One identity.</span>
+          </button>
+          <button
+            class="scenario"
+            data-scenario="lost_ack"
+            aria-pressed="false"
+          >
+            <span class="number">02</span><strong>Lost acknowledgment</strong
+            ><span>The action happened. The reply did not.</span>
+          </button>
+          <button
+            class="scenario"
+            data-scenario="disconnected"
+            aria-pressed="false"
+          >
+            <span class="number">03</span><strong>Disconnected device</strong
+            ><span>Restore the link. Reconcile.</span>
+          </button>
+        </div>
+        <div class="run-controls">
+          <p id="expectation">
+            Expect: receipt first, then one release pulse and confirmed
+            completion.
+          </p>
+          <button id="run" class="primary">Request release →</button>
+        </div>
+        <p id="error" class="error" role="alert" hidden></p>
+      </section>
+      <section aria-labelledby="evidence-heading">
+        <div class="section-label">
+          <h2 id="evidence-heading">02 / Follow the evidence</h2>
+          <label
+            >Recent run
+            <select id="history">
+              <option value="">No experiments yet</option>
+            </select></label
+          >
+        </div>
+        <div class="evidence-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              SERVICE KNOWLEDGE <span>Authoritative decision</span>
+            </div>
+            <h3 id="service-state" aria-live="polite">Ready to request</h3>
+            <p id="interpretation">
+              An accepted message is a receipt. Completion needs evidence from
+              the device.
+            </p>
+            <div class="stats">
+              <div><strong id="sends">—</strong><span>command sends</span></div>
+              <div>
+                <strong id="checks">—</strong><span>journal queries</span>
+              </div>
+            </div>
+            <code id="command-id">No command ID yet</code>
+            <div class="actions">
+              <button id="reconnect" hidden>Reconnect device</button
+              ><button id="resume" hidden>Resume reconciliation</button
+              ><button id="export" hidden>Export evidence JSON</button>
+            </div>
+          </article>
+          <article class="panel device-panel">
+            <div class="panel-heading">
+              DEVICE REALITY <span>Test instrument</span>
+            </div>
+            <div class="device-visual">
+              <div class="locker" id="locker">
+                <div class="door"><span>LAB / 01</span><i></i></div>
+              </div>
+              <div>
+                <h3 id="physical-state">Closed</h3>
+                <p id="link-state">No experiment started</p>
+                <strong class="pulse" id="pulses">0</strong
+                ><span class="pulse-label">actuator pulses</span>
+              </div>
+            </div>
+            <p class="instrument-note">
+              This diagnostic view can see behind a broken link. The recovery
+              service cannot use it to decide completion.
+            </p>
+          </article>
+        </div>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h3>Event timeline</h3>
+            <span>Elapsed time · source · observation</span>
+          </div>
+          <ol id="timeline">
+            <li class="empty">
+              Start an experiment to inspect its command and recovery history.
+            </li>
+          </ol>
+        </div>
+      </section>
+      <footer>
+        <p>
+          <strong>What this proves:</strong> retry decisions can follow durable
+          evidence instead of treating a timeout as a failed action.
+        </p>
+        <p>
+          Synthetic simulation. No real hardware. The simulator commits
+          actuation and its journal atomically; a physical controller needs its
+          own crash-safety strategy. No exactly-once claim.
+        </p>
+        <a
+          href="https://github.com/B8Z/device-recovery-lab/blob/main/docs/behavior.md"
+          >Read the behavior contract ↗</a
+        >
+      </footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

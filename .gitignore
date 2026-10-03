@@ -1,0 +1,11 @@
+.lab/
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+.npm-cache/
+.browsers/
+test-results/
+playwright-report/
+.verify/
+.env*

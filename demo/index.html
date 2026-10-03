@@ -16,14 +16,13 @@
       crossorigin
     />
     <link rel="stylesheet" href="style.css?v=ac6b3865fe0e" />
-    <link rel="stylesheet" href="instrument.css?v=4094956e5ede" />
+    <link rel="stylesheet" href="instrument.css?v=1850b2086c4e" />
   </head>
   <body>
     <a class="skip" href="#experiment">Skip to the experiment</a>
     <div class="masthead">
       <header class="site-header wrap">
         <a class="brand" href="https://github.com/B8Z"
-          ><span class="brand-mark">ab<span>.</span></span
           ><span>Adam Bates<small>Software engineer</small></span></a
         >
         <nav aria-label="Main">
@@ -43,12 +42,10 @@
           <div class="hero-intro">
             <div>
               <p class="eyebrow">
-                <span class="signal-dot"></span> DEVICE RECOVERY LAB
-                <span class="edition">/ ENGINEERING STUDY 01</span>
+                DEVICE RECOVERY LAB
+                <span class="edition">/ ADAM BATES</span>
               </p>
-              <h1 id="hero-title" tabindex="-1">
-                A timeout can hide<br /><span>a completed action.</span>
-              </h1>
+              <h1 id="hero-title" tabindex="-1">Did it <em>happen?</em></h1>
             </div>
             <div class="intro-aside">
               <p>
@@ -86,301 +83,132 @@
                 <div id="apparatus" class="apparatus">
                   <svg
                     id="device-drawing"
-                    viewBox="0 15 710 420"
+                    viewBox="0 0 690 330"
                     role="img"
-                    aria-label="A simulated locker and a recovery service connected by separate command and response paths. The illustration follows captured observations."
+                    aria-label="A line drawing of a simulated locker and recovery service. Separate command and response paths connect them; the door follows captured observations."
                   >
                     <defs>
-                      <linearGradient id="front" x1="0" y1="0" x2="1" y2=".6">
-                        <stop stop-color="#c4c9cc" />
-                        <stop offset=".48" stop-color="#969fa5" />
-                        <stop offset="1" stop-color="#59636c" />
-                      </linearGradient>
-                      <linearGradient id="side" x2="1" y2="1">
-                        <stop stop-color="#45515c" />
-                        <stop offset=".55" stop-color="#303944" />
-                        <stop offset="1" stop-color="#171e26" />
-                      </linearGradient>
-                      <linearGradient id="top" x2="1" y2="1">
-                        <stop stop-color="#e0e5e7" />
-                        <stop offset="1" stop-color="#70818a" />
-                      </linearGradient>
-                      <linearGradient id="inside" x2="1" y2="1">
-                        <stop stop-color="#0a1016" />
-                        <stop offset="1" stop-color="#2f3a40" />
-                      </linearGradient>
-                      <linearGradient id="door" x2="1" y2=".7">
-                        <stop stop-color="#87959d" />
-                        <stop offset=".5" stop-color="#d3dadd" />
-                        <stop offset="1" stop-color="#73818b" />
-                      </linearGradient>
-                      <linearGradient id="edge" x2="1" y2="0">
-                        <stop stop-color="#d7e0e4" />
-                        <stop offset=".5" stop-color="#81929c" />
-                        <stop offset="1" stop-color="#394650" />
-                      </linearGradient>
-                      <radialGradient id="ground">
-                        <stop stop-color="#607778" stop-opacity=".2" />
-                        <stop
-                          offset="1"
-                          stop-color="#607778"
-                          stop-opacity="0"
-                        />
-                      </radialGradient>
-                      <filter
-                        id="shadow"
-                        x="-40%"
-                        y="-50%"
-                        width="180%"
-                        height="200%"
-                      >
-                        <feGaussianBlur stdDeviation="13" />
-                      </filter>
                       <pattern
-                        id="floor"
-                        width="60"
-                        height="60"
+                        id="hatch"
+                        width="7"
+                        height="7"
                         patternUnits="userSpaceOnUse"
-                        patternTransform="matrix(1 .22 -1 .22 355 328)"
                       >
                         <path
-                          d="M60 0H0V60"
-                          stroke="#778b99"
-                          stroke-opacity=".13"
+                          d="M0 7L7 0"
                           fill="none"
+                          stroke="#cccbbf"
+                          stroke-width=".7"
                         />
                       </pattern>
                     </defs>
-                    <ellipse
-                      cx="470"
-                      cy="386"
-                      rx="233"
-                      ry="103"
-                      fill="url(#ground)"
-                    />
-                    <path
-                      d="M145 315L458 227 714 313 418 474Z"
-                      fill="url(#floor)"
-                    />
-                    <ellipse
-                      cx="472"
-                      cy="397"
-                      rx="140"
-                      ry="23"
-                      fill="#000"
-                      opacity=".6"
-                      filter="url(#shadow)"
-                    />
-                    <path d="M190 173H258L326 196" class="command-wire" />
-                    <path d="M326 288L260 320H190" class="return-wire" />
-                    <g class="wire-caption">
-                      <text x="203" y="155">COMMAND →</text>
-                      <text x="207" y="345" id="return-path-label">
-                        REPLY LOST
-                      </text>
-                    </g>
-                    <g id="lost-reply-mark" class="lost-reply-mark">
-                      <circle cx="239" cy="320" r="14" fill="#121923" />
+                    <g
+                      class="service-node"
+                      stroke="#242620"
+                      stroke-width="1.5"
+                      fill="#f5f2e9"
+                    >
+                      <rect x="18" y="106" width="166" height="148" />
                       <path
-                        d="M234 315l10 10m0-10l-10 10"
-                        stroke="#ff956e"
-                        stroke-width="2"
+                        d="M18 145H184M36 175H77M36 186H95M36 210H143M36 221H125"
                       />
-                    </g>
-                    <g class="service-node">
-                      <rect
-                        x="26"
-                        y="144"
-                        width="165"
-                        height="204"
-                        rx="15"
-                        fill="#151e28"
-                        stroke="#425365"
-                      />
-                      <path d="M26 191H191" stroke="#354450" />
-                      <circle cx="45" cy="167" r="3" fill="#baf078" />
-                      <text
-                        x="58"
-                        y="171"
-                        fill="#d8e0e5"
-                        font-size="12"
-                        font-family="monospace"
-                      >
+                      <text x="34" y="130" font-size="12" stroke="none">
                         RECOVERY SERVICE
                       </text>
-                      <rect
-                        x="46"
-                        y="212"
-                        width="123"
-                        height="36"
-                        rx="5"
-                        fill="#0b1118"
-                      />
-                      <path
-                        d="M57 225h38m-38 9h23"
-                        stroke="#76909a"
-                        stroke-width="2"
-                      />
-                      <circle cx="153" cy="230" r="3" fill="#baf078" />
-                      <path
-                        d="M47 272h98m-98 12h79m-79 12h106"
-                        stroke="#4f6574"
-                        stroke-width="3"
-                      />
-                      <text
-                        x="47"
-                        y="324"
-                        font-family="monospace"
-                        font-size="12"
-                        fill="#a9b8c6"
-                      >
+                      <text x="34" y="244" font-size="10" stroke="none">
                         DURABLE INTENT
                       </text>
                     </g>
-                    <g class="locker-shell">
-                      <path
-                        d="M384 60L599 116 650 86 437 32Z"
-                        fill="url(#top)"
-                        stroke="#c0ccd1"
-                        stroke-opacity=".5"
+                    <path d="M184 163H287L361 134" class="command-wire" />
+                    <path d="M360 250L282 279H184V233" class="return-wire" />
+                    <g class="wire-caption">
+                      <text x="202" y="145">COMMAND →</text>
+                      <text x="208" y="301" id="return-path-label">
+                        REPLY LOST
+                      </text>
+                    </g>
+                    <g class="lost-reply-mark">
+                      <rect
+                        x="226"
+                        y="267"
+                        width="24"
+                        height="24"
+                        fill="#f5f2e9"
                       />
                       <path
-                        d="M599 116L650 86V347L599 382Z"
-                        fill="url(#side)"
-                        stroke="#51616e"
-                      />
-                      <path
-                        d="M384 60L599 116V382L384 326Z"
-                        fill="url(#front)"
-                        stroke="#b7c6ce"
-                        stroke-width="1.2"
-                      />
-                      <path
-                        d="M398 85L586 134V362L398 312Z"
-                        fill="#303b42"
-                        stroke="#d0dadd"
-                        stroke-opacity=".5"
-                      />
-                      <path
-                        d="M405 94L579 140V351L405 306Z"
-                        fill="url(#inside)"
-                        stroke="#142029"
-                        stroke-width="4"
-                      />
-                      <path d="M405 306L443 279 579 315V351Z" fill="#414d54" />
-                      <path d="M443 106V279L405 306V94Z" fill="#161f26" />
-                      <path
-                        d="M444 279L578 315"
-                        stroke="#64727b"
-                        stroke-width="1"
-                      />
-                      <path
-                        d="M611 169l25-14m-25 22l25-14m-25 22l25-14m-25 22l25-14m-25 22l25-14"
-                        stroke="#788793"
-                        stroke-opacity=".4"
+                        d="M232 273l12 12m0-12l-12 12"
+                        stroke="#b9381d"
                         stroke-width="2"
                       />
-                      <circle cx="615" cy="326" r="2" fill="#85959c" />
-                      <circle cx="632" cy="315" r="2" fill="#85959c" />
+                    </g>
+                    <g
+                      class="locker-shell"
+                      stroke="#242620"
+                      stroke-width="1.5"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M376 29L577 69 625 42 423 3Z" fill="#f5f2e9" />
                       <path
-                        d="M408 74l67 17"
-                        stroke="#eef3f5"
-                        stroke-opacity=".75"
+                        d="M577 69L625 42V274L577 305Z"
+                        fill="url(#hatch)"
                       />
-                      <text
-                        x="400"
-                        y="77"
-                        transform="rotate(15 400 77)"
-                        font-family="monospace"
-                        font-size="8"
-                        fill="#24333e"
-                      >
-                        LAB / LKR–01
-                      </text>
-                      <circle cx="587" cy="126" r="3" fill="#c5f597" />
-                      <path d="M590 350l3 .8v10l-3-.8z" fill="#101820" />
-                      <g class="parcel">
+                      <path d="M376 29L577 69V305L376 264Z" fill="#ece8dd" />
+                      <path d="M391 54L562 88V285L391 250Z" fill="#242620" />
+                      <path d="M391 250L429 225 562 251V285Z" fill="#76776e" />
+                      <path d="M391 54L429 62V225L391 250Z" fill="#44473e" />
+                      <path
+                        d="M592 105l19-11m-19 19l19-11m-19 19l19-11m-19 19l19-11"
+                      />
+                      <g class="parcel" fill="#f5f2e9">
+                        <path d="M439 197L481 181 528 192 486 209Z" />
                         <path
-                          d="M447 241L500 222 549 237 495 257Z"
-                          fill="#ddc798"
+                          d="M439 197L486 209V254L439 242Z"
+                          fill="#d5cbbb"
                         />
                         <path
-                          d="M447 241L495 257V311L447 297Z"
-                          fill="#ae8d59"
+                          d="M486 209L528 192V238L486 254Z"
+                          fill="#e8e0d1"
                         />
                         <path
-                          d="M495 257L549 237V289L495 311Z"
-                          fill="#c0a574"
+                          d="M456 190L503 202V220L513 216V198L467 187"
+                          fill="#f5f2e9"
+                          stroke-width="1"
                         />
-                        <path
-                          d="M467 234l48 16v21l-13 5v-23l-48-15z"
-                          fill="#ecd8ab"
-                        />
-                        <path d="M508 279l20-7v14l-20 8z" fill="#e7dfc8" />
-                        <path d="M512 281l12-4m-12 8l9-3" stroke="#80785e" />
                       </g>
                       <g class="door-closed">
-                        <path
-                          d="M403 91L580 139V353L403 307Z"
-                          fill="url(#door)"
-                          stroke="#d6e0e4"
-                        />
-                        <path
-                          d="M420 113L565 151V329L420 291Z"
-                          fill="#9aabb4"
-                          stroke="#748690"
-                        />
-                        <path d="M548 212l6 2v36l-6-2z" fill="#273640" />
-                        <path
-                          d="M415 102L572 144"
-                          stroke="#f4f8fa"
-                          opacity=".5"
-                        />
+                        <path d="M391 54L562 88V285L391 250Z" fill="#d6d0c3" />
+                        <path d="M407 74L546 101V267L407 238Z" fill="#e5dfd2" />
+                        <path d="M534 164V196" stroke-width="5" />
                       </g>
                       <g class="door-open">
-                        <path
-                          d="M399 91L315 139V354L399 307Z"
-                          fill="url(#door)"
-                          stroke="#e0e7eb"
-                          stroke-width="1.4"
-                        />
-                        <path d="M399 91L405 94V309L399 307Z" fill="#8196a2" />
-                        <path
-                          d="M315 139L307 137V353L315 354Z"
-                          fill="#526a7b"
-                        />
-                        <path
-                          d="M328 150L385 118V293L328 325Z"
-                          fill="#708994"
-                          stroke="#bbcbd2"
-                        />
-                        <path
-                          d="M330 151L385 121V293L377 297V132L330 158Z"
-                          fill="#405b6d"
-                        />
-                        <path d="M329 230l6-3v34l-6 3z" fill="#1a2f3d" />
-                        <path
-                          d="M307 137L393 88 399 91 315 139Z"
-                          fill="#d3dde2"
-                        />
-                        <path
-                          d="M319 146V344"
-                          stroke="#f7fafb"
-                          stroke-opacity=".55"
-                        />
+                        <path d="M391 54L314 91V286L391 250Z" fill="#c4472c" />
+                        <path d="M326 101L378 76V236L326 260Z" fill="#db7559" />
+                        <path d="M332 163V197" stroke-width="4" />
+                        <path d="M314 91L308 88V282L314 286Z" fill="#242620" />
                       </g>
                       <path
-                        d="M396 125l8 2v29l-8-2zM396 263l8 2v29l-8-2z"
-                        fill="url(#edge)"
-                        stroke="#3e5462"
+                        d="M387 87l8 2v21l-8-2zM387 206l8 2v21l-8-2z"
+                        fill="#f5f2e9"
                       />
                       <path
-                        d="M386 328l15 4v11l-15-4zM582 379l14 4v10l-14-4zM635 356l11-7v10l-11 7z"
-                        fill="#0b1117"
+                        d="M383 266v10m184 28v12m47-35v9"
+                        stroke-width="3"
+                      />
+                      <text
+                        x="390"
+                        y="44"
+                        transform="rotate(11 390 44)"
+                        font-size="9"
+                        stroke="none"
+                      >
+                        LKR–01 / SIMULATED
+                      </text>
+                    </g>
+                    <g fill="none" stroke="#919185" stroke-width=".7">
+                      <path
+                        d="M645 44v230m-4-230h8m-8 230h8M376 320H577m-201-4v8m201-8v8"
                       />
                     </g>
-                    <path d="M659 148h25v85" stroke="#56717a" fill="none" />
-                    <circle cx="659" cy="148" r="3" fill="#baf078" />
                   </svg>
                   <div class="device-caption">
                     <div>
@@ -800,7 +628,7 @@
         </details>
       </div>
     </main>
-    <script src="viewer.js?v=a6d50dc96f24" defer></script>
+    <script src="viewer.js?v=71f1066f31dc" defer></script>
     <script src="workload.js?v=f0dcc9934358" defer></script>
   </body>
 </html>

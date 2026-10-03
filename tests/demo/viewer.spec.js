@@ -43,7 +43,7 @@ test("the opening explains the disagreement and shows recovery without another a
 }) => {
   await page.goto("/");
   await expect(page.locator("main #hero-title")).toContainText(
-    "A timeout can hide",
+    "Did it happen?",
   );
   await expect(page.locator("#case-title")).toHaveText(
     "The door opened. The reply didn’t.",
@@ -97,7 +97,7 @@ test("the opening explains the disagreement and shows recovery without another a
   await expect(page.locator("#decision-title")).toHaveText(
     "The service must stop.",
   );
-  await expect(page.locator("#hero-title")).toContainText("A timeout can hide");
+  await expect(page.locator("#hero-title")).toContainText("Did it happen?");
 });
 
 test("captured uncertainty and every recovery path remain inspectable", async ({

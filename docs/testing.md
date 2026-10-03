@@ -205,3 +205,10 @@ It also checks a late-arriving completion-query event, pause/resume, and replay
 completion. The existing scenario, workload, keyboard and viewport checks remain.
 The discrete device illustration changes directly with the selected snapshot,
 so its image and action count agree on initial load and while seeking.
+
+The October 3 field-guide redesign retains these five browser checks and the
+same captures. The opening uses a custom SVG line drawing, a paper background,
+and a continuous snapshot timeline. The primary action and observed state still
+fit all seven tested opening viewports; keyboard access and reduced-motion
+behavior are unchanged. Screenshots show the rendered redesign. This visual
+revision introduces no new runtime behavior or performance measurements.

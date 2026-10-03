@@ -215,9 +215,10 @@ function render() {
   $("guided-result").textContent =
     `${result}${v.device ? ` · ${v.device.pulses} action${v.device.pulses === 1 ? "" : "s"}` : ""}`;
   $("guided-result").classList.toggle("confirmed", v.state === "COMPLETED");
-  $("state").style.color = v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
+  $("state").style.color =
+    v.state === "COMPLETED" ? "var(--confirmed)" : "var(--accent)";
   $("status-marker").style.background =
-    v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
+    v.state === "COMPLETED" ? "var(--confirmed)" : "var(--accent)";
   $("event-count").textContent =
     `${v.events.length} OBSERVATIONS / ELAPSED · SOURCE · EVIDENCE`;
   $("explanation").textContent = explanations[v.state];

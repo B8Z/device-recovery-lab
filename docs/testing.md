@@ -47,8 +47,14 @@ snapshot where the service is uncertain but the diagnostic device panel is open.
 Playback advances snapshots every 700 ms; the displayed elapsed times remain the
 original observations. It does not rerun the service in the browser.
 
-Serve `demo/` on port 8879 with `python -m http.server 8879 --bind 127.0.0.1
---directory demo`, then run `npx playwright test --config playwright.demo.config.js`.
+Serve `demo/` on port 8879:
+
+```sh
+python -m http.server 8879 --bind 127.0.0.1 --directory demo
+npx playwright test --config playwright.demo.config.js
+```
+
+Run the second command in another terminal while the server is running.
 The check covers all four recorded outcomes, uncertainty, pulse counts, keyboard
 stepping, playback controls and a narrow viewport.
 

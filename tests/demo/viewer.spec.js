@@ -5,14 +5,21 @@ test("the opening explains the disagreement and shows recovery without another a
 }) => {
   await page.goto("/");
   await expect(page.locator("main #hero-title")).toContainText(
-    "The door opened.",
+    "Device recovery is",
+  );
+  await expect(page.locator("#case-title")).toHaveText(
+    "The door opened. The reply didn’t.",
+  );
+  await expect(page.locator("#decision-title")).toHaveText(
+    "Check before repeating.",
   );
   await expect(page.locator("#guided-result")).toHaveText(
     "Unconfirmed · 1 action",
   );
-  await expect(page.locator("#service-brief")).toHaveText("No confirmation");
   for (const viewport of [
     { width: 1366, height: 900 },
+    { width: 1366, height: 768 },
+    { width: 1280, height: 720 },
     { width: 821, height: 870 },
     { width: 768, height: 1024 },
     { width: 390, height: 844 },
@@ -21,6 +28,7 @@ test("the opening explains the disagreement and shows recovery without another a
     await page.setViewportSize(viewport);
     const action = await page.locator("#resolve").boundingBox();
     const physical = await page.locator("#physical").boundingBox();
+    await expect(page.locator(".instrument-caption")).toBeVisible();
     expect(action.y + action.height).toBeLessThanOrEqual(viewport.height);
     expect(physical.y + physical.height).toBeLessThanOrEqual(viewport.height);
   }
@@ -34,17 +42,24 @@ test("the opening explains the disagreement and shows recovery without another a
   );
   await expect(page.locator("#sends")).toHaveText("1");
   await expect(page.locator("#pulses")).toHaveText("1");
-  await expect(page.locator("#service-brief")).toHaveText(
-    "Completion confirmed",
+  await expect(page.locator("#decision-title")).toHaveText(
+    "Confirmed. No second action.",
+  );
+  await expect(page.locator("#decision-evidence")).toHaveText(
+    "Controller completion evidence received",
   );
   await page.locator('.scenarios [data-scenario="crash_after"]').click();
-  await expect(page.locator("#hero-title")).toBeFocused();
+  await expect(page.locator("#case-title")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.locator("#resolve")).toBeFocused();
   await expect(page.locator("#guided-result")).toHaveText(
     "Inspection required · 1 action",
   );
   await expect(page.locator("#resolve")).toContainText("See why it stops");
+  await expect(page.locator("#decision-title")).toHaveText(
+    "The service must stop.",
+  );
+  await expect(page.locator("#hero-title")).toContainText("Device recovery is");
 });
 
 test("captured uncertainty and every recovery path remain inspectable", async ({
@@ -57,8 +72,8 @@ test("captured uncertainty and every recovery path remain inspectable", async ({
   await expect(page.locator("#physical")).toHaveText("Open");
   await expect(page.locator("#pulses")).toHaveText("1");
   await expect(page.locator("#apparatus")).toHaveClass(/is-open/);
-  await expect(page.locator("#journal-state")).toHaveText(
-    "RESPONSE UNAVAILABLE",
+  await expect(page.locator("#decision-evidence")).toHaveText(
+    "Completion has not been established",
   );
   await expect(page.locator(".notice")).toContainText("does not execute");
   await expect(page.locator('[data-pulses="crash_before"]')).toHaveText("0");

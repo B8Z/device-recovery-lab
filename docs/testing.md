@@ -169,3 +169,18 @@ The page versions its stylesheet and scripts by normalized source content so an
 existing browser tab does not retain an older layout after a deployment. After
 editing viewer assets, run `python scripts/version_viewer_assets.py`. The browser
 CI job checks those references before running the visitor journeys.
+
+## Evidence-focused presentation — October 3, 2026
+
+The opening separates the purpose of the lab from the selected failure case.
+The device observation and service decision share one console. Replay changes
+the decision statement, query count and completion evidence from the retained
+snapshot; it does not add simulated outcomes or new timing measurements.
+
+The four static browser checks also cover 1366×768 and 1280×720 laptop layouts.
+The primary action and physical-state readout remain in the initial viewport at
+all seven opening sizes. The independent-observer disclosure remains visible
+on phones. Selecting another case focuses its heading, then keyboard navigation
+reaches the replay action. An independent review checked the rendered opening,
+state explanations and mobile disclosure. The existing six captured workflows,
+18 measured workload pairs, slower-run link and raw-data provenance are retained.

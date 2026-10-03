@@ -43,11 +43,11 @@ const explanations = {
   UNCERTAIN:
     "The outcome is uncertain. The service checks the journal before deciding whether to send again.",
   COMPLETED:
-    "The service has completion evidence from the controller journal. The simulated pulse count is one.",
+    "The controller’s completion record resolves the uncertainty. The observed action count is still one.",
   NEEDS_ATTENTION:
     "Automatic recovery has paused. The live lab requires reconnection or an explicit resume.",
   NEEDS_INSPECTION:
-    "The controller restarted with intent but no completion record. This same evidence can mean zero or one physical actions. The service stops; retrying cannot resolve the missing fact.",
+    "Both crash points leave IN_DOUBT. That record cannot establish whether the device acted, so the service requires inspection.",
 };
 function stop() {
   clearInterval(timer);
@@ -65,6 +65,31 @@ function render() {
   $("position").textContent =
     `${frame + 1}/${trace.frames.length} · +${captured.observed_seconds.toFixed(2)}s`;
   $("state").textContent = v.state.replaceAll("_", " ");
+  document.querySelector(".experiment-console").dataset.state = v.state;
+  $("decision-title").textContent = {
+    QUEUED: "Preserve the intent first.",
+    ACCEPTED: "Received isn’t completed.",
+    UNCERTAIN: "Check before repeating.",
+    COMPLETED: "Confirmed. No second action.",
+    NEEDS_ATTENTION: "Pause automatic recovery.",
+    NEEDS_INSPECTION: "The service must stop.",
+  }[v.state];
+  $("intent-evidence").textContent = "Command identity stored before dispatch";
+  $("intent-mark").textContent = "✓";
+  $("query-evidence").textContent = v.checks
+    ? `${v.checks} journal ${v.checks === 1 ? "query" : "queries"} recorded`
+    : "No journal query recorded yet";
+  $("query-mark").textContent = v.checks ? "↗" : "—";
+  $("decision-evidence").textContent = {
+    QUEUED: "Awaiting device evidence",
+    ACCEPTED: "Receipt alone cannot prove completion",
+    UNCERTAIN: "Completion has not been established",
+    COMPLETED: "Controller completion evidence received",
+    NEEDS_ATTENTION: "Investigation or explicit resume required",
+    NEEDS_INSPECTION: "Independent inspection required",
+  }[v.state];
+  $("decision-mark").textContent =
+    v.state === "COMPLETED" ? "✓" : v.state === "NEEDS_INSPECTION" ? "!" : "—";
   $("physical").textContent = !v.device
     ? "Unknown"
     : v.device.pulses
@@ -92,14 +117,6 @@ function render() {
     NEEDS_INSPECTION: "IN_DOUBT",
     NEEDS_ATTENTION: "NO FINAL EVIDENCE",
   }[v.state];
-  $("service-brief").textContent = {
-    QUEUED: "Intent recorded",
-    ACCEPTED: "Receipt only",
-    UNCERTAIN: "No confirmation",
-    COMPLETED: "Completion confirmed",
-    NEEDS_INSPECTION: "Inspection required",
-    NEEDS_ATTENTION: "Recovery paused",
-  }[v.state];
   const result = {
     QUEUED: "Not dispatched",
     ACCEPTED: "Receipt only",
@@ -111,15 +128,6 @@ function render() {
   $("guided-result").textContent =
     `${result}${v.device ? ` · ${v.device.pulses} action${v.device.pulses === 1 ? "" : "s"}` : ""}`;
   $("guided-result").classList.toggle("confirmed", v.state === "COMPLETED");
-  $("run-label").textContent = v.id.slice(0, 8).toUpperCase();
-  $("journal-state").textContent = {
-    QUEUED: "NOT YET OBSERVED",
-    ACCEPTED: "RECEIVED",
-    UNCERTAIN: "RESPONSE UNAVAILABLE",
-    COMPLETED: "COMPLETED",
-    NEEDS_INSPECTION: "IN_DOUBT",
-    NEEDS_ATTENTION: "NO FINAL EVIDENCE",
-  }[v.state];
   $("state").style.color = v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
   $("status-marker").style.background =
     v.state === "COMPLETED" ? "#d2f0b7" : "#f3bd8b";
@@ -158,12 +166,18 @@ function choose(scenario) {
     ? "See why it stops "
     : "Watch recovery ";
   const [first, second, description] = cases[scenario];
-  const line = document.createElement("span");
-  line.textContent = second;
-  $("hero-title").replaceChildren(document.createTextNode(first), line);
+  $("case-title").textContent = `${first} ${second}`;
   $("hero-description").textContent = description;
-  document.querySelector(".case-number").textContent =
-    `/ ${["lost_ack", "duplicate", "disconnected", "crash_before", "crash_after", "healthy"].indexOf(scenario) + 1}`;
+  document.querySelector(".case-number").textContent = String(
+    [
+      "lost_ack",
+      "duplicate",
+      "disconnected",
+      "crash_before",
+      "crash_after",
+      "healthy",
+    ].indexOf(scenario) + 1,
+  ).padStart(2, "0");
   frame =
     scenario === "lost_ack"
       ? trace.frames.findIndex(
@@ -208,8 +222,10 @@ $("resolve").addEventListener("click", () => {
   }, 1400);
 });
 function showScene() {
-  $("hero-title").focus({ preventScroll: true });
-  $("experiment").scrollIntoView({ block: "start" });
+  $("case-title").focus({ preventScroll: true });
+  document
+    .querySelector(".experiment-console")
+    .scrollIntoView({ block: "start" });
 }
 $("back-to-scene").addEventListener("click", showScene);
 $("frame").addEventListener("input", () => {

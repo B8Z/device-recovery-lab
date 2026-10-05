@@ -7,6 +7,11 @@ Request a simulated parcel-locker release, break communication, and inspect the
 service's decision alongside the device's actual recorded behavior. Then compare
 one recovery worker with four under the same independently injected faults.
 
+This independent project reflects how I approach complex systems: establish
+what needs to stay correct, make failures observable, and evaluate an improvement
+under the same conditions. It connects integration, diagnostics, and performance
+optimization; it does not reproduce an employer system.
+
 [**Watch the recovery →**](https://b8z.github.io/device-recovery-lab/)
 · [Run the processes locally](#run-it) · [Read the controlled experiment](docs/workload.md)
 
